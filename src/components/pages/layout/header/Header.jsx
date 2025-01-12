@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { context } from "@/context-API/context";
 
 import { useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ import { getCollections } from "@/utils/functions/api/cms/woocommerce/collection
 import skipMap from "@/utils/functions/general/skipMap";
 
 import { getAllRoutes } from '@/routes';
-
+import Axios from 'axios';
 
 const { HOME, SHOP, CATEGORIES, COLLECTIONS, CART, WISHLIST, SEARCH } = getAllRoutes();
 
@@ -44,14 +44,14 @@ export default function Header() {
 
 
   const { isActive: isHomepage } = useRouteActive({ href: HOME?.pathname });
-  
+
   const { data: { triggered } = {}, data: { states } = {} } = useContext(context) || {};
-  
+
   const isHeroSecVisible = isHomepage && (triggered && states?.isHeroSecVisible);
 
 
   const [isOpen, setIsOpen]
-    = triggered && Array.isArray(states?.layoutSidebar) ? states?.layoutSidebar : [false, () => {}];
+    = triggered && Array.isArray(states?.layoutSidebar) ? states?.layoutSidebar : [false, () => { }];
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -61,37 +61,37 @@ export default function Header() {
     if (!currentRoute || !currentRoute.id || !Array.isArray(routes)) return false;
     return !(routes.some(route => route.id === currentRoute.id) && screenWidth >= breakpoint);
   };
-  
+
   const enableNavItem = (currentRoute, routes, breakpoint = md) => {
 
     if (!currentRoute || !currentRoute.id || !Array.isArray(routes)) return true;
     return !(routes.some(route => route.id === currentRoute.id) && screenWidth < breakpoint);
   };
 
-  
+
   const requiredCategories = categories => {
 
     return skipMap(categories, [{ name: "General" }], category =>
-      ({ 
-        id: category?.id,
-        name: category?.name,
-        slug: category?.slug,
-        count: category?.count,
-        url: CATEGORIES?.getPathname(category?.id)
-      })
+    ({
+      id: category?.id,
+      name: category?.name,
+      slug: category?.slug,
+      count: category?.count,
+      url: CATEGORIES?.getPathname(category?.id)
+    })
     );
   }
 
   const requiredCollections = collections => {
 
     return collections.map(collection =>
-      ({ 
-        id: collection?.id,
-        name: collection?.name,
-        slug: collection?.slug,
-        count: collection?.count,
-        url: COLLECTIONS?.getPathname(collection?.id)
-      })
+    ({
+      id: collection?.id,
+      name: collection?.name,
+      slug: collection?.slug,
+      count: collection?.count,
+      url: COLLECTIONS?.getPathname(collection?.id)
+    })
     );
   }
 
@@ -101,27 +101,29 @@ export default function Header() {
     isLoading: isParentCategoriesLoading,
     isSuccess: isParentCategoriesSuccess
   } =
-  useQuery({
-    queryKey: ['parent-categories'],
-    queryFn: () => getCategories({ parent: 0 }),
-    retry: 10,
-    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
-  });
+    useQuery({
+      queryKey: ['parent-categories'],
+      queryFn: () => getCategories({ parent: 0 }),
+      retry: 10,
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
+    });
 
-
+  useEffect(() => {
+    console.log("header")
+  }, [])
   const {
     data: collections,
     isLoading: isCollectionsLoading,
     isSuccess: isCollectionsSuccess
-  } = 
-  useQuery({
-    queryKey: ['general-collections'],
-    queryFn: getCollections,
-    retry: 10,
-    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
-  });
+  } =
+    useQuery({
+      queryKey: ['general-collections'],
+      queryFn: getCollections,
+      retry: 10,
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
+    });
 
-  
+
   const totalCartItems = useSelector(
     state => state?.cartReducer?.reduce((sum, item) => sum + item?.cartQtyCount, 0) ?? 0
   );
@@ -129,7 +131,6 @@ export default function Header() {
 
 
   const [isSearchActive, setIsSearchActive] = useState(false);
-
 
   return (
     <header
@@ -154,7 +155,7 @@ export default function Header() {
       </Link>
 
       <div className="wrapper w-full flex relative font-medium">
-        
+
         <nav className="navbar w-[inherit] fixed bottom-0 left-0 lg:static">
           <ul className={`
             nav-items-cont
@@ -222,7 +223,7 @@ export default function Header() {
                       `,
                       theIcon:
                         isParentCategoriesLoading ?
-                          <AiOutlineLoading3Quarters/> : <MdOutlineArrowDropDown/>
+                          <AiOutlineLoading3Quarters /> : <MdOutlineArrowDropDown />
                     },
                     autoComplete: "off",
                     readOnly: true
@@ -270,7 +271,7 @@ export default function Header() {
                       `,
                       theIcon:
                         isCollectionsLoading ?
-                          <AiOutlineLoading3Quarters/> : <MdOutlineArrowDropDown/>
+                          <AiOutlineLoading3Quarters /> : <MdOutlineArrowDropDown />
                     },
                     autoComplete: "off",
                     readOnly: true
@@ -316,7 +317,7 @@ export default function Header() {
                     inactive: route?.inactiveIcon,
                     general: route?.generalIcon
                   },
-                  badge:{
+                  badge: {
                     badge: {
                       size: "15px",
                       textSize: "text-2xs",
@@ -349,7 +350,7 @@ export default function Header() {
             design-line
             w-full absolute top-[93%] right-0
             ${isHeroSecVisible ? "border-white" : "border-primaryFont"}
-          `}/>
+          `} />
         </nav>
 
       </div>
