@@ -26,16 +26,18 @@ export default function ProductQuantity({
   buttonsClassName: buttonClassName = "",
   stockLeft = 0,
   stockLimit = undefined,
-  callback = () => {}
+  callDecrement,
+  callIncrement,
+  callback = () => { }
 }) {
-  
+
   const qtyInputRef = useRef(null);
 
   const { isActive: isProductPage } = useRouteActive({ href: PRODUCT.getPathname(productId) });
 
   const dispatch = useDispatch();
 
-  
+
   const [quantity, setQuantity] = useState(cartQtyCount || INITIAL_QTY);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function ProductQuantity({
 
   useEffect(() => {
 
-    qtyInputRef.current.readOnly = !isProductPage ? true : false; 
+    qtyInputRef.current.readOnly = !isProductPage ? true : false;
   }, [isProductPage]);
 
 
@@ -74,7 +76,7 @@ export default function ProductQuantity({
   const handleQtyInput = event => {
 
     let inputValue = event.target.value.replace(/[^0-9]/g, '');
-  
+
     if (isFalsy({ value: inputValue, exclude: [0] })) {
       callback('');
       setQuantity('');
@@ -90,27 +92,29 @@ export default function ProductQuantity({
 
   const handleIncrement = () => {
 
-    if (!isProductPage) {
-      dispatch(cart.incrementQty({ productId, cartQtyCount: quantity + 1 }));
-    }
-    callback(quantity + 1);
+    // if (!isProductPage) {
+    //   dispatch(cart.incrementQty({ productId, cartQtyCount: quantity + 1 }));
+    // }
+    // callback(quantity + 1);
 
-    setQuantity(prev => {
+    // setQuantity(prev => {
 
-      if (isFalsy({ value: prev })) {
-        return INITIAL_QTY;
-      }
-      return prev + 1;
-    });
+    //   if (isFalsy({ value: prev })) {
+    //     return INITIAL_QTY;
+    //   }
+    //   return prev + 1;
+    // });
+    
+    callIncrement(1);
   }
 
   const handleDecrement = () => {
-    
-    if (!isProductPage) {
-      dispatch(cart.decrementQty({ productId, cartQtyCount: quantity - 1 }));
-    }
-    callback(quantity - 1);
-    setQuantity(prev => prev - 1);
+    callDecrement(-1);
+    // if (!isProductPage) {
+    //   dispatch(cart.decrementQty({ productId, cartQtyCount: quantity - 1 }));
+    // }
+    // callback(quantity - 1);
+    // setQuantity(prev => prev - 1);
   }
 
 
@@ -129,7 +133,7 @@ export default function ProductQuantity({
         onClick={handleIncrement}
         disabled={disableIncrementButton()}
       >
-        <Icon className="plus-icon" icon={incrementIcon}/>
+        <Icon className="plus-icon" icon={incrementIcon} />
       </button>
       <input
         ref={qtyInputRef}
@@ -158,7 +162,7 @@ export default function ProductQuantity({
         onClick={handleDecrement}
         disabled={disableDecrementButton()}
       >
-        <Icon className="minus-icon" icon={decrementIcon}/>
+        <Icon className="minus-icon" icon={decrementIcon} />
       </button>
     </div>
   );

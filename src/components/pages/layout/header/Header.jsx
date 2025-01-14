@@ -109,7 +109,6 @@ export default function Header() {
     });
 
   useEffect(() => {
-    console.log("header")
   }, [])
   const {
     data: collections,
@@ -125,7 +124,7 @@ export default function Header() {
 
 
   const totalCartItems = useSelector(
-    state => state?.cartReducer?.reduce((sum, item) => sum + item?.cartQtyCount, 0) ?? 0
+    state => state?.cartReducer?.reduce((sum, item) => sum + item?.quantity, 0) ?? 0
   );
   const totalWishlistItems = useSelector(state => state?.wishlistReducer?.length ?? 0);
 

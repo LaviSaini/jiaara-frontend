@@ -36,7 +36,7 @@ export async function getProducts({
   apiParams.keys = Object.keys(apiParams);
 
   try {
-    const { data } = await Axios.get(`/api/cms/woocommerce/products/getProducts`, {
+    const { data } = await Axios.get(`/products/getProducts`, {
       params: apiParams
     });
 
@@ -51,13 +51,13 @@ export async function getProducts({
 
 
 export async function getProductsByIds({ ids = [] }) {
-  
+
   try {
     if (!Array.isArray(ids) || ids.length === 0) {
       throw new Error("No product IDs provided.");
     }
 
-    const { data } = await Axios.get(`/api/cms/woocommerce/products/getProductsByIds`, {
+    const { data } = await Axios.get(`/products/getProductsByIds`, {
       params: {
         'ids[]': ids
       }

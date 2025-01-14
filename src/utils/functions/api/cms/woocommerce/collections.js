@@ -16,7 +16,7 @@ export async function getCollections({
   apiParams.keys = Object.keys(apiParams);
 
   try {
-    const { data } = await Axios.get(`/api/cms/woocommerce/collections/getCollections`, {
+    const { data } = await Axios.get(`/collections/getCollections`, {
       params: apiParams
     });
 

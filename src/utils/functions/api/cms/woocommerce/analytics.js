@@ -39,10 +39,10 @@ export async function getProductsAnalytics({
   apiParams.keys = Object.keys(apiParams);
 
   try {
-    const { data } = await Axios.get(`/api/cms/woocommerce/analytics/getProductsAnalytics`, {
+    const { data } = await Axios.get(`/analytics/getProductsAnalytics`, {
       params: apiParams
     });
-    
+
     return data;
   }
   catch (error) {

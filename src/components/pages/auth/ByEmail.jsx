@@ -8,7 +8,7 @@ import InputField from '@/components/general/InputField';
 export default function ByEmail({ className = "" }) {
 
   const onSubmit = data => {
-    console.log(data);
+    (data);
   };
 
   const { handleSubmit } = useForm();

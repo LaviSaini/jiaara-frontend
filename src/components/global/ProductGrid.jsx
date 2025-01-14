@@ -1,15 +1,72 @@
 'use client';
 
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 
 import Product from "@/components/global/Product";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartListService, getWishListService } from "@/app/api/cms/nodeapi/DetailService";
+import { cart } from "@/redux/slices/cart";
+import { wishlist } from "@/redux/slices/wishlist";
 
 
 const ProductGrid = ({
   className = "",
   products = null
 }) => {
-  
+  const [productList, setProductList] = useState([]);
+  const userData = useSelector(data => data.userDataSlice);
+  useEffect(() => {
+    setProductList(products)
+
+    if (userData) {
+
+      fetchCartList()
+      fetchWishList()
+    }
+  }, [])
+  const dispatch = useDispatch()
+  const fetchCartList = async () => {
+
+    const response = await getCartListService(userData?.userId);
+    if (response?.response?.success) {
+      if (response?.response?.data?.length > 0) {
+        dispatch(cart.addAll(response?.response?.data))
+      } else {
+        dispatch(cart.addAll([]))
+      }
+
+    }
+  }
+  const fetchWishList = async () => {
+    const response = await getWishListService(userData?.userId);
+    if (response?.response?.success) {
+      if (response?.response?.data?.length > 0) {
+        const newArray = response?.response?.data?.map((element) => {
+          return creatNewObj(JSON.parse(element?.data))
+        })
+        console.log(newArray)
+        dispatch(wishlist.addAll(newArray))
+      } else {
+        dispatch(wishlist.addAll([]))
+      }
+    }
+  }
+  const creatNewObj = (data) => {
+    const reqObj = {
+
+      "user_id": '',
+      "cart_id": '',
+      "created_date": '',
+      "product_id": data?.id,
+      "quantity": 0,
+      "img": data?.image,
+      "price": data?.price,
+      "name": data?.name,
+      "status": 's'
+
+    }
+    return reqObj
+  }
   return (
     <div
       className={`
@@ -20,7 +77,7 @@ const ProductGrid = ({
         ${className}
       `}
     >
-      {products.map((product, index) =>
+      {productList.map((product, index) =>
         <Product
           key={index}
           className={`
@@ -43,6 +100,7 @@ const ProductGrid = ({
           btnTextClassName="text-2xs uppercase bg-primaryFont text-white xs:text-xs"
           iconContClassName="text-lg p-2 bg-white text-black"
           product={product}
+          cartProduct={creatNewObj(product)}
         />
       )}
     </div>
@@ -50,4 +108,4 @@ const ProductGrid = ({
 }
 
 
-export default memo(ProductGrid);
+export default ProductGrid;

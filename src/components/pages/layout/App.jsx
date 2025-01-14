@@ -8,10 +8,11 @@ import QueryProvider from "@/components/pages/layout/QueryProvider";
 import ContextProvider from "@/context-API/ContextProvider";
 
 import useHideWarnings from "@/utils/hooks/general/useHideWarnings";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS
 
 export default function App({ children }) {
-  
+
   useHideWarnings({ keywords: ["fill", "sizes", "priority"] });
 
   return (
@@ -23,6 +24,9 @@ export default function App({ children }) {
           </ContextProvider>
         </QueryProvider>
       </Provider>
+      <ToastContainer
+
+      />
     </>
   );
 }

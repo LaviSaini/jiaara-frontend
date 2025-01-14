@@ -34,32 +34,32 @@ export default function ProductGalleryCarousel({
 
 } = {}) {
 
-  
+
   const { dispatch } = useContext(context);
-  
+
   const { clickType, handleMouseUp, handleMouseDown } = useClickTracker({ threshold: 200 });
 
   const carouselRef = useRef(null);
   const carouselNodeRef = useRef(null);
 
   const [activeIndex, setActiveIndex] = useState(0);
-  
+
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
-  
+
   const [isTouchInteracting, setIsTouchInteracting] = useState(false);
 
-  
+
   const handleLinkOnClick = event => {
 
     if (clickType === "held") {
       event.preventDefault();
     }
   }
-  
+
 
   const handleInteraction = (event = null) => {
-    
+
     if (event) {
       if (event.type === "mousedown") {
         event.preventDefault();
@@ -68,7 +68,7 @@ export default function ProductGalleryCarousel({
     }
 
     if (!hasInteracted) {
-      
+
       dispatch(storeData({
         productGalleryCarousel: {
           hasInteracted: true
@@ -78,7 +78,7 @@ export default function ProductGalleryCarousel({
       setHasInteracted(true);
     }
   }
-  
+
   useEffect(() => {
 
     if (product?.gallery?.length <= 1) {
@@ -88,7 +88,7 @@ export default function ProductGalleryCarousel({
     let intervalId;
 
     if (isCarouselHovered && !hasInteracted) {
-      intervalId = setInterval(() => 
+      intervalId = setInterval(() =>
         carouselRef?.current?.slideNext(),
         carouselRef.current.props.autoPlayInterval
       );
@@ -98,7 +98,7 @@ export default function ProductGalleryCarousel({
     }
 
     return () => clearInterval(intervalId);
-    
+
   }, [isCarouselHovered, hasInteracted]);
 
 
@@ -113,11 +113,11 @@ export default function ProductGalleryCarousel({
       }
     }
   }
-  
+
   useEffect(() => {
 
     function handleTouchInteraction() {
-  
+
       dispatch(storeData({
         productGalleryCarousel: {
           isTouchInteracting
@@ -135,7 +135,7 @@ export default function ProductGalleryCarousel({
     position: dotsGroupPosition
   });
 
-  
+
   return (
     (product?.gallery?.length > 0 &&
       <div

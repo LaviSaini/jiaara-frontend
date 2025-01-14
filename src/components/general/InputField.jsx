@@ -10,7 +10,7 @@ const Icon = Content;
 
 export default function InputField({
   className = "",
-  onClick = () => {},
+  onClick = () => { },
 
   input = {
     id: "",
@@ -49,6 +49,7 @@ export default function InputField({
   label = {
     className: "",
     text: "",
+    require: false
   },
 
   validation = {
@@ -102,7 +103,7 @@ export default function InputField({
         message: validation?.messages?.max,
       },
     }),
-  }; 
+  };
 
 
   return (
@@ -113,8 +114,18 @@ export default function InputField({
       {label?.text && (
         <label className={`${label?.className}`} htmlFor={input?.id}>
           {label?.text}
+          {
+            label?.require ?
+              <>
+                <span style={{ color: 'red' }}>*</span>
+              </>
+              :
+              ''
+          }
         </label>
+
       )}
+
 
       {/* Render controlled components using Controller */}
       {(methods?.control || control) ? (
@@ -139,7 +150,7 @@ export default function InputField({
                       type={input?.type}
                       value={option?.value}
                       className={`${input?.className}`}
-                      disabled={option.disabled} 
+                      disabled={option.disabled}
                       onChange={event => {
                         const currentValue = event.target.value;
                         const isChecked = event.target.checked;
@@ -212,29 +223,29 @@ export default function InputField({
             </>
           )}
         />
-      ) 
-        : 
-      (
-        <div className="wrapper w-full relative flex items-center">
-          <input
-            id={input?.id}
-            name={input?.inputName}
-            type={input?.type}
-            className={`${input?.className} outline-none hover:ring-1 focus:ring-1`}
-            value={input?.value}
-            placeholder={input?.placeholder}
-            autoComplete={input?.autoComplete}
-            autoFocus={input?.autoFocus}
-            readOnly={input?.readOnly}
-          />
-          {input?.icon?.theIcon && (
-            <Icon
-              className={`${input?.icon?.className} absolute right-[0.8rem]`}
-              icon={input?.icon?.theIcon}
+      )
+        :
+        (
+          <div className="wrapper w-full relative flex items-center">
+            <input
+              id={input?.id}
+              name={input?.inputName}
+              type={input?.type}
+              className={`${input?.className} outline-none hover:ring-1 focus:ring-1`}
+              value={input?.value}
+              placeholder={input?.placeholder}
+              autoComplete={input?.autoComplete}
+              autoFocus={input?.autoFocus}
+              readOnly={input?.readOnly}
             />
-          )}
-        </div>
-      )}
+            {input?.icon?.theIcon && (
+              <Icon
+                className={`${input?.icon?.className} absolute right-[0.8rem]`}
+                icon={input?.icon?.theIcon}
+              />
+            )}
+          </div>
+        )}
     </div>
   );
 }

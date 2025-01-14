@@ -10,12 +10,14 @@ import Pagination from "@/components/general/Pagination";
 import Validation from "@/components/general/Validation";
 
 import { getProducts } from "@/utils/functions/api/cms/woocommerce/products";
+import { useDispatch, useSelector } from "react-redux";
+import { userdata } from "@/redux/slices/userdata";
 
 
 export default function ManageShop({ className = "", params }) {
 
   const [currentPage, setCurrentPage] = useState(1);
-
+  const buyNowItem = useSelector(state => state?.userDataSlice)
   const {
     data: productsData,
     isLoading,
@@ -23,7 +25,7 @@ export default function ManageShop({ className = "", params }) {
     isError,
     refetch: fetchProducts
   }
-  = useQuery({
+    = useQuery({
       queryKey: ["products", params?.id || ""],
       queryFn: () => getProducts({
         categoryId: params?.id || null,
@@ -34,7 +36,7 @@ export default function ManageShop({ className = "", params }) {
       }),
       keepPreviousData: true
     });
-  
+
   useEffect(() => {
     fetchProducts();
   }, [currentPage]);
@@ -48,7 +50,7 @@ export default function ManageShop({ className = "", params }) {
       />
     );
   }
-  
+
   if (isError) {
     return (
       <Validation
@@ -58,6 +60,8 @@ export default function ManageShop({ className = "", params }) {
     );
   }
 
+  // const dispatch = useDispatch();
+  // dispatch(userdata.add({ userId: '78967987' }))
 
   return (
     <div className={`flex flex-col gap-5 my-10 ${className}`}>

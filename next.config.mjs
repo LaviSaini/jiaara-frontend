@@ -23,8 +23,30 @@ const nextConfig = {
       {
         source: "/api/getCategories", // Local API endpoint
         destination:
-          "https://www.jiaarajewellery.com/api/cms/woocommerce/categories/getCategories?page=1&per_page=100&parent=0&keys[]=page&keys[]=per_page&keys[]=parent", // External API
+          "https://www.jiaarajewellery.com/api/cms/woocommerce/categories/getCategories", // External API
       },
+      {
+        source: '/collections/getCollections',
+        destination: 'https://www.jiaarajewellery.com/api/cms/woocommerce/collections/getCollections'
+      },
+      {
+        source: '/analytics/getProductsAnalytics',
+        destination: 'https://www.jiaarajewellery.com/api/cms/woocommerce/analytics/getProductsAnalytics'
+      },
+      {
+        source: '/products/getProducts',
+        destination: 'https://www.jiaarajewellery.com/api/cms/woocommerce/products/getProducts'
+      }
+      ,
+      {
+        source: '/products/getProductsByIds',
+        destination: 'https://www.jiaarajewellery.com/api/cms/woocommerce/products/getProductsByIds'
+      }
+      // ,
+      // {
+      //   source: '/payment/send-mail',
+      //   destination: 'http://localhost:9122/api/v1/payment/send-mail'
+      // }
     ];
   },
 

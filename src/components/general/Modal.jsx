@@ -8,7 +8,7 @@ import useClickOutside from "@/utils/hooks/general/useClickOutside";
 export default function Modal({
   className = "",
   isOpen = false,
-  setIsOpen = () => {},
+  setIsOpen = () => { },
   children
 }) {
 
@@ -17,7 +17,7 @@ export default function Modal({
   useClickOutside(modalRef, () => {
     setIsOpen(false);
   });
-  
+
 
   return (
     (isOpen &&

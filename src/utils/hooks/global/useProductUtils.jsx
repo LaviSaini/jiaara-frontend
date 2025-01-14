@@ -7,22 +7,21 @@ import { buyNow } from "@/redux/slices/buyNow";
 
 
 export default function useProductUtils(product = null) {
-  
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const cartItems = useSelector(state => state?.cartReducer ?? []);
-  const cartItem = product && cartItems.find(cartItem => cartItem?.id == product?.id);
+  const cartItem = product && cartItems.find(cartItem => cartItem?.product_id == product?.product_id);
 
   const wishlistItems = useSelector(state => state?.wishlistReducer ?? []);
-  const wishlistItem = product && wishlistItems.find(wishlistItem => wishlistItem?.id == product?.id);
+  const wishlistItem = product && wishlistItems.find(wishlistItem => wishlistItem?.product_id == product?.product_id);
 
   const buyNowItem = useSelector(state => state?.buyNowReducer ?? []);
 
 
   const addToCart = (quantity = 1) => {
-    
     quantity = !isNaN(quantity) ? quantity : 1;
-    dispatch(cart.add({ product, cartQtyCount: quantity }));
+    console.log(product, quantity)
+    dispatch(cart.add({ product, quantity: quantity }));
   }
 
   const clearCart = () => {
@@ -33,11 +32,12 @@ export default function useProductUtils(product = null) {
 
   const handleWishlist = () => {
 
-    if (!wishlistItem?.isWishlist) {
+    const itemExist = wishlistItems.filter(data => data.product_id == product.product_id);
+    if (itemExist?.length === 0) {
       dispatch(wishlist.add(product));
     }
     else {
-      dispatch(wishlist.remove(wishlistItem?.id))
+      dispatch(wishlist.remove(wishlistItem?.product_id))
     }
   }
 

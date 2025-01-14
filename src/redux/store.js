@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "@/redux/slices/cart";
 import wishlistReducer from "@/redux/slices/wishlist";
 import buyNowReducer from "@/redux/slices/buyNow";
+import userDataSlice from '@/redux/slices/userdata';
 
 
 const PERSISTENCE_KEY = 'redux_state';
@@ -17,7 +18,7 @@ const loadPersistedState = () => {
     const persistedState = localStorage.getItem(PERSISTENCE_KEY);
     return persistedState ? JSON.parse(persistedState) : undefined;
   }
-    return undefined;
+  return undefined;
 };
 
 
@@ -25,14 +26,15 @@ const store = configureStore({
   reducer: {
     cartReducer,
     wishlistReducer,
-    buyNowReducer
+    buyNowReducer,
+    userDataSlice
   },
   preloadedState: loadPersistedState()
 });
 
 
 const savePersistedState = state => {
-  
+
   if (isClientSide()) {
     localStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
   }
@@ -41,7 +43,7 @@ const savePersistedState = state => {
 
 if (isClientSide()) {
 
-  store.subscribe(() => {  
+  store.subscribe(() => {
     const state = store.getState();
     savePersistedState(state);
   });

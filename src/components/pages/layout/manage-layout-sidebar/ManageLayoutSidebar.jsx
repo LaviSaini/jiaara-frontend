@@ -10,7 +10,6 @@ export default function ManageLayoutSidebar() {
 
   const { screenWidth, breakpoints: { lg } } = useWindowSize();
   useEffect(() => {
-    console.log('manage')
   }, [])
   return (
     (screenWidth < lg &&
