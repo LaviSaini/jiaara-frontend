@@ -112,7 +112,7 @@ export default function CreatePass() {
               />
 
             </div>
-            <div class=" flex justify-content-between align-items-center">
+            <div class="flex" style={{justifyContent: 'space-between', alignItems: 'center'}}>
               <div className="flex align-content-center justify-content-lg-start">
                 <input type="checkbox" id="terms" class="h-3 w-3 text-indigo-600 rounded focus:ring-indigo-500" />
                 <label for="terms" class="ml-2  text-gray-600" style={{ fontSize: '8px' }}>I agree to all terms and privacy policy</label>
