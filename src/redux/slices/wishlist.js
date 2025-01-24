@@ -8,9 +8,7 @@ const wishlistSlice = createSlice({
   reducers: {
 
     add(state, action) {
-      console.log(state)
       const product = action.payload;
-      console.log(product)
       state.push({ ...product, isWishlist: true });
     },
     addAll(state, action) {
@@ -20,7 +18,6 @@ const wishlistSlice = createSlice({
     remove(state, action) {
 
       const productId = action.payload;
-      console.log(productId)
       const products = state.filter(item => item.product_id != productId);
       return products;
     },

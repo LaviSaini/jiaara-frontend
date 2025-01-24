@@ -10,7 +10,6 @@ const cartSlice = createSlice({
     add(state, action) {
 
       const { product, quantity } = action?.payload;
-      console.log(product, quantity)
       const existingProduct = state.find(item => item?.product_id == product?.product_id);
 
       if (existingProduct) {

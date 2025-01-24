@@ -104,7 +104,7 @@ export default function ProductQuantity({
     //   }
     //   return prev + 1;
     // });
-    
+
     callIncrement(1);
   }
 

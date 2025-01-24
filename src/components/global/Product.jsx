@@ -125,7 +125,6 @@ export default function Product({
     }
   }
   const addItemToWishList = async () => {
-    console.log(product)
     const requestObject = {
       userId: userData?.userId,
       productId: product?.id,
@@ -165,7 +164,6 @@ export default function Product({
         if (type == 'new') {
           addToCart()
         } else if (type == 'update') {
-          console.log(cartItem)
           if (quantity == 1) {
             dispatch(cart.incrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
           } else {
@@ -191,7 +189,6 @@ export default function Product({
   }
   return (
     <div className={`product-cont flex flex-col items-center justify-center gap-3 z-10 ${className}`}>
-
       <ProductGalleryCarousel
         product={product}
         media={{

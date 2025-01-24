@@ -6,7 +6,6 @@ export default function Category({ params }) {
 
   return (
     <>
-      <h1>h</h1>
       <ManageShop className="category-page" params={params} />
     </>
   );

@@ -20,7 +20,6 @@ export default function useProductUtils(product = null) {
 
   const addToCart = (quantity = 1) => {
     quantity = !isNaN(quantity) ? quantity : 1;
-    console.log(product, quantity)
     dispatch(cart.add({ product, quantity: quantity }));
   }
 

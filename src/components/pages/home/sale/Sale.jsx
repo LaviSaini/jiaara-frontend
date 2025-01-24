@@ -26,7 +26,7 @@ export default function Sale() {
     isSuccess: isParentCategoriesFetched,
     isLoading: isParentCategoriesLoading,
   }
-  = useQuery({
+    = useQuery({
       queryKey: ['parent-categories'],
       queryFn: () => getCategories({ parent: 0 }),
       retry: 10,
@@ -46,7 +46,7 @@ export default function Sale() {
     isSuccess: isSaleProductsFetched,
     refetch: fetchSalesProducts
   }
-  = useQuery({
+    = useQuery({
       queryKey: [`sale-products-${categoryId}`],
       queryFn: () =>
         getProducts({
@@ -62,8 +62,29 @@ export default function Sale() {
   useEffect(() => {
     fetchSalesProducts();
   }, [categoryId, fetchSalesProducts])
+  const [productList, setProductList] = useState([])
+  useEffect(() => {
+    const newArray = data?.products?.map((element) => {
+      return creatNewObj(element)
+    })
+    setProductList(newArray)
+  }, [data])
+  const creatNewObj = (data) => {
+    const reqObj = {
 
+      "user_id": '',
+      "cart_id": '',
+      "created_date": '',
+      "product_id": data?.id,
+      "quantity": 0,
+      "img": data?.image,
+      "price": data?.price,
+      "name": data?.name,
+      "status": 's'
 
+    }
+    return reqObj
+  }
   if (isParentCategoriesLoading) {
     return (
       <Validation
@@ -76,14 +97,14 @@ export default function Sale() {
 
   const [upperSaleProductsArr, lowerSaleProductsArr]
     = isSaleProductsFetched && splitInHalf(data?.products) || [];
-  
+
 
   return (
     <section id="sale" className="flex flex-col items-center justify-center gap-10">
       <h2 className="heading text-4xl uppercase text-primaryFont">
         Sale
       </h2>
-      
+
       {isParentCategoriesFetched &&
         <CategoriesTabs
           className={`
@@ -107,21 +128,22 @@ export default function Sale() {
           className="w-full h-[20rem] text-primaryFont"
           message="Loading Products…"
         />
-          :
+        :
         <>
           {upperSaleProductsArr?.length > 0 ?
             <ProductsCarousel
               className="upper-sale-products"
               headingClassName="text-center text-2xl uppercase text-primaryFont"
-              carousel={{ 
+              carousel={{
                 interval: 3000
               }}
               sliderClassName="sales-products-slider select-none cursor-grab active:cursor-grabbing"
               slideClassName="mx-[3vw]"
               slideInnerClassName="flex flex-col gap-10"
-              data={{ 
+              data={{
                 products: upperSaleProductsArr,
-                productComponent: <SaleProductCard/>
+                cartProduct: productList,
+                productComponent: <SaleProductCard />
               }}
               visibleSlides={{
                 desktop: 3,
@@ -130,7 +152,7 @@ export default function Sale() {
               }}
             />
             :
-            <Validation 
+            <Validation
               className="w-full h-[15rem] text-primaryFont"
               message="Currently, no products."
             />
@@ -140,15 +162,16 @@ export default function Sale() {
             <ProductsCarousel
               className="lower-sale-products"
               headingClassName="text-center text-2xl uppercase text-primaryFont"
-              carousel={{ 
+              carousel={{
                 interval: 3000
               }}
               sliderClassName="sales-products-slider select-none cursor-grab active:cursor-grabbing"
               slideClassName="mx-[3vw]"
               slideInnerClassName="flex flex-col gap-10"
-              data={{ 
+              data={{
                 products: lowerSaleProductsArr,
-                productComponent: <SaleProductCard/>
+                cartProduct: productList,
+                productComponent: <SaleProductCard />
               }}
               visibleSlides={{
                 desktop: 3,

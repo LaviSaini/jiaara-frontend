@@ -44,7 +44,6 @@ const ProductGrid = ({
         const newArray = response?.response?.data?.map((element) => {
           return creatNewObj(JSON.parse(element?.data))
         })
-        console.log(newArray)
         dispatch(wishlist.addAll(newArray))
       } else {
         dispatch(wishlist.addAll([]))

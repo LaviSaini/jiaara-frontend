@@ -41,6 +41,10 @@ const nextConfig = {
       {
         source: '/products/getProductsByIds',
         destination: 'https://www.jiaarajewellery.com/api/cms/woocommerce/products/getProductsByIds'
+      },
+      {
+        source: '/shipping/getShipping',
+        destination: 'https://www.jiaarajewellery.com/api/cms/woocommerce/shipping/getShipping'
       }
       // ,
       // {

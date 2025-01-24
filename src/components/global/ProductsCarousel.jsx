@@ -15,7 +15,7 @@ import useVisibleSlides from '@/utils/hooks/pure-react-carousel/useVisibleSlides
 
 
 export default function ProductsCarousel({
-  
+
   visibleSlides: {
     desktop = 4,
     tablet = 3,
@@ -38,18 +38,19 @@ export default function ProductsCarousel({
 
   data: {
     products = [],
-    productComponent = 
-      <Product
-        product={null}
-        imgContClassName="relative w-[43vw] h-[43vw] sm:w-[29vw] sm:h-[29vw] lg:w-[21vw] lg:h-[21vw]"
-        productDetailsContClassName="text-xs text-primaryFont"
-        productNameClassName="uppercase"
-        btnTextClassName="text-2xs uppercase bg-primaryFont text-white xs:text-xs"
-        iconContClassName="text-lg p-2 bg-white text-black"
-      />
+    cartProduct = [],
+    productComponent =
+    <Product
+      product={null}
+      cartProduct={null}
+      imgContClassName="relative w-[43vw] h-[43vw] sm:w-[29vw] sm:h-[29vw] lg:w-[21vw] lg:h-[21vw]"
+      productDetailsContClassName="text-xs text-primaryFont"
+      productNameClassName="uppercase"
+      btnTextClassName="text-2xs uppercase bg-primaryFont text-white xs:text-xs"
+      iconContClassName="text-lg p-2 bg-white text-black"
+    />
   } = {}
 }) {
-
 
   const [isTouchInteracting, setIsTouchInteracting] = useState(false);
   const [keepPlaying, setKeepPlaying] = useState(isPlaying);
@@ -118,13 +119,14 @@ export default function ProductsCarousel({
                 className={`${slideClassName}`}
                 innerClassName={`${slideInnerClassName}`}
               >
+
                 {productComponent &&
-                  React.cloneElement(productComponent, { product })
+                  React.cloneElement(productComponent, { product, cartProduct: cartProduct[index] })
                 }
               </Slide>
             )
           }
-        </Slider>   
+        </Slider>
       </CarouselProvider>
     </div>
   );

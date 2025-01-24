@@ -17,9 +17,9 @@ export default function OrderCalculation({ className = "", cartItems = [] }) {
 
   const isClient = useClient();
 
-  const cartItemsSubtotal = 
+  const cartItemsSubtotal =
     cartItems.reduce(
-      (subtotal, cartItem) => subtotal + (cartItem?.price * cartItem?.cartQtyCount), 0
+      (subtotal, cartItem) => subtotal + (cartItem?.price * cartItem?.quantity), 0
     );
 
   const shippingCharge = (cartItemsSubtotal > (shipping?.minAmountOnOrder ?? 599) ? 0 : 80);
@@ -48,7 +48,7 @@ export default function OrderCalculation({ className = "", cartItems = [] }) {
           </span>
         </div>
 
-        <hr className="my-2 border-primaryFont"/>
+        <hr className="my-2 border-primaryFont" />
 
         <div className="total flex justify-between">
           <span className="text text-xl">

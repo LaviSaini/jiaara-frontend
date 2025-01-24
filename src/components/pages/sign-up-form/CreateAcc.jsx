@@ -115,7 +115,7 @@ export default function CreatePass() {
             <div class=" flex justify-content-between align-items-center">
               <div className="flex align-content-center justify-content-lg-start">
                 <input type="checkbox" id="terms" class="h-3 w-3 text-indigo-600 rounded focus:ring-indigo-500" />
-                <label for="terms" class="ml-2  text-gray-600" style={{ fontSize: '8px' }}>I agree to all terms and privacy policy</label>
+                <label htmlFor="terms" class="ml-2  text-gray-600" style={{ fontSize: '8px' }}>I agree to all terms and privacy policy</label>
               </div>
               <button
                 type="submit"
@@ -124,9 +124,9 @@ export default function CreatePass() {
                 Sign Up
               </button>
             </div>
-            <div className="flex justify-center" style={{marginTop: '25px', marginBottom: '10px'}}>
-      <span className="text-sm text-gray-700">Already have an account <a className="text-blue-700">Sign In</a></span>
-      </div>
+            <div className="flex justify-center" style={{ marginTop: '25px', marginBottom: '10px' }}>
+              <span className="text-sm text-gray-700">Already have an account <a className="text-blue-700">Sign In</a></span>
+            </div>
           </form>
         </div>
       </div>

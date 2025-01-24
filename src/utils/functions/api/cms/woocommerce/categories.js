@@ -22,7 +22,6 @@ export async function getCategories({
   };
 
   try {
-    console.log('Fetching categories with params:', apiParams);
     const { data } = await Axios.get('/api/getCategories', {
       params: apiParams,
       headers: {

@@ -2,7 +2,9 @@ import Axios from 'axios';
 const httpService = Axios.create({
     baseURL: 'http://localhost:9122/api/v1'
 });
-
+const wpService = Axios.create({
+    baseURL: 'https://cms.jiaarajewellery.com/wp-json/wp/v2/'
+})
 export async function sendContactUsEmail(requestObject) {
     const response = await httpService.post('/payment/send-mail', requestObject, {
         headers: {
@@ -69,6 +71,39 @@ export async function deleteWishListService(userId, productId) {
 }
 export async function getWishListService(userId) {
     const response = await httpService.get(`/wishlist/get-wishlist/${userId}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function deleteAllWishListService(userId) {
+    const response = await httpService.delete(`/wishlist/delete-all-wishlist/${userId}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function getRelatedProductIdsService(productId) {
+    const response = await wpService.get(`getRelatedProduct?${productId}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+
+}
+export async function gerProductDetailService() {
+    const response = await wpService.get('https://www.jiaarajewellery.com/api/cms/woocommerce/products/29393', {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function createAccount(requestObject) {
+    const response = await httpService.post('/auth/signUp', requestObject, {
         headers: {
             'Content-Type': 'application/json'
         }

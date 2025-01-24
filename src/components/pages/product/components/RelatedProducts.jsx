@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import ProductsCarousel from "@/components/global/ProductsCarousel";
 
 import { getProductsByIds } from "@/utils/functions/api/cms/woocommerce/products";
+import { useEffect, useState } from "react";
 
 
 export default function RelatedProducts({ currentProductId = null, relatedProductIds = [] }) {
@@ -13,7 +14,29 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
   });
 
   const { products } = data || [];
+  const [cartProduct, setcartproduct] = useState([])
+  useEffect(() => {
+    const newArrat = products?.map((element) => {
+      return creatNewObj(element)
+    })
+    setcartproduct(newArrat)
+  }, [products])
+  const creatNewObj = (data) => {
+    const reqObj = {
 
+      "user_id": '',
+      "cart_id": '',
+      "created_date": '',
+      "product_id": data?.id,
+      "quantity": 0,
+      "img": data?.image,
+      "price": data?.price,
+      "name": data?.name,
+      "status": 's'
+
+    }
+    return reqObj
+  }
   return (
     <section id="related-products">
       {isSuccess && products.length > 0 &&
@@ -24,7 +47,7 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
           sliderClassName="select-none cursor-grab active:cursor-grabbing"
           slideClassName="mx-[2.5vw]"
           slideInnerClassName="flex flex-col gap-3"
-          data={{ products }}
+          data={{ products, cartProduct: cartProduct }}
         />
       }
     </section>

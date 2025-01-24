@@ -11,19 +11,26 @@ import { getWishListService } from "@/app/api/cms/nodeapi/DetailService";
 
 export default function WishlistManagement({ className = "" }) {
 
-  const wishlistItems = useState([])
+  const [wishlistItems, setWishlistItems] = useState([])
   // const wishlistItems = useSelector(state => state?.wishlistReducer ?? []);
   const userData = useSelector(data => data.userDataSlice)
+  const wishlist = useSelector(state => state?.wishlistReducer ?? []);
   useEffect(() => {
     if (userData) {
       getWishList()
     }
-  }, [])
+  }, [wishlist])
   const getWishList = async () => {
     const response = await getWishListService(userData?.userId);
-    console.log(response)
-    if (response?.response?.data?.length > 0) {
-
+    if (response?.response?.success) {
+      if (response?.response?.data?.length > 0) {
+        const newArray = response?.response?.data?.map((element) => {
+          return JSON.parse(element?.data)
+        })
+        setWishlistItems(newArray)
+      } else {
+        setWishlistItems([])
+      }
     }
   }
   return (

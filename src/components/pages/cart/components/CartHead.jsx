@@ -7,7 +7,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 export default function CartHead({ className = "", cartItemsCount = 0 }) {
 
   const dispatch = useDispatch();
-
   const clearCart = () =>
     dispatch(cart.clear());
 
@@ -24,7 +23,7 @@ export default function CartHead({ className = "", cartItemsCount = 0 }) {
       </div>
       <div className="actions flex items-center gap-5 text-lg text-primaryFont md:text-xl">
         <button className="icon-cont" onClick={clearCart}>
-          <RiDeleteBin6Line/>
+          <RiDeleteBin6Line />
         </button>
       </div>
     </div>
