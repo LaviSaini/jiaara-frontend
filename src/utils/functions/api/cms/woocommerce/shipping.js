@@ -22,7 +22,7 @@ export async function getShipping({
   apiParams.keys = Object.keys(apiParams);
 
   try {
-    const { data } = await Axios.get(`/api/cms/woocommerce/shipping/getShipping`, {
+    const { data } = await Axios.get(`/shipping/getShipping`, {
       params: apiParams
     });
 
