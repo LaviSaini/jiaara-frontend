@@ -102,8 +102,40 @@ export async function gerProductDetailService() {
     })
     return response.data;
 }
-export async function createAccount(requestObject) {
+export async function createAccountService(requestObject) {
     const response = await httpService.post('/auth/signUp', requestObject, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function loginService(requestObject) {
+    const response = await httpService.post('/auth/login', requestObject, {
+        headers: {
+            "Content-Type": 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function sendCodeService(email) {
+    const response = await httpService.post('/auth/send-reset-password-mail', { email: email }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function verifyOtpService(email, otp) {
+    const response = await httpService.post('/auth/verify-otp', { email: email, otp: otp }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function updatePasswordService(email, password) {
+    const response = await httpService.post('/auth/forget-password', { password: password, email: email }, {
         headers: {
             'Content-Type': 'application/json'
         }

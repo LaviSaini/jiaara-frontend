@@ -13,12 +13,13 @@ import useClient from "@/utils/hooks/general/useClient";
 import { useEffect, useState } from "react";
 import { gerProductDetailService, getCartListService, getRelatedProductIdsService } from "@/app/api/cms/nodeapi/DetailService";
 import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation'
 
 
 export default function CartManagement() {
 
   const isClient = useClient();
-
+  const router = useRouter();
   const cartItems = useSelector(state => state?.cartReducer ?? []);
   const userData = useSelector(data => data.userDataSlice)
   const [cartList, setCartList] = useState([]);
@@ -26,6 +27,8 @@ export default function CartManagement() {
     console.log("Called after udpate")
     if (userData) {
       getCartlist();
+    } else {
+      router.push('/sign-in')
     }
   }, [cartItems])
   const getCartlist = async () => {

@@ -26,8 +26,9 @@ footer {
 
 /* 404 Page */
 main {
+
   & h1.next-error-h1,
-  & > div > div > div > h2 {
+  &>div>div>div>h2 {
     @apply text-primaryFont;
   }
 }
@@ -60,7 +61,7 @@ input[type="number"] {
     @apply bg-primaryFont text-white;
   }
 
-  textarea::selection.input-selection-black{
+  textarea::selection.input-selection-black {
     @apply bg-black text-white;
   }
 
@@ -68,25 +69,25 @@ input[type="number"] {
     text-wrap: balance;
   }
 
-  
+
   .bullet-all {
     list-style: none;
     padding: 0;
     margin: 0;
 
-    & > * {
+    &>* {
       display: flex;
       align-items: flex-start;
     }
-    
-    & > *::before {
+
+    &>*::before {
       content: "•";
       margin-right: 10px;
       font-size: 16px;
       line-height: 1;
     }
   }
-  
+
   .overlay {
     content: "";
     position: absolute;
@@ -95,7 +96,7 @@ input[type="number"] {
     width: 100%;
     height: 100%;
   }
-  
+
   .overlay-black-10::after {
     @apply overlay opacity-10 bg-black;
   }
@@ -113,6 +114,6 @@ input[type="number"] {
   }
 
   .overlay-black-50::after {
-    @apply overlay opacity-50 bg-black ;
+    @apply overlay opacity-50 bg-black;
   }
 }

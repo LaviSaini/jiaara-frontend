@@ -3,11 +3,13 @@ import { createPortal } from "react-dom";
 import { useRef } from "react";
 
 import useClickOutside from "@/utils/hooks/general/useClickOutside";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userdata } from "@/redux/slices/userdata";
 import { getCartListService, getWishListService } from "@/app/api/cms/nodeapi/DetailService";
 import { cart } from "@/redux/slices/cart";
 import { wishlist } from "@/redux/slices/wishlist";
+import LogIn from "../pages/log-in-form/LogIn";
+import Icon from "../general/Icon";
 
 
 export default function LoginModel({
@@ -23,10 +25,11 @@ export default function LoginModel({
         setIsOpen(false);
     });
 
-    const userLogin = () => {
-        dispatch(userdata.add({ userId: 4869859 }));
-        fetchCartList(4869859);
-        fetchWishList(4869859)
+    const userLogin = (data) => {
+        console.log(data)
+        dispatch(userdata.add({ userId: data?.id }));
+        fetchCartList(data?.id);
+        fetchWishList(data?.id)
         closeModel()
     }
     const fetchCartList = async (userId) => {
@@ -56,7 +59,10 @@ export default function LoginModel({
                         ref={modalRef}
                         className={`modal bg-white rounded-lg p-4 ${className}`}
                     >
-                        <button onClick={() => userLogin()}>Login</button>
+                        <div className="flex justify-end " onClick={() => closeModel()}>
+                            <Icon icon={'/assets/icons/close.png'} className="relative size-[15px]   " />
+                        </div>
+                        <LogIn isPopUp={true} userlogin={userLogin} />
                     </div>
                 </div>,
                 document.body

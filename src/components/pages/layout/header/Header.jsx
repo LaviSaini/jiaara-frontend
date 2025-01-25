@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
 import { context } from "@/context-API/context";
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -29,6 +29,11 @@ import skipMap from "@/utils/functions/general/skipMap";
 
 import { getAllRoutes } from '@/routes';
 import Axios from 'axios';
+import { useRouter } from 'next/router';
+import { buyNow } from '@/redux/slices/buyNow';
+import { wishlist } from '@/redux/slices/wishlist';
+import { cart } from '@/redux/slices/cart';
+import { userdata } from '@/redux/slices/userdata';
 
 const { HOME, SHOP, CATEGORIES, COLLECTIONS, CART, WISHLIST, SEARCH } = getAllRoutes();
 
@@ -39,7 +44,7 @@ const brandLogo = {
 
 
 export default function Header() {
-
+  const dispatch = useDispatch();
   const { screenWidth, breakpoints: { md, lg } } = useWindowSize();
 
 
@@ -67,6 +72,7 @@ export default function Header() {
     if (!currentRoute || !currentRoute.id || !Array.isArray(routes)) return true;
     return !(routes.some(route => route.id === currentRoute.id) && screenWidth < breakpoint);
   };
+  const userData = useSelector(data => data.userDataSlice)
 
 
   const requiredCategories = categories => {
@@ -128,9 +134,15 @@ export default function Header() {
   );
   const totalWishlistItems = useSelector(state => state?.wishlistReducer?.length ?? 0);
 
-
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const logout = () => {
 
+    dispatch(buyNow.clear())
+    dispatch(wishlist.clear())
+    dispatch(cart.clear())
+    dispatch(userdata.clear())
+
+  }
   return (
     <header
       id="header"
@@ -304,38 +316,60 @@ export default function Header() {
             text-lg
             ${isHeroSecVisible ? "text-white" : "text-primaryFont"}
           `}>
-            {[WISHLIST, CART].map(route =>
-              <NavItem
-                key={route?.id}
-                href={{
-                  pathname: route?.pathname
-                }}
-                icon={{
-                  status: {
-                    active: route?.activeIcon,
-                    inactive: route?.inactiveIcon,
-                    general: route?.generalIcon
-                  },
-                  badge: {
-                    badge: {
-                      size: "15px",
-                      textSize: "text-2xs",
-                      position: {
-                        top: "-8px",
-                        left: "13px"
+            {
+              userData ?
+
+                [WISHLIST, CART].map(route =>
+                  <NavItem
+                    key={route?.id}
+                    href={{
+                      pathname: route?.pathname
+                    }}
+                    icon={{
+                      status: {
+                        active: route?.activeIcon,
+                        inactive: route?.inactiveIcon,
+                        general: route?.generalIcon
                       },
-                      value: route?.id === "wishlist" ? totalWishlistItems : totalCartItems,
-                      backgroundColor: `
+                      badge: {
+                        badge: {
+                          size: "15px",
+                          textSize: "text-2xs",
+                          position: {
+                            top: "-8px",
+                            left: "13px"
+                          },
+                          value: route?.id === "wishlist" ? totalWishlistItems : totalCartItems,
+                          backgroundColor: `
                         ${isHeroSecVisible ? "backdrop-blur bg-opacity-50 bg-white" : "bg-primaryFont"}
                       `,
-                      textColor: "text-white"
-                    },
-                    isBadgeEnabled: route?.isBadgeEnabled
-                  }
-                }}
-                enabled={enableNavItem(route, [], lg)}
-              />
-            )}
+                          textColor: "text-white"
+                        },
+                        isBadgeEnabled: route?.isBadgeEnabled
+                      }
+                    }}
+                    enabled={enableNavItem(route, [], lg)}
+                  />
+                )
+
+                :
+                ''
+            }
+
+            {
+              userData ?
+                <div style={{ cursor: 'pointer' }} onClick={() => logout()}>
+                  <div style={{ border: '1px solid', borderRadius: '15px', padding: '3px 10px 4px 10px', fontSize: '16px', lineHeight: '20px' }}>Logout</div>
+                </div>
+                :
+
+                <div style={{ cursor: 'pointer' }}>
+                  <div style={{ border: '1px solid', borderRadius: '15px', padding: '3px 10px 4px 10px', fontSize: '16px', lineHeight: '20px' }}>
+                    <Link href={'/sign-in'}>Login</Link>
+                  </div>
+                </div>
+            }
+
             {screenWidth < lg &&
               <HamburgerMenu
                 innerClassName={`w-4 h-px my-1 ${isHeroSecVisible ? "bg-white" : "bg-primaryFont"}`}

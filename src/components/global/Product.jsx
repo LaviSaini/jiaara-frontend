@@ -265,12 +265,9 @@ export default function Product({
           }
         </div>
       }
-      <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }}>
-        <form className="search-container size-[20rem]">
+      <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
 
-          Hello World
-        </form>
-      </LoginModel>
+
     </div>
   );
 }
