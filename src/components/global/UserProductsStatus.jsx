@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import useRouteActive from "@/utils/hooks/general/useRouteActive";
 
-import { CART, CHECKOUT, ORDER} from "@/routes";
+import { CART, CHECKOUT, ORDER } from "@/routes";
 
 const FIRST_TAB_INDEX = 0;
 
@@ -18,15 +18,15 @@ function UserProductsStatus({
     { name: ORDER?.title, url: "" }
   ],
   forTab = false,
-  callback = () => {}
+  callback = () => { }
 }) {
 
   const { isRouteActive } = useRouteActive();
-  
+
   const [currentActiveTab, setCurrentActiveTab] = useState(FIRST_TAB_INDEX);
   const [isInitialized, setIsInitialized] = useState(false);
-  
 
+  console.log(titles)
   const manageCurrentActiveTab = useCallback(({ index = null, titleId = null }) => {
 
     if (currentActiveTab === index) {
@@ -62,7 +62,7 @@ function UserProductsStatus({
 
   const getActiveClassName = (index, titleUrl = null) => {
     if (
-      (forTab && isCurrentTabActive(index)) || 
+      (forTab && isCurrentTabActive(index)) ||
       (!forTab && titleUrl && isRouteActive(titleUrl))
     ) {
       return "font-semibold underline underline-offset-[15px] decoration-2";

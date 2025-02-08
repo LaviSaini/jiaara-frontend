@@ -17,8 +17,9 @@ const ManageCheckout = () => {
   return (
     (isClient &&
       <>
-        <CheckoutForm currentItems={currentItems} clearItems={clearItems}/>
-        <OrderSummary currentItems={currentItems}/>
+        <CheckoutForm currentItems={currentItems} clearItems={clearItems} />
+        <OrderSummary currentItems={currentItems} />
+
       </>
     )
   );

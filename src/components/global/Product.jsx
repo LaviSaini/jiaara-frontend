@@ -229,7 +229,7 @@ export default function Product({
                 className={`add-to-cart-btn w-full py-2 ${btnTextClassName}`}
                 onClick={() => checkIsUserLogin('cart')}
               >
-                {btnText}ddd
+                {btnText}
               </button>
               :
               <ProductQuantity

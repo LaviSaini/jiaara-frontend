@@ -43,8 +43,14 @@ export default function UserProductsList({
   const { getTruncateText } = useTruncateText();
   const userData = useSelector(data => data.userDataSlice)
 
-  const removeCartItem = productId => {
-    dispatch(cart.remove(productId));
+  const removeCartItem = async (productId) => {
+    // dispatch(cart.remove(productId));
+    debugger
+    const response = await deleteCartItem(userData?.userId, productId);
+    console.log(response)
+    if (response?.response?.success) {
+      dispatch(cart.remove(productId))
+    }
   }
   const handleIncrementAndDecrement = (item, product) => {
     console.log(item, product)
@@ -166,7 +172,7 @@ export default function UserProductsList({
               {context.isCart &&
                 <button
                   className={`remove-btn ${productRemoveButtonClassName}`}
-                  onClick={() => removeCartItem(product?.id)}
+                  onClick={() => removeCartItem(product?.product_id)}
                 >
                   <IoCloseOutline className="cross-icon" />
                 </button>

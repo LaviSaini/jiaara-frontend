@@ -46,6 +46,8 @@ export default function LogIn({ isPopUp, userlogin }) {
     if (response?.response?.success) {
       if (response?.response?.data?.length > 0) {
         dispatch(cart.addAll(response?.response?.data))
+      } else {
+        dispatch(cart.addAll([]))
       }
 
     }

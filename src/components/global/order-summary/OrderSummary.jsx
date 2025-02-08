@@ -11,32 +11,37 @@ import Accordion from "@/components/general/Accordion";
 import UserProductsList from "@/components/global/user-products-list/UserProductsList";
 import CouponForm from "@/components/global/CouponForm";
 import OrderCalculation from "@/components/global/order-summary/components/OrderCalculation";
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 
 export default function OrderSummary({ className = "", currentItems = [] }) {
-
+  const router = useRouter();
   const { data: { triggered } = {}, data: { objects } = {} } = useContext(context) || {};
   const checkout = (triggered && objects?.checkout) || {};
+  const userData = useSelector(data => data.userDataSlice)
 
 
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handlePlaceOrder = () => {
-
+    if (!userData) {
+      router.push('/sign-in')
+    }
     checkout?.onSubmitCheckoutForm();
 
     if (checkout?.haveErrors) {
-      setIsDisabled(true);
+      // setIsDisabled(true);
     }
   }
 
-  
+
   return (
     <div className={`checkout-order-summary flex flex-col px-[8vw] py-5 ${className}`}>
       <div className="heading text-xl text-primaryFont sm:text-2xl">
         Order Summary
       </div>
-      
+
       <Accordion
         titleClassName="text-sm text-primaryFont sm:text-base"
         title={`Show Products`}
@@ -65,16 +70,26 @@ export default function OrderSummary({ className = "", currentItems = [] }) {
           />
         }
         iconClassName="text-primaryFont text-xl"
-        openIcon={<MdKeyboardArrowDown/>}
-        closeIcon={<MdKeyboardArrowUp/>}
+        openIcon={<MdKeyboardArrowDown />}
+        closeIcon={<MdKeyboardArrowUp />}
       />
 
-      <CouponForm className="mb-5"/>
+      <CouponForm className="mb-5" />
 
-      <hr className="border-primaryFont"/>
+      <hr className="border-primaryFont" />
 
-      <OrderCalculation cartItems={currentItems}/>
-
+      <OrderCalculation cartItems={currentItems} />
+      <div>
+        <div>
+          <span className='text-primaryFont text-xl'>Payment</span>
+        </div>
+        <div className=" p-3 rounded bg-white"  >
+          <div>
+            <input type="radio" name="" id="" />
+            <span style={{ fontSize: '14px', marginLeft: '10px' }}>Razorpay Secure(UPI,Cards, Wallets, Netbanking)</span>
+          </div>
+        </div>
+      </div>
       <button
         className={`
           checkout-btn
@@ -87,7 +102,7 @@ export default function OrderSummary({ className = "", currentItems = [] }) {
         disabled={isDisabled}
       >
         <span className="w-full button-text">
-          {!isDisabled ? "Place Order" : "Placing Order…"}  
+          {!isDisabled ? "Place Order" : "Placing Order…"}
         </span>
       </button>
     </div>

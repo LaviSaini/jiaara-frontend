@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
 import { context } from "@/context-API/context";
 import { storeData } from "@/context-API/actions/action.creators";
@@ -17,85 +17,227 @@ import { createOrder } from "@/utils/functions/api/cms/woocommerce/orders";
 import { ORDER } from '@/routes';
 
 import { indianStates } from '@/utils/constants';
+import { useSelector } from 'react-redux';
+import { createOrderService, createPaymentOrder, finalCallService, verifyPaymentService } from '@/app/api/cms/nodeapi/DetailService';
+import { toast } from 'react-toastify';
 
+import { cart } from '@/redux/slices/cart';
+import { coupon } from '@/redux/slices/coupon';
 
-export default function CheckoutForm({ className = "", currentItems = [], clearItems = () => {} }) {
+export default function CheckoutForm({ className = "", currentItems = [], clearItems = () => { } }) {
 
   const router = useRouter();
 
   const { dispatch, data: { triggered } = {}, data: { objects } = {} } = useContext(context);
 
   const checkout = (triggered && objects?.checkout) || {};
-
+  const [buttonMessage, setButtonMessage] = useState('Place Order')
+  const [isLoading, setIsLoading] = useState(false);
   const methods = useForm({ mode: "onChange" });
-  
-
+  const couponApplied = useSelector(data => data.couponSlice);
+  const userData = useSelector(data => data.userDataSlice)
+  console.log("from checkout", couponApplied)
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
   const theOnSubmitCheckoutForm = async (data) => {
+    const scriptLoaded = await loadRazorpayScript();
 
-    const formData = {
-      first_name: data?.firstName,
-      last_name: data?.lastName,
-      email: data?.email,
-      address_1: data?.address,
-      address_2: data?.additionalAddress,
-      city: data?.city,
-      state: data?.state,
-      postcode: data?.pinCode,
-      country: 'IN',
-      phone: data?.contactNumber
-    };
-    
-    const couponCode =
-      (
-        checkout?.couponData &&
-        Object.keys(checkout?.couponData).length > 0
-      ) && checkout?.couponData?.couponCode;
-
-
-    const orderData = {
-      payment_method: 'cod',
-      payment_method_title: 'Cash on delivery',
-      set_paid: false,
-      billing: formData,
-      shipping: formData,
-      line_items: currentItems?.map(currentItem => ({
-        product_id: currentItem?.id,
-        quantity: currentItem?.cartQtyCount
-      }))
-    };
-
-    if (couponCode) {
-      orderData.coupon_lines = [
-        {
-          code: couponCode
+    if (!userData) {
+      router.push('/sign-in')
+    }
+    if (scriptLoaded) {
+      const totalPriceArray = currentItems.map((element) => element.price * element.quantity);
+      const productIds = currentItems.map((element) => element?.product_id);
+      let totalSum = totalPriceArray.reduce((acc, cur) => acc + cur, 0);
+      let discount = 0;
+      if (couponApplied) {
+        if (couponApplied?.type == 'percent') {
+          discount = Number(((totalSum * Number(couponApplied?.value)) / 100).toFixed(0));
+        } else {
+          discount = Number(couponApplied?.value)
         }
-      ];
-    }
-
-    try {
-      const { data: { orderId } } = await createOrder(orderData);
-
-      if (orderId) {
-
-        dispatch(
-          storeData({
-            checkout: {
-              ...checkout,
-              orderNavigationFlag: true
-            }
-          }, "objects")
-        );
-
-        clearItems();
-        router.push(ORDER.getPathname(orderId));
       }
+      const obj = { amount: totalSum - discount, currency: "INR", userId: userData?.userId, productId: productIds }
+      setButtonMessage('processing order...')
+      setIsLoading(true);
+      const response = await createPaymentOrder(obj);
+      const orderId = response?.response?.data?.order_id
+      // 2. Initialize Razorpay with the order data
+      const options = {
+        key: 'rzp_test_UvSPbsmSimh3H2', // Your Razorpay key ID
+        amount: (totalSum - discount) * 100, // Amount in paise (e.g., 50000 paise = 500 INR)
+        currency: 'INR',
+        // name: 'Testing',
+        // description: 'Test Transaction',// Optional: add your logo URL
+        id: orderId, // Order ID received from the backend
+        handler: function (response2) {
+          // Success callback, handle success logic
+          // setPaymentId(response.razorpay_payment_id)
+          verifyPayment(response2.razorpay_payment_id, totalSum - discount, 'INR', response?.response?.data?.paymentId, data)
+          // alert('Payment Successful! Payment ID: ' + response.razorpay_payment_id);
+
+          // You can also send the payment details to your backend to verify the payment
+          // verifyPayment(response);
+        },
+        prefill: {
+          name: data?.firstName + " " + data?.lastName, // Prefill the user's name, email, etc.
+          email: data?.email,
+          contact: data?.contactNumber
+        },
+        theme: {
+          color: '#F37254'
+        }
+      };
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } else {
     }
-    catch(error) {
-      console.error("Error receiving the order.", error);
-    }
+    // const formData = {
+    //   first_name: data?.firstName,
+    //   last_name: data?.lastName,
+    //   email: data?.email,
+    //   address_1: data?.address,
+    //   address_2: data?.additionalAddress,
+    //   city: data?.city,
+    //   state: data?.state,
+    //   postcode: data?.pinCode,
+    //   country: 'IN',
+    //   phone: data?.contactNumber
+    // };
+
+    // const couponCode =
+    //   (
+    //     checkout?.couponData &&
+    //     Object.keys(checkout?.couponData).length > 0
+    //   ) && checkout?.couponData?.couponCode;
+
+
+    // const orderData = {
+    //   payment_method: 'cod',
+    //   payment_method_title: 'Cash on delivery',
+    //   set_paid: false,
+    //   billing: formData,
+    //   shipping: formData,
+    //   line_items: currentItems?.map(currentItem => ({
+    //     product_id: currentItem?.id,
+    //     quantity: currentItem?.cartQtyCount
+    //   }))
+    // };
+
+    // if (couponCode) {
+    //   orderData.coupon_lines = [
+    //     {
+    //       code: couponCode
+    //     }
+    //   ];
+    // }
+
   }
 
-  
+  const verifyPayment = async (orderId, amount, currency, customPaymentId, data) => {
+    setButtonMessage('verifying payment...')
+    const requestObject = {
+      amount: amount,
+      payment_order_Id: orderId,
+      currency: currency,
+      customPaymentId: customPaymentId
+    }
+
+
+    const response = await verifyPaymentService(requestObject);
+    if (response?.response?.success) {
+      const list = currentItems.map((element) => {
+        return {
+          product_id: element?.product_id,
+          quantity: element?.quantity,
+        }
+      }
+      )
+      const coupontList = []
+      if (couponApplied) {
+        coupontList.push({ code: couponApplied?.title })
+      }
+      let orderData = {
+        payment_method: "Razorpay",
+        payment_method_title: "Razor Pay",
+        set_paid: true,
+        customer_id: userData?.userId,
+        status: 'completed',
+        billing: {
+          first_name: data.firstName,
+          last_name: data.lastName,
+          address_1: data.address,
+          city: data.city,
+          state: data.state,
+          postcode: data.pinCode,
+          country: "IN",
+          email: data.email,
+          phone: data.phone
+        },
+        shipping: {
+          first_name: data.firstName,
+          last_name: data.lastName,
+          address_1: data.address,
+          city: data.city,
+          state: data.state,
+          postcode: data.pinCode,
+          country: 'IN'
+        },
+        line_items: list,
+        coupon_lines: coupontList
+      };
+      try {
+        setButtonMessage('creating order...')
+        const response = await createOrderService(orderData);
+        if (response?.status == '201') {
+          const req = {
+            userId: userData?.userId, orderId: response?.data?.id, customPaymentId: customPaymentId
+          }
+
+          const finalResponse = await finalCallService(req);
+          console.log('final response', finalResponse)
+          if (finalResponse?.response?.success) {
+            toast('Order Placed Successfully', { type: 'success' })
+            // dispatch(cart.addAll([]))
+            // dispatch(coupon.clear())
+            router.push('/')
+          } else {
+            setButtonMessage('Place Order')
+            setIsLoading(false);
+            toast('Please reach to support! Something went Wrong!', { type: 'error' })
+            router.push('/')
+
+          }
+        } else {
+          setButtonMessage('Place Order')
+          setIsLoading(false);
+          toast('Something Went Wrong!', { type: "error" })
+        }
+      } catch (error) {
+        setButtonMessage('Place Order')
+        setIsLoading(false);
+        if (error?.response?.data?.data?.status == 400) {
+          toast(error?.response?.data?.message, { type: 'error' })
+        } else {
+          toast("Something Went Wrong!")
+        }
+      }
+    } else {
+      setButtonMessage('Place Order')
+      setIsLoading(false)
+      toast("Something went wrong!", { type: 'error' })
+    }
+
+
+  }
+
   useEffect(() => {
 
     function storeComponentData() {
@@ -119,7 +261,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
 
 
   return (
-    <FormProvider { ...methods}>
+    <FormProvider {...methods}>
       <form
         id="the-checkout-form"
         className={`checkout-form flex flex-col gap-10 px-[8vw] ${className}`}
@@ -217,7 +359,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
         </div>
 
         <div className="form-group flex flex-col gap-5">
-          
+
           <div className="form-group-heading text-xl text-primaryFont sm:text-2xl">
             Delivery Information
           </div>
@@ -252,7 +394,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
               text: "Apartment, suit, etc."
             }}
           />
-          
+
           <InputField
             input={{
               id: "city",
@@ -323,6 +465,15 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           />
         </div>
       </form>
+      {
+        isLoading ?
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          :
+          ''
+      }
+
     </FormProvider>
   );
 }

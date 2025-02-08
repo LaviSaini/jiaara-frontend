@@ -14,13 +14,13 @@ export default function OrderSummary({ className = "", cartItems = [] }) {
         Order Summary
       </div>
 
-      <hr className="my-5 border-primaryFont"/>
+      <hr className="my-5 border-primaryFont" />
 
-      <CouponForm className="mb-5"/>
+      <CouponForm className="mb-5" />
 
-      <hr className="border-primaryFont"/>
+      <hr className="border-primaryFont mt-4" />
 
-      <OrderCalculation cartItems={cartItems}/>
+      <OrderCalculation cartItems={cartItems} />
 
       <Link
         className="checkout-btn px-5 py-2 mt-3 rounded-lg text-center uppercase bg-primaryFont text-white"

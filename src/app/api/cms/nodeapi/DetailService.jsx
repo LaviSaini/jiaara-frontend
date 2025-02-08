@@ -1,8 +1,11 @@
 import Axios from 'axios';
 const httpService = Axios.create({
-    baseURL: 'http://localhost:9122/api/v1'
+    baseURL: 'https://13.60.62.146/api/v1'
 });
 const wpService = Axios.create({
+    baseURL: 'https://cms.jiaarajewellery.com/wp-json/wc/v3/'
+})
+const wpServicev2 = Axios.create({
     baseURL: 'https://cms.jiaarajewellery.com/wp-json/wp/v2/'
 })
 export async function sendContactUsEmail(requestObject) {
@@ -136,6 +139,47 @@ export async function verifyOtpService(email, otp) {
 }
 export async function updatePasswordService(email, password) {
     const response = await httpService.post('/auth/forget-password', { password: password, email: email }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function validateCouponService(coupon) {
+    const response = await wpServicev2.post('validate', { coupon_code: coupon }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data
+}
+export async function createPaymentOrder(requestObject) {
+    const response = await httpService.post('/payment/create-order', requestObject, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
+export async function verifyPaymentService(requestObject) {
+    const response = await httpService.post('/payment/verify-payment', requestObject, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    return response?.data;
+}
+export async function createOrderService(requestObject) {
+    const response = await wpService.post(`orders?consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`, requestObject, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    return response
+}
+export async function finalCallService(requestObject) {
+    const response = await httpService.post('/cart/final-order', requestObject, {
         headers: {
             'Content-Type': 'application/json'
         }

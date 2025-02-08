@@ -38,7 +38,7 @@ export default function CartManagement() {
       setCartList(response?.response?.data);
       const productIds = response?.response?.data?.map(element => element?.product_id)
       console.log(productIds)
-      getRelatedProduct(productIds)
+      // getRelatedProduct(productIds)
     } else {
 
     }
@@ -63,7 +63,7 @@ export default function CartManagement() {
   return (
     (isClient &&
       <div className="cart-page flex flex-col">
-        <UserProductsStatus
+        {/* <UserProductsStatus
           className={`
             px-[8vw] gap-[5vw] my-[10vw]
             text-xs
@@ -78,7 +78,7 @@ export default function CartManagement() {
             xl:text-3xl
             2xl:text-4xl
           `}
-        />
+        /> */}
         <CartHead className="px-[8vw] mt-5" cartItemsCount={cartList?.length} />
         <CartData className="px-[8vw] py-5 mt-5" cartItems={cartList} />
         {cartList?.length > 0 &&

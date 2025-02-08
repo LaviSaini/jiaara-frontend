@@ -34,6 +34,8 @@ import { buyNow } from '@/redux/slices/buyNow';
 import { wishlist } from '@/redux/slices/wishlist';
 import { cart } from '@/redux/slices/cart';
 import { userdata } from '@/redux/slices/userdata';
+import { coupon } from '@/redux/slices/coupon';
+import { getCartListService, getWishListService } from '@/app/api/cms/nodeapi/DetailService';
 
 const { HOME, SHOP, CATEGORIES, COLLECTIONS, CART, WISHLIST, SEARCH } = getAllRoutes();
 
@@ -115,7 +117,32 @@ export default function Header() {
     });
 
   useEffect(() => {
-  }, [])
+    if (userData) {
+      fetchCartList(userData?.userId);
+      fetchWishList(userData?.userId);
+    }
+  }, [userData])
+  const fetchCartList = async (userId) => {
+
+    const response = await getCartListService(userId);
+    if (response?.response?.success) {
+      if (response?.response?.data?.length > 0) {
+        dispatch(cart.addAll(response?.response?.data))
+      } else {
+        dispatch(cart.addAll([]))
+      }
+
+    }
+  }
+  const fetchWishList = async (userId) => {
+
+    const response = await getWishListService(userId);
+    if (response?.response?.success) {
+      if (response?.response?.data?.length > 0) {
+        dispatch(wishlist.addAll(response?.response?.data))
+      }
+    }
+  }
   const {
     data: collections,
     isLoading: isCollectionsLoading,
@@ -141,6 +168,7 @@ export default function Header() {
     dispatch(wishlist.clear())
     dispatch(cart.clear())
     dispatch(userdata.clear())
+    dispatch(coupon.clear())
 
   }
   return (
