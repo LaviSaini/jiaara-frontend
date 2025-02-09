@@ -1,3 +1,4 @@
+"use client"
 // import '.../'
 // import FormHeader from "../layout/form-header/FormHeader";
 import InputField from "@/components/general/InputField";

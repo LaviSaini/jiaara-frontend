@@ -139,7 +139,11 @@ export default function LogIn({ isPopUp, userlogin }) {
           </FormProvider>
 
           <div className="flex justify-center" style={{ marginTop: '25px', marginBottom: '10px' }}>
-            <span className="text-sm text-gray-700">Don't have an account <Link className="text-blue-700" href={'/create-account'}>Sign Up</Link></span>
+            <span className="text-sm text-gray-700">
+              {"Don't have an account"}
+              <Link className="text-blue-700" href="/create-account">Sign Up</Link>
+            </span>
+
           </div>
         </div>
       </div>
