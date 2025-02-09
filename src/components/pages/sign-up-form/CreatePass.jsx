@@ -2,7 +2,7 @@
 // import '.../'
 // import FormHeader from "../layout/form-header/FormHeader";
 import InputField from "@/components/general/InputField";
-import './SignupForm.css';
+import '../sign-up-form/SignUpForm.css';
 import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 import { updatePasswordService } from "@/app/api/cms/nodeapi/DetailService";
