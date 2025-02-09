@@ -2,7 +2,7 @@
 // import FormHeader from "../layout/form-header/FormHeader";
 'use client';
 import InputField from "@/components/general/InputField";
-import '../../../styles/singnupform.css';
+import '../../../styles/signupform.css';
 import Link from "next/link";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";

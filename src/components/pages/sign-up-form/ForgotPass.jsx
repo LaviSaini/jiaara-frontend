@@ -3,7 +3,7 @@
 
 "use client"
 import InputField from "@/components/general/InputField";
-import '../../../styles/singnupform.css';
+import '../../../styles/signupform.css';
 import { FormProvider, useForm } from "react-hook-form";
 import { sendCodeService } from "@/app/api/cms/nodeapi/DetailService";
 import { toast } from "react-toastify";
