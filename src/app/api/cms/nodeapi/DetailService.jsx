@@ -1,6 +1,6 @@
 import Axios from 'axios';
 const httpService = Axios.create({
-    baseURL: 'http://43.204.102.137:9122/api/v1'
+    baseURL: 'http://jiara-frontend.vercel.app/api/v1'
 });
 const wpService = Axios.create({
     baseURL: 'https://cms.jiaarajewellery.com/wp-json/wc/v3/'
