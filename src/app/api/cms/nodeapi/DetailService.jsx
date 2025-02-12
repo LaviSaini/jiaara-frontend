@@ -1,6 +1,6 @@
 import Axios from 'axios';
 const httpService = Axios.create({
-    baseURL: 'http://127.0.0.1:9122/api/v1'
+    baseURL: 'https://jiaarajewellery.com/api/api/v1'
 });
 const wpService = Axios.create({
     baseURL: 'https://cms.jiaarajewellery.com/wp-json/wc/v3/'
