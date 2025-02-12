@@ -1,113 +1,106 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import Axios from "axios";
 
-import { useQuery } from "@tanstack/react-query";
-
-import ProductsCarousel from '@/components/global/ProductsCarousel';
+import ProductsCarousel from "@/components/global/ProductsCarousel";
 import SaleProductCard from "./components/SaleProductCard";
-import UserProductsStatus from '@/components/global/UserProductsStatus';
-import Validation from '@/components/general/Validation';
+import UserProductsStatus from "@/components/global/UserProductsStatus";
+import Validation from "@/components/general/Validation";
 
-import { getCategories } from '@/utils/functions/api/cms/woocommerce/categories';
-import { getProducts } from '@/utils/functions/api/cms/woocommerce/products';
-
+import { CATEGORIES } from "@/routes";
 import splitInHalf from "@/utils/functions/general/splitInHalf";
 
 const CategoriesTabs = UserProductsStatus;
 
-
 export default function Sale() {
-
   const [categoryId, setCategoryId] = useState(null);
+  const [parentCategories, setParentCategories] = useState([]);
+  const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
+  const [isParentCategoriesFetched, setIsParentCategoriesFetched] = useState(false);
 
-  const {
-    data: parentCategories,
-    isSuccess: isParentCategoriesFetched,
-    isLoading: isParentCategoriesLoading,
-  }
-    = useQuery({
-      queryKey: ['parent-categories'],
-      queryFn: () => getCategories({ parent: 0 }),
-      retry: 10,
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
-    });
+  const [saleProducts, setSaleProducts] = useState([]);
+  const [isSaleProductsLoading, setIsSaleProductsLoading] = useState(false);
+  const [isSaleProductsFetched, setIsSaleProductsFetched] = useState(false);
 
-  const requiredCategories = categories =>
-    categories.filter(category => category.name !== "General");
-
-  const getActiveCategoryId = activeCategoryId =>
-    setCategoryId(activeCategoryId);
-
-
-  const {
-    data,
-    isLoading: isSaleProductsLoading,
-    isSuccess: isSaleProductsFetched,
-    refetch: fetchSalesProducts
-  }
-    = useQuery({
-      queryKey: [`sale-products-${categoryId}`],
-      queryFn: () =>
-        getProducts({
-          page: 1,
-          perPage: 100,
-          categoryId,
-          onSale: true,
-          status: "publish"
-        }),
-      enabled: false
-    });
-
+  // Fetch Categories Directly
   useEffect(() => {
-    fetchSalesProducts();
-  }, [categoryId, fetchSalesProducts])
-  const [productList, setProductList] = useState([])
+    const fetchCategories = async () => {
+      try {
+        const response = await Axios.get(
+          "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
+        );
+        setParentCategories(response.data);
+        setIsParentCategoriesFetched(true);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setIsParentCategoriesFetched(false);
+      } finally {
+        setIsParentCategoriesLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Fetch Sale Products when categoryId changes
   useEffect(() => {
-    const newArray = data?.products?.map((element) => {
-      return creatNewObj(element)
-    })
-    setProductList(newArray)
-  }, [data])
-  const creatNewObj = (data) => {
-    const reqObj = {
+    if (!categoryId) return;
 
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
+    const fetchSaleProducts = async () => {
+      setIsSaleProductsLoading(true);
+      try {
+        const response = await Axios.get(
+          `https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/products/getProducts?page=1&per_page=100&categoryId=${categoryId}&onSale=true&status=publish`
+        );
+        setSaleProducts(response.data.products || []);
+        setIsSaleProductsFetched(true);
+      } catch (error) {
+        console.error("Error fetching sale products:", error);
+        setIsSaleProductsFetched(false);
+      } finally {
+        setIsSaleProductsLoading(false);
+      }
+    };
 
-    }
-    return reqObj
-  }
+    fetchSaleProducts();
+  }, [categoryId]);
+
+  const requiredCategories = (categories) =>
+    categories.filter((category) => category.name !== "General");
+
+  const getActiveCategoryId = (activeCategoryId) => setCategoryId(activeCategoryId);
+
+  const [upperSaleProductsArr, lowerSaleProductsArr] =
+    isSaleProductsFetched && splitInHalf(saleProducts) || [];
+
+  const creatNewObj = (data) => ({
+    user_id: "",
+    cart_id: "",
+    created_date: "",
+    product_id: data?.id,
+    quantity: 0,
+    img: data?.image,
+    price: data?.price,
+    name: data?.name,
+    status: "s",
+  });
+
+  const productList = saleProducts.map(creatNewObj);
+
   if (isParentCategoriesLoading) {
     return (
-      <Validation
-        className="w-full h-[10rem] text-primaryFont"
-        message="Loading Sale Products…"
-      />
+      <Validation className="w-full h-[10rem] text-primaryFont" message="Loading Sale Products…" />
     );
   }
 
-
-  const [upperSaleProductsArr, lowerSaleProductsArr]
-    = isSaleProductsFetched && splitInHalf(data?.products) || [];
-
-
   return (
     <section id="sale" className="flex flex-col items-center justify-center gap-10">
-      <h2 className="heading text-4xl uppercase text-primaryFont">
-        Sale
-      </h2>
+      <h2 className="heading text-4xl uppercase text-primaryFont">Sale</h2>
 
-      {isParentCategoriesFetched &&
+      {isParentCategoriesFetched && (
         <CategoriesTabs
-          className={`
+          className="
             px-[8vw] gap-[6vw]
             text-xs
             text-primaryFont
@@ -116,72 +109,62 @@ export default function Sale() {
             sm:text-lg
             md:gap-x-16 md:gap-y-7
             md:text-xl
-          `}
+          "
           titles={requiredCategories(parentCategories) || []}
           forTab={true}
           callback={getActiveCategoryId}
         />
-      }
+      )}
 
-      {isSaleProductsLoading ?
-        <Validation
-          className="w-full h-[20rem] text-primaryFont"
-          message="Loading Products…"
-        />
-        :
+      {isSaleProductsLoading ? (
+        <Validation className="w-full h-[20rem] text-primaryFont" message="Loading Products…" />
+      ) : (
         <>
-          {upperSaleProductsArr?.length > 0 ?
+          {upperSaleProductsArr?.length > 0 ? (
             <ProductsCarousel
               className="upper-sale-products"
               headingClassName="text-center text-2xl uppercase text-primaryFont"
-              carousel={{
-                interval: 3000
-              }}
+              carousel={{ interval: 3000 }}
               sliderClassName="sales-products-slider select-none cursor-grab active:cursor-grabbing"
               slideClassName="mx-[3vw]"
               slideInnerClassName="flex flex-col gap-10"
               data={{
                 products: upperSaleProductsArr,
                 cartProduct: productList,
-                productComponent: <SaleProductCard />
+                productComponent: <SaleProductCard />,
               }}
               visibleSlides={{
                 desktop: 3,
                 tablet: 2,
-                mobile: 1
+                mobile: 1,
               }}
             />
-            :
-            <Validation
-              className="w-full h-[15rem] text-primaryFont"
-              message="Currently, no products."
-            />
-          }
+          ) : (
+            <Validation className="w-full h-[15rem] text-primaryFont" message="Currently, no products." />
+          )}
 
-          {lowerSaleProductsArr?.length > 0 &&
+          {lowerSaleProductsArr?.length > 0 && (
             <ProductsCarousel
               className="lower-sale-products"
               headingClassName="text-center text-2xl uppercase text-primaryFont"
-              carousel={{
-                interval: 3000
-              }}
+              carousel={{ interval: 3000 }}
               sliderClassName="sales-products-slider select-none cursor-grab active:cursor-grabbing"
               slideClassName="mx-[3vw]"
               slideInnerClassName="flex flex-col gap-10"
               data={{
                 products: lowerSaleProductsArr,
                 cartProduct: productList,
-                productComponent: <SaleProductCard />
+                productComponent: <SaleProductCard />,
               }}
               visibleSlides={{
                 desktop: 3,
                 tablet: 2,
-                mobile: 1
+                mobile: 1,
               }}
             />
-          }
+          )}
         </>
-      }
+      )}
     </section>
   );
 }

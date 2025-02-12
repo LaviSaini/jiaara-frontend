@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { context } from "@/context-API/context";
 import { storeData } from "@/context-API/actions/action.creators";
-
 import { useQuery } from "@tanstack/react-query";
+import Axios from "axios";
 
 import { IoCloseOutline } from "react-icons/io5";
 import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -18,76 +18,76 @@ import CategoriesFilter from "@/components/global/filter/sidebar-filter/componen
 import CollectionsFilter from "@/components/global/filter/sidebar-filter/components/CollectionsFilter";
 
 import useSidebarUtils from "@/utils/hooks/sidebar/useSidebarUtils";
-
-import { getCategories } from "@/utils/functions/api/cms/woocommerce/categories";
 import { getCollections } from "@/utils/functions/api/cms/woocommerce/collections";
 
 import { CATEGORIES, COLLECTIONS } from "@/routes";
 
-
 export default function SidebarFilter({ className = "" }) {
+  const [parentCategories, setParentCategories] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
+  const [isCategoriesSuccess, setIsCategoriesSuccess] = useState(false);
 
-  const {
-    data: parentCategories,
-    isLoading: isParentCategoriesLoading,
-    isSuccess: isParentCategoriesSuccess
-  } =
-  useQuery({
-    queryKey: ['parent-categories'],
-    queryFn: () => getCategories({ parent: 0 }),
-    retry: 10,
-    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
-  });
+  // Fetch Categories Directly (Without useQuery)
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await Axios.get(
+          "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
+        );
+        setParentCategories(response.data);
+        setIsCategoriesSuccess(true);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setIsCategoriesSuccess(false);
+      } finally {
+        setIsLoadingCategories(false);
+      }
+    };
 
+    fetchCategories();
+  }, []);
 
+  // Fetch Collections Using useQuery
   const {
     data: collections,
     isLoading: isCollectionsLoading,
     isSuccess: isCollectionsSuccess
-  } = 
-  useQuery({
-    queryKey: ['general-collections'],
+  } = useQuery({
+    queryKey: ["general-collections"],
     queryFn: getCollections,
     retry: 10,
-    retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000)
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
-
   const { dispatch } = useContext(context);
-
   const { sidebarState: [isOpen, setIsOpen], innerRef } = useSidebarUtils();
 
-
   useEffect(() => {
-
     function storeComponentData() {
       dispatch(storeData({ sidebar: [isOpen, setIsOpen] }, "states"));
     }
     storeComponentData();
-
   }, [isOpen, setIsOpen, dispatch]);
 
-
   const closeSidebar = () => setIsOpen(false);
-
 
   return (
     <Sidebar
       innerRef={innerRef}
       className={`filter ${className}`}
       innerClassName="w-[inherit] xs:w-[20rem] px-3 bg-white"
-      isOpen={isOpen} setIsOpen={setIsOpen}
+      isOpen={isOpen} 
+      setIsOpen={setIsOpen}
     >
       <div className="wrapper flex justify-between sticky top-0 px-3 py-5 z-10 border-b uppercase font-medium bg-white">
-        <div className="heading">
-          Filter Products
-        </div>
+        <div className="heading">Filter Products</div>
         <button className="close-btn" onClick={closeSidebar}>
-          <IoCloseOutline className="cross-icon text-xl"/>
+          <IoCloseOutline className="cross-icon text-xl" />
         </button>
       </div>
 
       <ul className="filter-cont flex flex-col px-3">
+        {/* Price Filter */}
         <li className="price-filter">
           <Accordion
             className="border-primaryFont text-sm"
@@ -95,17 +95,16 @@ export default function SidebarFilter({ className = "" }) {
             title="Price Filter"
             defaultState={true}
             contentClassName="py-3"
-            content={<PriceFilter className="px-5"/>}
+            content={<PriceFilter className="px-5" />}
             iconClassName="text-xl"
             openIcon={MdOutlineKeyboardArrowDown}
             closeIcon={MdOutlineKeyboardArrowUp}
-            divider={{
-              upper: { isEnabled: true },
-              bottom: { isEnabled: true },
-            }}
+            divider={{ upper: { isEnabled: true }, bottom: { isEnabled: true } }}
             unmountOnExit={false}
           />
         </li>
+
+        {/* Categories Filter */}
         <li className="categories-filter">
           <Accordion
             className="border-primaryFont text-sm"
@@ -116,19 +115,18 @@ export default function SidebarFilter({ className = "" }) {
             content={
               <CategoriesFilter
                 className="px-5"
-                categories={isParentCategoriesSuccess ? parentCategories : []}
+                categories={isCategoriesSuccess ? parentCategories : []}
               />
             }
-            iconClassName={isParentCategoriesLoading ? "animate-spin" : "text-xl"}
-            openIcon={isParentCategoriesLoading ? AiOutlineLoading3Quarters : MdOutlineKeyboardArrowDown}
-            closeIcon={isParentCategoriesLoading ? AiOutlineLoading3Quarters : MdOutlineKeyboardArrowUp}
-            divider={{
-              upper: { isEnabled: true },
-              bottom: { isEnabled: true }
-            }}
+            iconClassName={isLoadingCategories ? "animate-spin" : "text-xl"}
+            openIcon={isLoadingCategories ? AiOutlineLoading3Quarters : MdOutlineKeyboardArrowDown}
+            closeIcon={isLoadingCategories ? AiOutlineLoading3Quarters : MdOutlineKeyboardArrowUp}
+            divider={{ upper: { isEnabled: true }, bottom: { isEnabled: true } }}
             unmountOnExit={false}
           />
         </li>
+
+        {/* Collections Filter */}
         <li className="collections-filter">
           <Accordion
             className="border-primaryFont text-sm"
@@ -145,10 +143,7 @@ export default function SidebarFilter({ className = "" }) {
             iconClassName={isCollectionsLoading ? "animate-spin" : "text-xl"}
             openIcon={isCollectionsLoading ? AiOutlineLoading3Quarters : MdOutlineKeyboardArrowDown}
             closeIcon={isCollectionsLoading ? AiOutlineLoading3Quarters : MdOutlineKeyboardArrowUp}
-            divider={{
-              upper: { isEnabled: true },
-              bottom: { isEnabled: true }
-            }}
+            divider={{ upper: { isEnabled: true }, bottom: { isEnabled: true } }}
             unmountOnExit={false}
           />
         </li>

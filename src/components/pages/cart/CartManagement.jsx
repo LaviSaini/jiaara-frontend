@@ -54,8 +54,8 @@ export default function CartManagement() {
     if (response) {
       const productId = response?.products?.map((element) => element?.id);
       console.log(productId)
-      const response2 = await gerProductDetailService();
-      console.log('res', response2)
+      // const response2 = await gerProductDetailService();
+      // console.log('res', response2)
     } else {
       toast('Something Went Wrong!', { type: 'error' })
     }
