@@ -48,16 +48,43 @@ export default function SidebarFilter({ className = "" }) {
   }, []);
 
   // Fetch Collections Using useQuery
-  const {
-    data: collections,
-    isLoading: isCollectionsLoading,
-    isSuccess: isCollectionsSuccess
-  } = useQuery({
-    queryKey: ["general-collections"],
-    queryFn: getCollections,
-    retry: 10,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-  });
+  const [collections, setCollections] = useState(null);
+  const [isCollectionsLoading, setIsCollectionsLoading] = useState(true);
+  const [isCollectionsSuccess, setIsCollectionsSuccess] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchCollections = async (attempt = 0) => {
+    setIsCollectionsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        "https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?page=1&per_page=100&parent=0"
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      setCollections(result);
+      setIsCollectionsSuccess(true);
+    } catch (err) {
+      if (attempt < 10) {
+        // Retry with exponential backoff (max 30 sec delay)
+        setTimeout(() => fetchCollections(attempt + 1), Math.min(1000 * 2 ** attempt, 30000));
+      } else {
+        setError(err.message);
+        setIsCollectionsSuccess(false);
+      }
+    } finally {
+      setIsCollectionsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCollections();
+  }, []);
 
   const { dispatch } = useContext(context);
   const { sidebarState: [isOpen, setIsOpen], innerRef } = useSidebarUtils();

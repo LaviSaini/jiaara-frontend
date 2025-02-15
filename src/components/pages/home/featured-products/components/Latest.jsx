@@ -1,51 +1,58 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-
 import ProductsCarousel from '@/components/global/ProductsCarousel';
 import Validation from "@/components/general/Validation";
-
-import { getProducts } from '@/utils/functions/api/cms/woocommerce/products';
 import { useEffect, useState } from 'react';
 
-
 export default function Latest() {
+  const [products, setProducts] = useState([]);
+  const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['latest-products'],
-    queryFn: () => getProducts({
-      page: 1,
-      perPage: 10,
-      paginate: true,
-      orderby: "date",
-      order: "desc",
-      status: "publish"
-    })
-  });
-  const [productList, setProductList] = useState([])
   useEffect(() => {
-    const newArray = data?.products?.map((element) => {
-      return creatNewObj(element)
-    })
-    setProductList(newArray)
-  }, [data])
-  const creatNewObj = (data) => {
-    const reqObj = {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "https://cms.jiaarajewellery.com/wp-json/wc/v3/products?consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6"
+        );
 
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
 
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const newArray = products.map((element) => creatNewObj(element));
+      setProductList(newArray);
     }
-    return reqObj
-  }
-  if (isLoading) {
+  }, [products]);
+
+  const creatNewObj = (data) => ({
+    user_id: '',
+    cart_id: '',
+    created_date: '',
+    product_id: data?.id,
+    quantity: 0,
+    img: data?.images?.[0]?.src || "", // Handling image properly
+    price: data?.price,
+    name: data?.name,
+    status: 's'
+  });
+
+  if (loading) {
     return (
       <Validation
         className="w-full h-[10rem] text-primaryFont"
@@ -54,21 +61,31 @@ export default function Latest() {
     );
   }
 
+  if (error) {
+    return (
+      <Validation
+        className="w-full h-[10rem] text-red-600"
+        message={`Error: ${error}`}
+      />
+    );
+  }
+
   return (
-    (isSuccess && data?.products?.length > 0) &&
-    <ProductsCarousel
-      className="latest-products"
-      headingClassName="text-center text-2xl uppercase text-primaryFont"
-      heading="Latest"
-      carousel={{
-        isPlaying: true,
-        interval: 3000,
-        playDirection: "backward"
-      }}
-      sliderClassName="select-none cursor-grab active:cursor-grabbing"
-      slideClassName="mx-[1.5vw]"
-      slideInnerClassName="flex flex-col gap-3"
-      data={{ products: data?.products, cartProduct: productList }}
-    />
+    products.length > 0 && (
+      <ProductsCarousel
+        className="latest-products"
+        headingClassName="text-center text-2xl uppercase text-primaryFont"
+        heading="Latest"
+        carousel={{
+          isPlaying: true,
+          interval: 3000,
+          playDirection: "backward"
+        }}
+        sliderClassName="select-none cursor-grab active:cursor-grabbing"
+        slideClassName="mx-[1.5vw]"
+        slideInnerClassName="flex flex-col gap-3"
+        data={{ products, cartProduct: productList }}
+      />
+    )
   );
 }

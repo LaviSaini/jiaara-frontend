@@ -14,10 +14,39 @@ export default function ManageProduct({ className = "", params }) {
 
   const { id } = params;
 
-  const { data, isLoading, isSuccess, isError } = useQuery({
-    queryKey: [`product-${id}`],
-    queryFn: () => getProductsByIds({ ids: [id] })
-  });
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const fetchProduct = async () => {
+    if (!id) return;
+    
+    setIsLoading(true);
+    setIsError(false);
+
+    try {
+      const url = `https://cms.jiaarajewellery.com/wp-json/wp/v2/getRelatedProduct?product_ids[]=${id}`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      setData(result);
+      setIsSuccess(true);
+    } catch (error) {
+      setIsError(true);
+      console.error("Error fetching product:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
 
   if (isNaN(id)) {
     return (

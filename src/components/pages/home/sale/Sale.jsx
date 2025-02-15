@@ -15,7 +15,7 @@ const CategoriesTabs = UserProductsStatus;
 
 export default function Sale() {
   const [categoryId, setCategoryId] = useState(null);
-  const [parentCategories, setParentCategories] = useState([]);
+  const [parentCategories, setParentCategories] = useState([]); // Default empty array
   const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
   const [isParentCategoriesFetched, setIsParentCategoriesFetched] = useState(false);
 
@@ -30,10 +30,16 @@ export default function Sale() {
         const response = await Axios.get(
           "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
         );
+
+        if (!Array.isArray(response.data)) {
+          throw new Error("Invalid response format");
+        }
+
         setParentCategories(response.data);
         setIsParentCategoriesFetched(true);
       } catch (error) {
         console.error("Error fetching categories:", error);
+        setParentCategories([]); // Ensure default empty array to prevent issues
         setIsParentCategoriesFetched(false);
       } finally {
         setIsParentCategoriesLoading(false);
@@ -53,10 +59,16 @@ export default function Sale() {
         const response = await Axios.get(
           `https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/products/getProducts?page=1&per_page=100&categoryId=${categoryId}&onSale=true&status=publish`
         );
-        setSaleProducts(response.data.products || []);
+
+        if (!Array.isArray(response.data.products)) {
+          throw new Error("Invalid response format for products");
+        }
+
+        setSaleProducts(response.data.products);
         setIsSaleProductsFetched(true);
       } catch (error) {
         console.error("Error fetching sale products:", error);
+        setSaleProducts([]);
         setIsSaleProductsFetched(false);
       } finally {
         setIsSaleProductsLoading(false);
@@ -66,15 +78,17 @@ export default function Sale() {
     fetchSaleProducts();
   }, [categoryId]);
 
-  const requiredCategories = (categories) =>
-    categories.filter((category) => category.name !== "General");
+  const requiredCategories = (categories) => {
+    if (!Array.isArray(categories)) return [];
+    return categories.filter((category) => category?.name !== "General");
+  };
 
   const getActiveCategoryId = (activeCategoryId) => setCategoryId(activeCategoryId);
 
   const [upperSaleProductsArr, lowerSaleProductsArr] =
     isSaleProductsFetched && splitInHalf(saleProducts) || [];
 
-  const creatNewObj = (data) => ({
+  const createNewObj = (data) => ({
     user_id: "",
     cart_id: "",
     created_date: "",
@@ -86,7 +100,7 @@ export default function Sale() {
     status: "s",
   });
 
-  const productList = saleProducts.map(creatNewObj);
+  const productList = saleProducts.map(createNewObj);
 
   if (isParentCategoriesLoading) {
     return (
@@ -98,7 +112,7 @@ export default function Sale() {
     <section id="sale" className="flex flex-col items-center justify-center gap-10">
       <h2 className="heading text-4xl uppercase text-primaryFont">Sale</h2>
 
-      {isParentCategoriesFetched && (
+      {isParentCategoriesFetched && parentCategories.length > 0 && (
         <CategoriesTabs
           className="
             px-[8vw] gap-[6vw]
@@ -110,7 +124,7 @@ export default function Sale() {
             md:gap-x-16 md:gap-y-7
             md:text-xl
           "
-          titles={requiredCategories(parentCategories) || []}
+          titles={requiredCategories(parentCategories)}
           forTab={true}
           callback={getActiveCategoryId}
         />

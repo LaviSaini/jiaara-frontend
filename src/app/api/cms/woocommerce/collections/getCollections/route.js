@@ -21,8 +21,10 @@ export async function GET(req) {
   try {
     while (true) {
       const { data } = await WooCommerceAPI.get("/products/categories", {
-        params: apiParams
+        baseURL: "https://cms.jiaarajewellery.com/wp-json/wc/v3",  // Override here
+        params: apiParams,
       });
+      
 
       if (data.length === 0) break;
 

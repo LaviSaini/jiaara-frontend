@@ -8,11 +8,47 @@ import { getProductsByIds } from "@/utils/functions/api/cms/woocommerce/products
 
 export default function RelatedProducts({ className = "", cartItems = [] }) {
 
-  const { data, isLoading, isSuccess } = useQuery({
-    queryKey: [`related-products-cart`],
-    queryFn: () => getProductsByIds({ ids: cartItems[0]?.relatedProductIds }),
-    enabled: true
-  });
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchRelatedProducts = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      if (!cartItems?.length || !cartItems[0]?.relatedProductIds?.length) {
+        throw new Error("No related product IDs found.");
+      }
+
+      // Construct query params dynamically
+      const productIds = cartItems[0].relatedProductIds.map(id => `product_ids[]=${id}`).join("&");
+      const url = `https://cms.jiaarajewellery.com/wp-json/wp/v2/getRelatedProduct?${productIds}`;
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      setData(result);
+      setIsSuccess(true);
+    } catch (err) {
+      setError(err.message);
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (cartItems?.length) {
+      fetchRelatedProducts();
+    }
+  }, [cartItems]);
+
   
   if (isLoading) {
     return (

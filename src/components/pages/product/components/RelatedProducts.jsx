@@ -8,10 +8,40 @@ import { useEffect, useState } from "react";
 
 export default function RelatedProducts({ currentProductId = null, relatedProductIds = [] }) {
 
-  const { data, isSuccess } = useQuery({
-    queryKey: [`related-products-${currentProductId}`],
-    queryFn: () => getProductsByIds({ ids: relatedProductIds })
-  });
+  const [data, setData] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  const fetchRelatedProducts = async () => {
+    if (!relatedProductIds || relatedProductIds.length === 0) return;
+
+    setIsLoading(true);
+    setIsError(false);
+
+    try {
+      const idsQuery = relatedProductIds.map(id => `product_ids[]=${id}`).join("&");
+      const url = `https://cms.jiaarajewellery.com/wp-json/wp/v2/getRelatedProduct?${idsQuery}`;
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      setData(result);
+      setIsSuccess(true);
+    } catch (error) {
+      setIsError(true);
+      console.error("Error fetching related products:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRelatedProducts();
+  }, [currentProductId, relatedProductIds]);
 
   const { products } = data || [];
   const [cartProduct, setcartproduct] = useState([])

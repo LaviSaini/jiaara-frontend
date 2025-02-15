@@ -9,9 +9,9 @@ import Validation from "@/components/general/Validation";
 import { CATEGORIES } from "@/routes";
 
 export default function Categories({ className = "" }) {
-  const [parentCategories, setParentCategories] = useState([]);
+  const [parentCategories, setParentCategories] = useState([]); // Default to an empty array
   const [isLoading, setIsLoading] = useState(true);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   // Fetch Categories Directly (Without useQuery)
   useEffect(() => {
@@ -20,11 +20,16 @@ export default function Categories({ className = "" }) {
         const response = await Axios.get(
           "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
         );
+
+        if (!Array.isArray(response.data)) {
+          throw new Error("Invalid response format");
+        }
+
         setParentCategories(response.data);
-        setIsSuccess(true);
+        setIsError(false);
       } catch (error) {
         console.error("Error fetching categories:", error);
-        setIsSuccess(false);
+        setIsError(true);
       } finally {
         setIsLoading(false);
       }
@@ -33,13 +38,13 @@ export default function Categories({ className = "" }) {
     fetchCategories();
   }, []);
 
-  const requiredCategories = isSuccess
-    ? parentCategories?.filter((category) => category?.name !== "General")
-    : [];
+  const requiredCategories = parentCategories?.filter(
+    (category) => category?.name !== "General"
+  ) || [];
 
-  const parentCategoriesUrl = isSuccess
-    ? parentCategories.map((category) => CATEGORIES?.getPathname(category?.id))
-    : [];
+  const parentCategoriesUrl = requiredCategories.map((category) =>
+    CATEGORIES?.getPathname(category?.id)
+  );
 
   return (
     <section
@@ -55,12 +60,22 @@ export default function Categories({ className = "" }) {
           className="w-full h-[10rem] text-primaryFont"
           message="Loading Categories…"
         />
+      ) : isError ? (
+        <Validation
+          className="w-full h-[10rem] text-red-500"
+          message="Error fetching categories. Please try again."
+        />
+      ) : requiredCategories.length === 0 ? (
+        <Validation
+          className="w-full h-[10rem] text-primaryFont"
+          message="No categories available."
+        />
       ) : (
         <BeautifulLayout
           className="categories"
           items={{
-            itemsArr: requiredCategories || [],
-            urlsArr: parentCategoriesUrl || [],
+            itemsArr: requiredCategories,
+            urlsArr: parentCategoriesUrl,
           }}
         />
       )}

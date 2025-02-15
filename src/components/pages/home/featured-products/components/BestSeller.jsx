@@ -11,18 +11,39 @@ import { useEffect, useState } from 'react';
 
 export default function BestSeller() {
 
-  const { data, isLoading, isSuccess } = useQuery({
-    queryKey: ['best-seller-products'],
-    queryFn: () => getProductsAnalytics({
-      paginate: true,
-      page: 1,
-      perPage: 10,
-      period: "all",
-      orderby: "items_sold",
-      order: "desc",
-      status: "publish"
-    })
-  });
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchProducts = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        "https://cms.jiaarajewellery.com/wp-json/custom/v1/products?page=2&per_page=10"
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      setData(result);
+      setIsSuccess(true);
+    } catch (err) {
+      setError(err.message);
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const [productList, setProductList] = useState([])
   useEffect(() => {
     const newArray = data?.products?.map((element) => {

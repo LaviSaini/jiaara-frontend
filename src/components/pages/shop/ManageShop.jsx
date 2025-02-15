@@ -1,48 +1,65 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 
-import { useQuery } from "@tanstack/react-query";
-
 import ProductGrid from "@/components/global/ProductGrid";
-
 import Pagination from "@/components/general/Pagination";
 import Validation from "@/components/general/Validation";
 
-import { getProducts } from "@/utils/functions/api/cms/woocommerce/products";
-import { useDispatch, useSelector } from "react-redux";
-import { userdata } from "@/redux/slices/userdata";
-
+import { useSelector } from "react-redux";
 
 export default function ManageShop({ className = "", params }) {
-
   const [currentPage, setCurrentPage] = useState(1);
-  const buyNowItem = useSelector(state => state?.userDataSlice)
-  const {
-    data: productsData,
-    isLoading,
-    isFetching,
-    isError,
-    refetch: fetchProducts
-  }
-    = useQuery({
-      queryKey: ["products", params?.id || ""],
-      queryFn: () => getProducts({
-        categoryId: params?.id || null,
-        paginate: true,
-        page: currentPage,
-        perPage: 20,
-        status: "publish"
-      }),
-      keepPreviousData: true
-    });
+  const [categoryId, setCategoryId] = useState(null); // ✅ Define categoryId state
+  const buyNowItem = useSelector((state) => state?.userDataSlice);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const url = new URL(
+        "https://cms.jiaarajewellery.com/wp-json/wc/v3/products"
+      );
+      url.searchParams.append(
+        "consumer_key",
+        "ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5"
+      );
+      url.searchParams.append(
+        "consumer_secret",
+        "cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6"
+      );
+      url.searchParams.append("status", "publish");
+      url.searchParams.append("page", currentPage);
+      url.searchParams.append("per_page", 20);
+
+      if (categoryId) {
+        url.searchParams.append("category", categoryId);
+      }
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchProducts();
-  }, [currentPage]);
+  }, [categoryId, currentPage]); // ✅ Added categoryId in dependency array
 
-
-  if (isLoading || isFetching) {
+  if (loading) {
     return (
       <Validation
         className="w-screen h-[20rem] text-primaryFont"
@@ -51,7 +68,7 @@ export default function ManageShop({ className = "", params }) {
     );
   }
 
-  if (isError) {
+  if (error) {
     return (
       <Validation
         className="w-screen h-[20rem] text-primaryFont"
@@ -60,21 +77,14 @@ export default function ManageShop({ className = "", params }) {
     );
   }
 
-  // const dispatch = useDispatch();
-  // dispatch(userdata.add({ userId: '78967987' }))
-
   return (
     <div className={`flex flex-col gap-5 my-10 ${className}`}>
-      <ProductGrid
-        products={productsData?.products || []}
+      <ProductGrid products={products || []} />
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={10} // Set a default totalPages or fetch from API
       />
-      {productsData?.storeInfo?.totalPages > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={productsData?.storeInfo?.totalPages}
-        />
-      )}
     </div>
   );
 }
