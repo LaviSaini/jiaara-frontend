@@ -8,6 +8,7 @@ import RelatedProducts from "@/components/pages/product/components/RelatedProduc
 import Validation from "@/components/general/Validation";
 
 import { getProductsByIds } from "@/utils/functions/api/cms/woocommerce/products";
+import { useEffect, useState } from "react";
 
 
 export default function ManageProduct({ className = "", params }) {
@@ -21,20 +22,22 @@ export default function ManageProduct({ className = "", params }) {
 
   const fetchProduct = async () => {
     if (!id) return;
-    
+    console.log('dfdfjjjjjjj', id)
     setIsLoading(true);
     setIsError(false);
 
     try {
-      const url = `https://cms.jiaarajewellery.com/wp-json/wp/v2/getRelatedProduct?product_ids[]=${id}`;
-      const response = await fetch(url);
+      // const url = `https://cms.jiaarajewellery.com/wp-json/wp/v2/getRelatedProduct?product_ids[]=${id}`;
+      // const response = await fetch(url);
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      setData(result);
+      // if (!response.ok) {
+      //   throw new Error(`Error: ${response.statusText}`);
+      // }
+      const url2 = `https://cms.jiaarajewellery.com/wp-json/custom-api/v1/products?product_id=${id}`;
+      const response2 = await fetch(url2);
+      const resul2 = await response2.json();
+      // const result = await response.json();
+      setData(resul2?.product);
       setIsSuccess(true);
     } catch (error) {
       setIsError(true);
@@ -48,14 +51,14 @@ export default function ManageProduct({ className = "", params }) {
     fetchProduct();
   }, [id]);
 
-  if (isNaN(id)) {
-    return (
-      <Validation
-        className="w-screen h-[20rem] text-primaryFont"
-        message="Not a Valid Product URL"
-      />
-    );
-  }
+  // if (isNaN(id)) {
+  //   return (
+  //     <Validation
+  //       className="w-screen h-[20rem] text-primaryFont"
+  //       message="Not a Valid Product URL"
+  //     />
+  //   );
+  // }
 
   if (isLoading) {
     return (
@@ -69,24 +72,24 @@ export default function ManageProduct({ className = "", params }) {
   const { products: [product] = [] } = data || {};
 
 
-  if (!product || Object.keys(product).length <= 0 || isError) {
-    return (
-      <Validation
-        className="w-screen h-[20rem] text-primaryFont"
-        message="Not a Valid Product URL"
-      />
-    );
-  }
+  // if (!product || Object.keys(product).length <= 0 || isError) {
+  //   return (
+  //     <Validation
+  //       className="w-screen h-[20rem] text-primaryFont"
+  //       message="Not a Valid Product URL"
+  //     />
+  //   );
+  // }
 
-  
+
   return (
     (isSuccess &&
       <div className={`${className}-${id} flex flex-col gap-12`}>
-        <ProductDisplay product={product}/>
-        <KeyBenefits/>
+        <ProductDisplay product={data} />
+        <KeyBenefits />
         <RelatedProducts
           currentProductId={id}
-          relatedProductIds={product?.relatedProductIds}
+          relatedProductIds={data?.relatedProductIds}
         />
       </div>
     )

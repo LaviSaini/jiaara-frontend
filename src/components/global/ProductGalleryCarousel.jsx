@@ -33,7 +33,7 @@ export default function ProductGalleryCarousel({
   }
 
 } = {}) {
-
+  console.log("HELO HELO", product)
 
   const { dispatch } = useContext(context);
 
@@ -137,7 +137,7 @@ export default function ProductGalleryCarousel({
 
 
   return (
-    (product?.gallery?.length > 0 &&
+    (product?.images?.length > 0 &&
       <div
         ref={carouselNodeRef}
         className={`alice-carousel-wrapper ${media.contClassName} bg-senaryBackground`}
@@ -157,7 +157,7 @@ export default function ProductGalleryCarousel({
           activeIndex={activeIndex}
           onSlideChanged={item => setActiveIndex(item?.slide)}
         >
-          {product?.gallery?.map((image, index) => (
+          {product?.images?.map((image, index) => (
             <Link
               key={index}
               className={`product-link w-[inherit] h-[inherit] active:cursor-grabbing`}

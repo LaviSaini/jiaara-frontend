@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { useEffect, useContext,useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { context } from "@/context-API/context";
 import { storeData } from "@/context-API/actions/action.creators";
 
@@ -22,6 +22,8 @@ import { getCategories } from "@/utils/functions/api/cms/woocommerce/categories"
 import { getCollections } from "@/utils/functions/api/cms/woocommerce/collections";
 
 import skipMap from "@/utils/functions/general/skipMap";
+import { Axios } from "axios";
+import { getCategorywpSevice } from "@/app/api/cms/nodeapi/DetailService";
 
 
 export default function LayoutSidebar() {
@@ -52,29 +54,29 @@ export default function LayoutSidebar() {
   // });
 
   const [parentCategories, setParentCategories] = useState(null);
-const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
-const [isParentCategoriesSuccess, setIsParentCategoriesSuccess] = useState(false);
+  const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
+  const [isParentCategoriesSuccess, setIsParentCategoriesSuccess] = useState(false);
 
-useEffect(() => {
-  const fetchParentCategories = async () => {
-    setIsParentCategoriesLoading(true);
-    try {
-      const response = await Axios.get("https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0");
-      setParentCategories(response.data);
-      setIsParentCategoriesSuccess(true);
-    } catch (error) {
-      console.error("Error fetching parent categories:", error);
-      setIsParentCategoriesSuccess(false);
-    } finally {
-      setIsParentCategoriesLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchParentCategories = async () => {
+      setIsParentCategoriesLoading(true);
+      try {
+        const response = await getCategorywpSevice();
+        setParentCategories(response);
+        setIsParentCategoriesSuccess(true);
+      } catch (error) {
+        console.error("Error fetching parent categories:", error);
+        setIsParentCategoriesSuccess(false);
+      } finally {
+        setIsParentCategoriesLoading(false);
+      }
+    };
 
-  fetchParentCategories();
-}, []);
+    fetchParentCategories();
+  }, []);
 
 
-const [collections, setCollections] = useState(null);
+  const [collections, setCollections] = useState(null);
   const [isCollectionsLoading, setIsCollectionsLoading] = useState(true);
   const [isCollectionsSuccess, setIsCollectionsSuccess] = useState(false);
   const [error, setError] = useState(null);

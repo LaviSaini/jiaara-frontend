@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useState, useContext, useEffect} from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { context } from "@/context-API/context";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -78,7 +78,6 @@ export default function Header() {
 
 
   const requiredCategories = categories => {
-
     return skipMap(categories, [{ name: "General" }], category =>
     ({
       id: category?.id,
@@ -104,26 +103,26 @@ export default function Header() {
   }
 
   const [parentCategories, setParentCategories] = useState(null);
-const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
-const [isParentCategoriesSuccess, setIsParentCategoriesSuccess] = useState(false);
+  const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
+  const [isParentCategoriesSuccess, setIsParentCategoriesSuccess] = useState(false);
 
-useEffect(() => {
-  const fetchParentCategories = async () => {
-    setIsParentCategoriesLoading(true);
-    try {
-      const response = await Axios.get("https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0");
-      setParentCategories(response.data);
-      setIsParentCategoriesSuccess(true);
-    } catch (error) {
-      console.error("Error fetching parent categories:", error);
-      setIsParentCategoriesSuccess(false);
-    } finally {
-      setIsParentCategoriesLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchParentCategories = async () => {
+      setIsParentCategoriesLoading(true);
+      try {
+        const response = await Axios.get("https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0");
+        setParentCategories(response.data);
+        setIsParentCategoriesSuccess(true);
+      } catch (error) {
+        console.error("Error fetching parent categories:", error);
+        setIsParentCategoriesSuccess(false);
+      } finally {
+        setIsParentCategoriesLoading(false);
+      }
+    };
 
-  fetchParentCategories();
-}, []);
+    fetchParentCategories();
+  }, []);
 
 
   // const {
@@ -321,7 +320,7 @@ useEffect(() => {
                       "bg-secondaryBackground text-primaryFont"
                     }   
                   `}
-                  options={isParentCategoriesSuccess ? requiredCategories(parentCategories) : []}
+                  options={isParentCategoriesSuccess ? requiredCategories(Object.values(parentCategories)) : []}
                   optionClassName={{
                     hover: `
                       ${isHeroSecVisible ?

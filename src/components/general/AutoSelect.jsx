@@ -30,7 +30,7 @@ const AutoSelect = ({
   defaultOption = "",
   options = [],
   arrowDropdownIcon: ArrowDropdown = ({
-    className = "", size = 20, stroke = "", fill = "none", onClick = () => {}
+    className = "", size = 20, stroke = "", fill = "none", onClick = () => { }
   }) =>
     <svg
       className={`arrow-drop-down-icon ${className}`}
@@ -42,23 +42,23 @@ const AutoSelect = ({
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M14 20l10 10 10-10z" />
-      <path d="M0 0h48v48h-48z" fill={fill}/>
+      <path d="M0 0h48v48h-48z" fill={fill} />
     </svg>
 }) => {
-
+  // console.log('options', options)
   const methods = useFormContext();
   const inputValue = methods?.watch(input?.inputName) ?? input?.defaultValue;
 
   const [filteredOptions, setFilteredOptions] = useState(options);
 
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  
+
   const [selectedOption, setSelectedOption] = useState(() => {
     methods?.setValue(input?.inputName, defaultOption);
     return defaultOption;
   });
 
-  const inputRef = useRef(null);  
+  const inputRef = useRef(null);
   const dropdownRef = useRef(null);
 
   const { scrollRef, scrollIntoView }
@@ -101,7 +101,7 @@ const AutoSelect = ({
 
     setDropdownVisible(false);
 
-    if (isLinkMode) return; 
+    if (isLinkMode) return;
 
     methods?.setValue(input?.inputName, option);
     setSelectedOption(option);
@@ -127,7 +127,7 @@ const AutoSelect = ({
 
 
   useEffect(() => {
-    
+
     if (isLinkMode) return;
 
     if (isDropdownVisible) {
@@ -138,10 +138,10 @@ const AutoSelect = ({
 
   useClickOutside(dropdownRef, () => {
 
-    setDropdownVisible(false);    
-    inputRef.current?.blur();      
+    setDropdownVisible(false);
+    inputRef.current?.blur();
   });
-  
+
 
   return (
     <div
@@ -159,16 +159,16 @@ const AutoSelect = ({
           icon: {
             className: `${isDropdownVisible ? 'rotate-180' : ''} ${input?.icon?.className}`,
             theIcon: input?.icon?.theIcon ?
-            <Icon icon={input?.icon?.theIcon}/> : <Icon icon={<ArrowDropdown/>}/>
+              <Icon icon={input?.icon?.theIcon} /> : <Icon icon={<ArrowDropdown />} />
           },
           value: inputValue,
           ...input
         }}
-        
+
         label={{
           ...label
         }}
-        
+
         validation={{
           ...validation
         }}
@@ -201,7 +201,7 @@ const AutoSelect = ({
                     </div>
                   }
                 </Link>
-                ) : (
+              ) : (
                 option
               )}
             </li>

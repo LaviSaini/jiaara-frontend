@@ -48,7 +48,7 @@ export default function Product({
     general: <></>
   }
 }) {
-
+  console.log("product", product)
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const { activeRoute, isRouteActive } = useRouteActive();

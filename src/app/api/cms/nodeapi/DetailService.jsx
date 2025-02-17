@@ -8,6 +8,18 @@ const wpService = Axios.create({
 const wpServicev2 = Axios.create({
     baseURL: 'https://cms.jiaarajewellery.com/wp-json/wp/v2/'
 })
+const wpSercice3 = Axios.create({
+    baseURL: 'https://cms.jiaarajewellery.com/wp-json/cms/woocommerce'
+})
+export async function getCategorywpSevice() {
+    const response = await wpSercice3.get(`categories/getCategories?page=1&per_page=5&parent=0`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response.data;
+
+}
 export async function sendContactUsEmail(requestObject) {
     const response = await httpService.post('/payment/send-mail', requestObject, {
         headers: {
