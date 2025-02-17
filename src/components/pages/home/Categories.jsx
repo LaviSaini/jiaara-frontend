@@ -7,6 +7,7 @@ import BeautifulLayout from "@/components/global/beautiful-layout/BeautifulLayou
 import Validation from "@/components/general/Validation";
 
 import { CATEGORIES } from "@/routes";
+import { getCategorywpSevice } from "@/app/api/cms/nodeapi/DetailService";
 
 export default function Categories({ className = "" }) {
   const [parentCategories, setParentCategories] = useState([]); // Default to an empty array
@@ -17,15 +18,15 @@ export default function Categories({ className = "" }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await Axios.get(
-          "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
-        );
+        // const response = await Axios.get(
+        //   "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
+        // );
 
-        if (!Array.isArray(response.data)) {
-          throw new Error("Invalid response format");
-        }
-
-        setParentCategories(response.data);
+        // if (!Array.isArray(response.data)) {
+        //   throw new Error("Invalid response format");
+        // }
+        const response = await getCategorywpSevice();
+        setParentCategories(response);
         setIsError(false);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -37,8 +38,8 @@ export default function Categories({ className = "" }) {
 
     fetchCategories();
   }, []);
-
-  const requiredCategories = parentCategories?.filter(
+  // debugger
+  const requiredCategories = Object.values(parentCategories)?.filter(
     (category) => category?.name !== "General"
   ) || [];
 

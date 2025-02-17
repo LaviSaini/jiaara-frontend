@@ -22,7 +22,7 @@ export default function BestSeller() {
 
     try {
       const response = await fetch(
-        "https://cms.jiaarajewellery.com/wp-json/custom/v1/products?page=2&per_page=10"
+        "https://cms.jiaarajewellery.com/wp-json/custom-api/v1/products?page=2&per_page=10"
       );
 
       if (!response.ok) {
