@@ -1,12 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: 'The Signature';
+  src: url('/fonts/Thesignature.ttf') format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  src: url('/fonts/BodoniModa.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Neue Haas';
+  src: url('/fonts/NeueHaas.ttf') format('truetype');
+}
+
+
 
 
 body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 main {

@@ -7,7 +7,7 @@ export default function Benefit({ className, icon, heading, text }) {
     <div className={`
       benefit
       w-full
-      flex items-center gap-5 p-4
+      flex items-center gap-4 p-4
       text-white
       sm:w-1/2
       lg:w-fit
@@ -15,10 +15,10 @@ export default function Benefit({ className, icon, heading, text }) {
     `}>
       <Icon className="text-3xl" icon={icon}/>
       <div className="content flex flex-col gap-1">
-        <div className="heading text-sm uppercase">
+        <div className="heading text-xl text-center capetillize font-heading">
           {heading}
         </div>
-        <div className="text text-xs">
+        <div className="text text-sm font-content tracking-wide">
           {text}
         </div>  
       </div>

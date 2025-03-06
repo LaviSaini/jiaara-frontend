@@ -12,15 +12,15 @@ export default function FeaturedDeals() {
   return (
     <section
       id="featured-deals"
-      className="flex flex-col items-center justify-center gap-12"
+      className="flex flex-col items-center justify-center gap-12 mx-[10vw]"
     >
-      <h2 className="heading text-center px-5 text-4xl uppercase text-primaryFont">
+      {/* <h2 className="heading text-center px-5 text-4xl uppercase text-primaryFont">
         Featured Deals
-      </h2>
+      </h2> */}
 
       <div className="featured-deals-cont w-full flex flex-col p-5 bg-white md:flex-row">
 
-        <div className="img-cont relative w-[inherit] h-[20rem] md:w-[45%] md:h-auto">
+        <div className="img-cont relative w-[inherit] h-[20rem] md:w-[50%] md:h-auto">
           <Image
             className="object-cover object-center rounded-lg"
             fill
@@ -29,25 +29,25 @@ export default function FeaturedDeals() {
           />
         </div>
 
-        <div className="deal-content text-center flex flex-col items-center justify-center gap-5 p-2 bg-white 2xs:p-4 xs:p-6 sm:gap-7 sm:p-15 md:w-[55%]">
-          <h3 className="heading text-sm uppercase">
+        <div className="deal-content py-[40px] px-[55px] bg-white sm:gap-7 sm:p-15 md:w-[50%]">
+          <h3 className="font-content text-sm uppercase mb-4 leading-3 font-semibold">
             Deal of the Week
           </h3>
-          <h4 className="deal-heading text-2xl uppercase">
+          <h4 className="font-heading text-5xl capitalize mb-5">
             Elin Stacking Crystal Earrings
           </h4>
 
-          <p className="deal-text text-xs">
+          <p className="font-content text-md tracking-wide leading-6">
             Designed to be worn solo or stacked for a bolder look. Each earring features dazzling crystals that catch the light beautifully, adding a touch of sophistication to any outfit.
           </p>
 
-          <div className="time-left text-xl">
+          <h4 className="time-left font-heading text-4xl  tracking-wide my-6">
             06d : 14h : 11m : 49s
-          </div>
+          </h4>
            
-            <div className="wrapper w-full flex justify-evenly items-center">
+            <div className="wrapper w-full flex justify-between items-center">
 
-              <div className="coupon-wrapper w-[150px] h-[77px] relative 2xs:w-[160px] 2xs:h-[82px]">
+              <div className="coupon-wrapper w-[180px] h-[92px] relative">
 
                 <div className="img-cont w-[inherit] h-[inherit] absolute inset-0">
                   <Image
@@ -57,18 +57,18 @@ export default function FeaturedDeals() {
                   />
                 </div>
 
-                <div className="coupon relative flex justify-evenly items-center mt-4 me-7 2xs:me-8 2xs:mt-5">
-                  <div className="brand-name me-7 -rotate-90 text-3xs uppercase font-semibold 2xs:me-7">
+                <div className="coupon relative flex items-center mt-4 ">
+                  <div className="brand-name ms-2 me-7 -rotate-90 text-3xs uppercase font-semibold">
                     Jiaara
                   </div>
                   <div className="wrapper text-start">
-                    <div className="coupon-text text-2xs font-semibold">
+                    <div className="font-content text-md font-semibold tracking-wide">
                       Buy 1 Get 1
                     </div>
-                    <div className="coupon-code-text mt-0.5 text-3xs">
+                    <div className="font-content text-xs">
                       Use Code
                     </div>
-                    <div className="coupon-code text-2xs font-semibold">
+                    <div className="font-content text-sm font-semibold">
                       ELIN2024
                     </div>
                   </div>
@@ -76,16 +76,16 @@ export default function FeaturedDeals() {
               </div>
 
               <Link
-                className="shop-now-btn px-2 py-1 rounded text-sm bg-black text-white 2xs:px-4 sm:text-base"
+                className="shop-now-btn px-3 py-2 text-md bg-black text-white 2xs:px-4 sm:text-base"
                 href={SHOP?.pathname}
               >
                 Shop Now
               </Link>
             </div>
 
-            <p className="deal-disclaimer text-center mt-2 text-xs">
+            <p className="deal-disclaimer mt-2 text-sm font-content tracking-wide">
               Limited time offer.
-              The deal will expire on December 31, 2024.
+              The deal will expire on <b>December 31, 2024.</b>
               Hurry Up!
             </p>
         </div>

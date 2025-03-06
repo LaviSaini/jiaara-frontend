@@ -58,7 +58,7 @@ export default function Collections({ className = "" }) {
       id="shop-by-collections"
       className={`grid items-center gap-y-12 ${className}`}
     >
-      <h2 className={`heading text-center px-5 text-4xl uppercase text-primaryFont`}>
+      <h2 className={`font-heading text-center text-4xl capitalize text-primaryFont`}>
         {`Shop by ${COLLECTIONS?.title}`}
       </h2>
 

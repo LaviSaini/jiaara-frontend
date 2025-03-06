@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'banner': ['The Signature', 'sans-serif'],
+        'heading': ['Bodoni Moda', 'sans-serif'],
+        'content': ['Neue Haas', 'sans-serif'],
+      },
       screens: {
         'xs': '425px',
         '2xs': '375px'
@@ -27,7 +32,7 @@ module.exports = {
 
         primaryFont: "#663c59",
         primaryButton: "#ffddf4",
-        
+
         primaryOverlay: "#f7d9ee",
         primaryGradientOverlay: "#663c59",
 

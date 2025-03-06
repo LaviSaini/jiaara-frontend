@@ -52,7 +52,7 @@ export default function Categories({ className = "" }) {
       id="shop-by-categories"
       className={`grid items-center gap-y-12 ${className}`}
     >
-      <h2 className="heading text-center text-4xl uppercase text-primaryFont">
+      <h2 className="font-heading text-center text-4xl capitalize text-primaryFont">
         {`Shop by ${CATEGORIES?.title}`}
       </h2>
 

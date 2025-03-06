@@ -66,7 +66,6 @@ export default function Testimonial({ testimonial }) {
           flex items-center gap-8 border-l-8 px-5 py-3
           rounded-lg shadow-md
           bg-quinaryBackground border-l-senaryBackground shadow-gray-400
-          lg:w-1/2
         `}>
 
           <div className="avatar-cont">

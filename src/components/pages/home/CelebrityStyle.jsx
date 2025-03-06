@@ -42,7 +42,7 @@ export default function CelebrityStyle() {
 
   return (
     <section id="celebrity-style" className="flex flex-col items-center justify-center gap-12">
-      <h2 className="heading text-center px-5 text-4xl uppercase text-primaryFont">
+      <h2 className="font-heading text-center text-4xl capitalize text-primaryFont">
         Celebrity Style
       </h2>
 

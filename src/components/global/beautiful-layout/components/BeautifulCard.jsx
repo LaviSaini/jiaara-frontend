@@ -15,10 +15,9 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
         md:h-[35vw]
         lg:h-[30vw]
         xl:h-[25vw]
-        2xl:h-[20vw]
       `}>
         <Image
-          className="object-cover object-center rounded-xl"
+          className="object-cover object-center rounded-3xl"
           fill
           src={item?.image}
           alt={item?.slug}
@@ -28,17 +27,16 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
       {(item?.name || item?.count || url) &&
         <div
           className={`
-            w-full flex flex-wrap justify-between items-center gap-2 px-3 py-3
+            w-full flex justify-between items-center gap-2 px-3 py-3
             absolute left-0 bottom-0
-            after:rounded-b-xl
             text-xs font-semibold
-            overlay-black-50 text-white
+            tracking-wider text-white
             sm:text-sm
             md:text-base
           `}
         >
           {(item?.name || item?.count) &&
-            <div className="wrapper flex flex-col gap-1 z-10 uppercase">
+            <div className="wrapper flex flex-col gap-1 z-10 uppercase justify-between">
               {item?.name &&
                 <div className="name">
                   {item?.name}
@@ -48,10 +46,7 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
                 <div
                   className={`
                     products-count
-                    text-2xs font-normal
-                    text-white text-opacity-50
-                    sm:text-xs
-                    md:text-sm
+                    text-xs
                   `}
                 >
                   {`${item?.count} Products`}
@@ -59,14 +54,16 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
               }
             </div>
           }
-
+           
           {url &&
+          <div>
             <Link
-              className="url border px-2 py-1 z-10 rounded-lg"
+              className="url border py-2 px-5 z-10 rounded-full uppercase tracking-wider font-content text-xs"
               href={url}
             >
-              View
+              Shop Now
             </Link>
+            </div>
           }
         </div>
       }

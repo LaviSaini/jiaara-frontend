@@ -20,13 +20,14 @@ export default function Home() {
       <Categories/>
       <Collections/>
       <FeaturedProducts/>
-      <Sale/>
       <FeaturedDeals/>
-      <CelebrityStyle/>
+      <Sale/>
       <KeyBenefits/>
-      <Testimonials/>
-      <JiaaraStory/>
+      <CelebrityStyle/>
+      {/* <JiaaraStory/> */}
       <BuildingWithPurpose/>
+      <FollowOnInstagram/>
+      <Testimonials/>
     </div>
   );
 }

@@ -110,14 +110,18 @@ export default function Testimonials() {
     <section
       id="testimonials"
       ref={currSecRef}
-      className="flex flex-col items-center justify-center gap-12"
+      className="grid grid-cols-3 gap-4 items-center justify-center mx-[10vw]"
     >
-      <h2 className="text-center text-4xl uppercase text-primaryFont px-5">
+     <div className="col-span-1 max-w-md">
+      <h2 className="font-heading text-6xl capitalize text-primaryFont mb-4">
         What Our Customers Say!
       </h2>
-
+      <p className="font-content text-md leading-7">
+              “Thank you so much for your glowing review! We’re thrilled that you love our jewelry and appreciate your kind words. Your satisfaction is our top priority, and we’re committed to continuing to provide you with exquisite designs and exceptional service. We look forward to being a part of your future special moments.”
+            </p>
+      </div>
       <CarouselProvider
-        className="carousel w-screen"
+        className="carousel col-span-2 ps-20"
         naturalSlideWidth={100}
         naturalSlideHeight={125}
         totalSlides={testimonials.length}

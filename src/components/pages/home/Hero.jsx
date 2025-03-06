@@ -90,7 +90,6 @@ export default function HeroCarousel() {
               index={index}
               className={`
                 pt-[37rem]
-                overlay-black-30
                 transition-transform duration-[5000ms] ease-in-out
                 ${currentSlide === index ? "scale-125" : "scale-100"}
               `}
@@ -116,20 +115,20 @@ export default function HeroCarousel() {
           lg:gap-10
         `}>
           <div className="text text-center sm:text-xl lg:text-2xl 2xl:text-3xl">
-            <p className="leading-loose">
-              Crafted from the Heart, for the Heart.<br/>
-              Premium Contemporary Handcrafted Pure Brass Jewellery for Modern Women.
+            <p className="font-banner text-7xl">
+            Elegance you can mean, moments you can cherish.
             </p>
           </div>
           <Link
             className={`
+              font-content
               carousel-button
-              px-[3vw] py-2
-              rounded-xl
+              px-[3vw] py-3
+              rounded-full
               uppercase
               bg-primaryButton
               text-primaryFont
-              sm:text-lg lg:text-xl 2xl:text-3xl
+              sm:text-md lg:text-lg 2xl:text-2xl
             `}
             href={SHOP?.pathname}
           >

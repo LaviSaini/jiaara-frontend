@@ -34,17 +34,36 @@ export default function BeautifulGrid({ className = "", items = {} }) {
 
         {/* Two-card row */}
         {pos < itemsArr.length && (
-          <div className="row-2 grid grid-cols-10 gap-2">
+          <div className="row-2 grid grid-cols-12 gap-8 px-8">
             <BeautifulCard
-              className={`col-span-4
-                ${isEven(pos) ? "order-last" : "order-first"}
+              className={`col-span-3
               `}
               item={itemsArr[pos]}
               url={urlsArr[pos++]}
             />
             {pos < itemsArr.length && (
               <BeautifulCard
-                className="col-span-6"
+                className="col-span-3"
+                item={itemsArr[pos]}
+                url={urlsArr[pos++]}
+              />
+            )}
+             <BeautifulCard
+              className={`col-span-3`
+              }
+              item={itemsArr[pos]}
+              url={urlsArr[pos++]}
+            />
+            {pos < itemsArr.length && (
+              <BeautifulCard
+                className="col-span-3"
+                item={itemsArr[pos]}
+                url={urlsArr[pos++]}
+              />
+            )}
+            {screenWidth >= md && pos < itemsArr.length && (
+              <BeautifulCard
+                className="md:col-span-4"
                 item={itemsArr[pos]}
                 url={urlsArr[pos++]}
               />
@@ -56,8 +75,7 @@ export default function BeautifulGrid({ className = "", items = {} }) {
         {pos < itemsArr.length && (
           <div className="row-3 grid grid-cols-12 gap-2 md:grid-cols-11">
             <BeautifulCard
-              className={`col-span-6 md:col-span-3
-                ${isEven(pos) ? "md:order-first" : "md:order-last"}`
+              className={`col-span-6 md:col-span-3`
               }
               item={itemsArr[pos]}
               url={urlsArr[pos++]}
