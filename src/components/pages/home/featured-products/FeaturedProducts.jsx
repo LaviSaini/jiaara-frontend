@@ -14,6 +14,7 @@ import useProductUtils from '@/utils/hooks/global/useProductUtils';
 import { useSelector } from 'react-redux';
 import LoginModel from '@/components/model/LoginModel';
 import { toast } from 'react-toastify';
+import { addToCartService } from '@/app/api/cms/nodeapi/DetailService';
 
 const products = {
   bestSeller: [
@@ -99,17 +100,31 @@ export default function FeaturedProducts(
     //   }
     // }
   }
-  const addItemToCart = (isRemove, isOld, item) => {
+  const addItemToCart = async (isRemove, isOld, item) => {
     console.log(item)
     const requestObject = {
       userId: userData?.userId,
       productId: item?.id,
-      quantity: 1,
+      quantity: isRemove ? -1 : 1,
       img: item?.images[0]?.src,
       name: item?.name,
       price: item?.price
     }
     console.log(requestObject)
+    const response = await addToCartService(requestObject);
+    if (response?.response?.success) {
+      if (type == 'new') {
+        addToCart()
+      } else if (type == 'update') {
+        if (quantity == 1) {
+          dispatch(cart.incrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+        } else {
+          dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+        }
+      }
+    } else {
+      toast('Something Went Wrong!', { type: 'error' })
+    }
   }
   const itemExistsInWishlist = (id) => {
 
