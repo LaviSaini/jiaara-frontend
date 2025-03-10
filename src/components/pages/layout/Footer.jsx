@@ -1,12 +1,13 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#5D2C55] text-white py-10 px-10vw md:px-[4vw]">
+    <footer className="bg-[#5D2C55] text-white py-10 lg:px-16 px-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-4">
         {/* Company Info */}
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-4 md:col-span-6">
           <h2 className="text-2xl font-bold">JIAARA</h2>
-          <p className="mt-4 text-sm leading-relaxed">
-            Jiara Creations Private Limited<br />
+          <h5 className="mt-4 text-lg font-bold">
+          Jiara Creations Private Limited</h5>
+          <p className="text-sm leading-relaxed">
             1003, Bldg-8, Sandstone Society, Unique Garden,<br />
             Kanakia Layout, Mira Road, Thane-East,<br />
             Bhayander 401107
@@ -19,8 +20,8 @@ export default function Footer() {
           <p className="mt-4 font-bold text-lg">+91 6396872895</p>
         </div>
 
-        <div className="lg:col-span-5">
-          <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-5 md:col-span-6">
+          <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
               <h3 className="font-semibold text-lg mb-4">JIAARA</h3>
               <ul className="space-y-2 text-sm">

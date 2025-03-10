@@ -29,10 +29,10 @@ export default function BuildingWithPurpose() {
           }}
           innerClassName="wrapper p-[5vw] text-primaryFont sm:gap-7"
         >
-          <h2 className="font-heading text-4xl mb-8">
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-4xl sm:mb-6 md:mb-8 lg:mb-8">
             The Hands Behind the Craft
           </h2>
-          <p className="font-content text-md leading-7">
+          <p className="font-content text-md leading-7 ">
             At the heart of our jewellery lies the skill and dedication of our artisans, the true artists behind each piece.
             With years of experience and a deep respect for traditional techniques, they meticulously craft every detail by hand, infusing their passion and expertise into every creation.
             Our artisans are more than just makers; they are custodians of age-old craftsmanship, preserving the heritage of jewelry-making while bringing their unique touch to each design.

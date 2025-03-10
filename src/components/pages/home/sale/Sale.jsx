@@ -1,6 +1,13 @@
-"use client";
-
+'use client';
 import Image from 'next/image';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
 // import { useState, useEffect } from "react";
 // import Axios from "axios";
 
@@ -13,7 +20,6 @@ import Image from 'next/image';
 // import splitInHalf from "@/utils/functions/general/splitInHalf";
 
 // const CategoriesTabs = UserProductsStatus;
-
 
 const products = [
   {
@@ -45,9 +51,18 @@ const products = [
     rating: '4.4',
     reviews: '5 REVIEWS',
     image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
+  },
+  {
+    id: 4,
+    name: '18ct White Gold 2cttw',
+    price: '₹ 58,400.00',
+    oldPrice: '₹ 75,200.00',
+    discount: '28% Off',
+    rating: '4.4',
+    reviews: '5 REVIEWS',
+    image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
   }
 ];
-
 
 export default function Sale() {
   // const [categoryId, setCategoryId] = useState(null);
@@ -143,40 +158,54 @@ export default function Sale() {
   //     <Validation className="w-full h-[10rem] text-primaryFont" message="Loading Sale Products…" />
   //   );
   // }
-
   return (
-    <section id="sale" className="flex flex-col items-center justify-center gap-10">
-      <h2 className="font-heading text-4xl capetilize text-primaryFont">Sale</h2>
-  
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 px-[5vw]">
-      {products.map((product) => (
-        <div key={product.id} className="bg-white  shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg">
-          <div className='card-img'>
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={300}
-            height={200}
-            className="object-cover w-full"
-          />
-          </div>
-          <div className='content px-3 flex flex-col  text-center '>
-          <h3 className="mt-4 text-md text-center font-medium font-content tracking-wide">{product.name}</h3>
-          <h2 className="font-content text-lg font-medium mt-3">{product.price}</h2>
-          <h2> <span className="line-through text-gray-400 text-sm mt-3">{product.oldPrice}</span></h2>
-          <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-4">
-            ⭐ {product.rating} <span>{product.reviews}</span>
-          </div>
-          <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-bold px-2 py-1 font-content tracking-wide">{product.discount}</div>
-         
-          <div className="flex justify-between items-center mt-4">
-            {/* <Heart className="text-gray-600 cursor-pointer" />
-            <ShoppingCart className="text-gray-600 cursor-pointer" /> */}
-          </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <section id="sale" className="flex flex-col items-center justify-center gap-7">
+      <h2 className="font-heading text-center text-4xl uppercase text-primaryFont leading-10">
+        Sale
+      </h2>
+      <div className="w-full max-w-[90vw] mx-auto">
+      <Swiper
+      // install Swiper modules
+      modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+      spaceBetween={18}
+      slidesPerView={3}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      breakpoints={{
+        320: { slidesPerView: 1, spaceBetween: 10 },
+        768: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 3, spaceBetween: 30 }
+      }}
+    >
+          {products.map((product) => (
+            <SwiperSlide  key={product.id}>
+              <div className="bg-white shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg overflow-hidden">
+              <div className="card-img">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={300}
+                  height={200}
+                  className="object-cover w-full"
+                />
+              </div>
+              <div className="content p-4 flex flex-col text-center">
+                <h3 className="text-md font-medium font-content tracking-wide">{product.name}</h3>
+                <h2 className="font-content text-lg font-medium mt-2">{product.price}</h2>
+                <h2>
+                  <span className="line-through text-gray-400 text-sm">{product.oldPrice}</span>
+                </h2>
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-2">
+                  ⭐ {product.rating} <span>{product.reviews}</span>
+                </div>
+                <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-bold px-2 py-1">
+                  {product.discount}
+                </div>
+              </div>
+            </div>
+            </SwiperSlide>
+          ))}
+    </Swiper>
+      </div>
     </section>
   );
 }

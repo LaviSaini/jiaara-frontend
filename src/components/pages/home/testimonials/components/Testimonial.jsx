@@ -85,7 +85,7 @@ export default function Testimonial({ testimonial }) {
             />
 
             <div className="wrapper w-full flex items-center gap-5">
-              <div className="name text-sm font-semibold text-primaryFont">
+              <div className=" text-md font-semibold text-primaryFont">
                 {testimonial.avatar.name}
               </div>
 
@@ -97,7 +97,7 @@ export default function Testimonial({ testimonial }) {
               />
             </div>
 
-            <div className="text text-xs overflow-y-auto text-primaryFont">
+            <div className="font-content text-md overflow-y-auto text-primaryFont tracking-wide">
               {testimonial.text}
             </div>
           </div>

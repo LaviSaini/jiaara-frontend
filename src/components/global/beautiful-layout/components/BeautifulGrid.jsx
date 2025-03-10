@@ -22,7 +22,7 @@ export default function BeautifulGrid({ className = "", items = {} }) {
       <React.Fragment key={pos}>
 
         {/* Single card for small screens */}
-        {screenWidth < md && (
+        {/* {screenWidth < md && (
           <div className={`row-1`}>
             <BeautifulCard
               className="w-full"
@@ -30,33 +30,33 @@ export default function BeautifulGrid({ className = "", items = {} }) {
               url={urlsArr[pos++]}
             />
           </div>
-        )}
+        )} */}
 
         {/* Two-card row */}
         {pos < itemsArr.length && (
-          <div className="row-2 grid grid-cols-12 gap-8 px-8">
+          <div className="grid grid-cols-12 gap-4 lg:gap-8">
             <BeautifulCard
-              className={`col-span-3
+              className={`col-span-12 md:col-span-6 lg:col-span-3
               `}
               item={itemsArr[pos]}
               url={urlsArr[pos++]}
             />
             {pos < itemsArr.length && (
               <BeautifulCard
-                className="col-span-3"
+                className="col-span-12 md:col-span-6 lg:col-span-3"
                 item={itemsArr[pos]}
                 url={urlsArr[pos++]}
               />
             )}
              <BeautifulCard
-              className={`col-span-3`
+              className={`col-span-12 md:col-span-6 lg:col-span-3`
               }
               item={itemsArr[pos]}
               url={urlsArr[pos++]}
             />
             {pos < itemsArr.length && (
               <BeautifulCard
-                className="col-span-3"
+                className="col-span-12 md:col-span-6 lg:col-span-3"
                 item={itemsArr[pos]}
                 url={urlsArr[pos++]}
               />

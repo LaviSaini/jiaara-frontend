@@ -12,7 +12,7 @@ export default function FeaturedDeals() {
   return (
     <section
       id="featured-deals"
-      className="flex flex-col items-center justify-center gap-12 mx-[10vw]"
+      className="flex flex-col items-center justify-center gap-12 mx-[6vw] md:mx-[10vw] lg:mx-[10vw]"
     >
       {/* <h2 className="heading text-center px-5 text-4xl uppercase text-primaryFont">
         Featured Deals
@@ -29,19 +29,19 @@ export default function FeaturedDeals() {
           />
         </div>
 
-        <div className="deal-content py-[40px] px-[55px] bg-white sm:gap-7 sm:p-15 md:w-[50%]">
+        <div className="deal-content py-[40px] lg:px-[55px] md:px-[16px] bg-white sm:gap-7 sm:p-15 md:w-[50%]">
           <h3 className="font-content text-sm uppercase mb-4 leading-3 font-semibold">
             Deal of the Week
           </h3>
-          <h4 className="font-heading text-5xl capitalize mb-5">
+          <h4 className="font-heading text-4xl md:text-3xl lg:text-5xl capitalize mb-5">
             Elin Stacking Crystal Earrings
           </h4>
 
-          <p className="font-content text-md tracking-wide leading-6">
+          <p className="font-content md:text-sm lg:text-md tracking-wide leading-6">
             Designed to be worn solo or stacked for a bolder look. Each earring features dazzling crystals that catch the light beautifully, adding a touch of sophistication to any outfit.
           </p>
 
-          <h4 className="time-left font-heading text-4xl  tracking-wide my-6">
+          <h4 className="time-left font-heading text-3xl md:text-2xl lg:text-4xl  tracking-wide my-6">
             06d : 14h : 11m : 49s
           </h4>
            
@@ -58,17 +58,17 @@ export default function FeaturedDeals() {
                 </div>
 
                 <div className="coupon relative flex items-center mt-4 ">
-                  <div className="brand-name ms-2 me-7 -rotate-90 text-3xs uppercase font-semibold">
+                  <div className="brand-name ms-2 md:ms-1 lg:ms-2 me-7 -rotate-90 text-3xs uppercase font-semibold">
                     Jiaara
                   </div>
                   <div className="wrapper text-start">
-                    <div className="font-content text-md font-semibold tracking-wide">
+                    <div className="font-content text-sm lg:text-md font-semibold tracking-wide">
                       Buy 1 Get 1
                     </div>
-                    <div className="font-content text-xs">
+                    <div className="font-content lg:text-xs">
                       Use Code
                     </div>
-                    <div className="font-content text-sm font-semibold">
+                    <div className="font-content text-xs lg:text-sm font-semibold">
                       ELIN2024
                     </div>
                   </div>
@@ -76,7 +76,7 @@ export default function FeaturedDeals() {
               </div>
 
               <Link
-                className="shop-now-btn px-3 py-2 text-md bg-black text-white 2xs:px-4 sm:text-base"
+                className="shop-now-btn lg:px-3 md:px-2 py-2 text-md bg-black text-white 2xs:px-4 "
                 href={SHOP?.pathname}
               >
                 Shop Now

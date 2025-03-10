@@ -1,13 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext
-} from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { WISHLIST } from '@/routes';
 import Icon from '@/components/general/Icon';
 import useProductUtils from '@/utils/hooks/global/useProductUtils';
@@ -140,23 +137,53 @@ export default function FeaturedProducts(
 
       <section id="featured-products" className="px-[5vw]">
         <div className="flex flex-row items-center justify-center gap-12">
-          <button onClick={() => tabChange('bestSeller')} className={`font-heading text-center text-4xl capetilize text-primaryFont border-b-2 ${activeTab === 'bestSeller' ? 'border-primaryFont' : 'border-transparent'}`}
+          <button onClick={() => tabChange('bestSeller')} className={`font-heading text-center text-3xl lg:text-4xl capetilize text-primaryFont border-b-2 ${activeTab === 'bestSeller' ? 'border-primaryFont' : 'border-transparent'}`}
           >
             Best Seller
           </button>
-          <button onClick={() => tabChange('trending')} className={`font-heading text-center text-4xl capetilize text-primaryFont border-b-2  ${activeTab === 'trending' ? 'border-primaryFont' : 'border-transparent'}`}
+          <button onClick={() => tabChange('trending')} className={`font-heading text-center text-3xl lg:text-4xl capetilize text-primaryFont border-b-2  ${activeTab === 'trending' ? 'border-primaryFont' : 'border-transparent'}`}
           >Trending</button>
         </div>
-
-        <CarouselProvider
-          naturalSlideWidth={100}
-          naturalSlideHeight={125}
-          totalSlides={productArray.length}
-          visibleSlides={4}
-          infinite={true}
-          step={1}
-        >
-          <Slider className="mt-8">
+        <div className="w-full max-w-[85vw] mx-auto mt-7">
+      <Swiper
+      // install Swiper modules
+      modules={[Navigation, Pagination, Autoplay]}
+      slidesPerView={4}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      breakpoints={{
+        320: { slidesPerView: 1, spaceBetween: 10 },
+        768: { slidesPerView: 2, spaceBetween: 20 },
+        1024: { slidesPerView: 3, spaceBetween: 30 },
+        1200: { slidesPerView: 4, spaceBetween: 50 },
+      }}
+    >
+          {productArray.map((product, index) => (
+              <SwiperSlide index={index} key={product.id}>
+                <div className="relative mx-5x">
+                  <img
+                    src={product?.images[0]?.src}
+                    alt={product.title}
+                    className="rounded-lg shadow-lg w-full h-[285px] object-cover"
+                  />
+                  <div className="absolute top-1/2 right-3 transform -translate-y-1/2 flex flex-col gap-2">
+                    <button className="bg-primaryBackground p-2 rounded-full shadow-lg">❤️
+                      <Icon
+                        className={`${icon?.className}`}
+                        icon={icon?.active}
+                      />
+                    </button>
+                    <button className="bg-primaryBackground p-2 rounded-full shadow-lg" onClick={() => checkIsUserLogin('cart', product)}>🛒</button>
+                  </div>
+                  <h3 className="mt-4 font-heading text-center text-xl tracking-wide">{product.name}</h3>
+                  <p className="font-heading text-center text-lg tracking-wide">&#8377;
+                    {product.price}</p>
+                </div>
+              </SwiperSlide>
+            ))}
+    </Swiper>
+      </div>
+        
+          {/* <Slider className="mt-8">
             {productArray.map((product, index) => (
               <Slide index={index} key={product.id}>
                 <div className="relative mx-5">
@@ -180,13 +207,11 @@ export default function FeaturedProducts(
                 </div>
               </Slide>
             ))}
-          </Slider>
-
+          </Slider> */}
           {/* <div className="flex justify-between mt-6">
           <ButtonBack className="bg-gray-800 text-white p-2 rounded">Back</ButtonBack>
           <ButtonNext className="bg-gray-800 text-white p-2 rounded">Next</ButtonNext>
         </div> */}
-        </CarouselProvider>
       </section>
       <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
     </>
