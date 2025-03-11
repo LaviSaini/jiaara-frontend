@@ -45,7 +45,7 @@ export default function Footer() {
               <h3 className="font-semibold text-lg mb-4">CUSTOMER CARE</h3>
               <ul className="space-y-2 text-sm">
                 <li>Contact Us</li>
-                <li>FAQ's</li>
+                <li>FAQ&#39;s</li>
                 <li>Shipping Policy</li>
                 <li>Returns and Exchanges</li>
                 <li>Refund Policy</li>
@@ -53,7 +53,6 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-
         </div>
 
         {/* Newsletter */}
