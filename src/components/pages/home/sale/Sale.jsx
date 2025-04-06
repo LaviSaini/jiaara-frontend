@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -9,350 +10,159 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-// import { useState, useEffect } from "react";
-// import Axios from "axios";
-
-// import ProductsCarousel from "@/components/global/ProductsCarousel";
-// import SaleProductCard from "./components/SaleProductCard";
-// import UserProductsStatus from "@/components/global/UserProductsStatus";
-// import Validation from "@/components/general/Validation";
-
-// import { CATEGORIES } from "@/routes";
-// import splitInHalf from "@/utils/functions/general/splitInHalf";
-
-// const CategoriesTabs = UserProductsStatus;
-
-const products = {
-  bracelets: [
-    {
-      id: 1,
-      name: 'Twist Flows Bracelet',
-      price: '₹ 6,200.00',
-      oldPrice: '₹ 8,400.00',
-      discount: '18% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 2,
-      name: '18ct Yellow Gold GG',
-      price: '₹ 52,000.00',
-      oldPrice: '₹ 55,000.00',
-      discount: '5% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 3,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 4,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    }
-  ],
-  earrings: [
-    {
-      id: 5,
-      name: 'Twist Flows Bracelet',
-      price: '₹ 6,200.00',
-      oldPrice: '₹ 8,400.00',
-      discount: '18% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 6,
-      name: '18ct Yellow Gold GG',
-      price: '₹ 52,000.00',
-      oldPrice: '₹ 55,000.00',
-      discount: '5% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 7,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 8,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    }
-  ],
-  necklaces: [
-    {
-      id: 9,
-      name: 'Twist Flows Bracelet',
-      price: '₹ 6,200.00',
-      oldPrice: '₹ 8,400.00',
-      discount: '18% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 10,
-      name: '18ct Yellow Gold GG',
-      price: '₹ 52,000.00',
-      oldPrice: '₹ 55,000.00',
-      discount: '5% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 11,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 12,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    }
-  ],
-  rings: [
-    {
-      id: 13,
-      name: 'Twist Flows Bracelet',
-      price: '₹ 6,200.00',
-      oldPrice: '₹ 8,400.00',
-      discount: '18% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 14,
-      name: '18ct Yellow Gold GG',
-      price: '₹ 52,000.00',
-      oldPrice: '₹ 55,000.00',
-      discount: '5% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 15,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    },
-    {
-      id: 16,
-      name: '18ct White Gold 2cttw',
-      price: '₹ 58,400.00',
-      oldPrice: '₹ 75,200.00',
-      discount: '28% Off',
-      rating: '4.4',
-      reviews: '5 REVIEWS',
-      image: 'https://cms.jiaarajewellery.com/wp-content/uploads/2024/11/Necklaces.webp'
-    }
-  ],
-};
-
 export default function Sale() {
-  // const [categoryId, setCategoryId] = useState(null);
-  // const [parentCategories, setParentCategories] = useState([]); // Default empty array
-  // const [isParentCategoriesLoading, setIsParentCategoriesLoading] = useState(true);
-  // const [isParentCategoriesFetched, setIsParentCategoriesFetched] = useState(false);
+  const [activeTab, setActiveTab] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [currentProducts, setCurrentProducts] = useState([]);
+  const [imageIndexes, setImageIndexes] = useState({}); // Track image index for each product
 
-  // const [saleProducts, setSaleProducts] = useState([]);
-  // const [isSaleProductsLoading, setIsSaleProductsLoading] = useState(false);
-  // const [isSaleProductsFetched, setIsSaleProductsFetched] = useState(false);
+  // Change images every 2 seconds (auto carousel effect) only for products with multiple images
+  useEffect(() => {
+    if (currentProducts?.length > 0) {
+      const intervals = [];
 
-  // // Fetch Categories Directly
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const response = await Axios.get(
-  //         "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
-  //       );
+      currentProducts.forEach((product) => {
+        if (product?.images?.length > 1) {
+          const interval = setInterval(() => {
+            setImageIndexes((prevState) => ({
+              ...prevState,
+              [product.id]: (prevState[product.id] + 1) % product.images.length,
+            }));
+          }, 2000);
 
-  //       if (!Array.isArray(response.data)) {
-  //         throw new Error("Invalid response format");
-  //       }
+          // Store the interval ID for cleanup
+          intervals.push(interval);
+        }
+      });
 
-  //       setParentCategories(response.data);
-  //       setIsParentCategoriesFetched(true);
-  //     } catch (error) {
-  //       console.error("Error fetching categories:", error);
-  //       setParentCategories([]); // Ensure default empty array to prevent issues
-  //       setIsParentCategoriesFetched(false);
-  //     } finally {
-  //       setIsParentCategoriesLoading(false);
-  //     }
-  //   };
+      // Cleanup all intervals when component unmounts or products change
+      return () => {
+        intervals.forEach(clearInterval);
+      };
+    }
+  }, [currentProducts]); // Only re-run if currentProducts change
 
-  //   fetchCategories();
-  // }, []);
+  // Fetch categories from API
+  const getCategories = async () => {
+    try {
+      const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
+      if (response?.status === 200) {
+        const firstCategory = response.data[0];
+        setCategories(response.data);
+        setActiveTab(firstCategory);
+        getProducts(firstCategory.id); // Fetch products for the first category
+        setIsLoading(false);
+      } else {
+        console.error("Failed to fetch categories");
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error.message);
+      setIsLoading(false);
+    }
+  };
 
-  // // Fetch Sale Products when categoryId changes
-  // useEffect(() => {
-  //   if (!categoryId) return;
+  // Fetch products for a specific category
+  const getProducts = async (categoryId) => {
+    try {
+      setIsLoading(true)
+      const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/wc/v3/products?category=${categoryId}&consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`);
+      if (response?.status === 200) {
+        response?.data?.filter(item=>item.on_sale);
+        console.log(response.data,"responseDaatat")
+        setCurrentProducts(response.data);
+        setIsLoading(false)
+      } else {
+        console.error("Failed to fetch products");
+        setIsLoading(false)
+      }
+    } catch (error) {
+      setIsLoading(false)
+      console.error("Error fetching products:", error.message);
+    }
+  };
 
-  //   const fetchSaleProducts = async () => {
-  //     setIsSaleProductsLoading(true);
-  //     try {
-  //       const response = await Axios.get(
-  //         `https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/products/getProducts?page=1&per_page=100&categoryId=${categoryId}&onSale=true&status=publish`
-  //       );
-
-  //       if (!Array.isArray(response.data.products)) {
-  //         throw new Error("Invalid response format for products");
-  //       }
-
-  //       setSaleProducts(response.data.products);
-  //       setIsSaleProductsFetched(true);
-  //     } catch (error) {
-  //       console.error("Error fetching sale products:", error);
-  //       setSaleProducts([]);
-  //       setIsSaleProductsFetched(false);
-  //     } finally {
-  //       setIsSaleProductsLoading(false);
-  //     }
-  //   };
-
-  //   fetchSaleProducts();
-  // }, [categoryId]);
-
-  // const requiredCategories = (categories) => {
-  //   if (!Array.isArray(categories)) return [];
-  //   return categories.filter((category) => category?.name !== "General");
-  // };
-
-  // const getActiveCategoryId = (activeCategoryId) => setCategoryId(activeCategoryId);
-
-  // const [upperSaleProductsArr, lowerSaleProductsArr] =
-  //   isSaleProductsFetched && splitInHalf(saleProducts) || [];
-
-  // const createNewObj = (data) => ({
-  //   user_id: "",
-  //   cart_id: "",
-  //   created_date: "",
-  //   product_id: data?.id,
-  //   quantity: 0,
-  //   img: data?.image,
-  //   price: data?.price,
-  //   name: data?.name,
-  //   status: "s",
-  // });
-
-  // const productList = saleProducts.map(createNewObj);
-
-  // if (isParentCategoriesLoading) {
-  //   return (
-  //     <Validation className="w-full h-[10rem] text-primaryFont" message="Loading Sale Products…" />
-  //   );
-  // }
-  const [activeTab, setActiveTab] = useState('bracelets');
-
+  // Handle category change
   const tabChange = (tab) => {
     setActiveTab(tab);
-  }
+    getProducts(tab.id); // Fetch products for the selected category
+  };
+
+  // Initial categories load
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <section id="sale" className="flex flex-col items-center justify-center gap-7">
       <h2 className="font-heading text-center text-4xl uppercase text-primaryFont leading-10">
         Sale
       </h2>
 
+      {isLoading && <div className="text-center text-gray-500">Loading...</div>}
+
+      {/* Category Tabs */}
       <div className="flex flex-row items-center justify-center gap-12">
-        {['bracelets', 'earrings', 'necklaces', 'rings'].map((tab) => (
+        {categories?.map((tab) => (
           <button
-            key={tab}
+            key={tab.id}
             onClick={() => tabChange(tab)}
-            className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${
-              activeTab === tab ? 'border-primaryFont' : 'border-transparent'
-            }`}
+            className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${activeTab?.id === tab.id ? 'border-primaryFont' : 'border-transparent'}`}
           >
-            {tab}
+            {tab.name}
           </button>
         ))}
       </div>
 
+      {/* Product Carousel */}
       <div className="w-full max-w-[90vw] mx-auto">
         <Swiper
-          // install Swiper modules
+          key={activeTab?.id} // Force re-render on tab change
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={18}
           slidesPerView={3}
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           breakpoints={{
             320: { slidesPerView: 1, spaceBetween: 10 },
             768: { slidesPerView: 2, spaceBetween: 20 },
             1024: { slidesPerView: 3, spaceBetween: 30 }
           }}
         >
-          {products[activeTab]?.map((product) => (
-            <SwiperSlide key={product.id}>
-              <div className="bg-white shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg overflow-hidden">
-                <div className="card-img">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    width={300}
-                    height={200}
-                    className="object-cover w-full"
-                  />
-                </div>
-                <div className="content p-4 flex flex-col text-center">
-                  <h3 className="text-md font-medium font-content tracking-wide">{product.name}</h3>
-                  <h2 className="font-content text-lg font-medium mt-2">{product.price}</h2>
-                  <h2>
-                    <span className="line-through text-gray-400 text-sm">{product.oldPrice}</span>
-                  </h2>
-                  <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-2">
-                    ⭐ {product.rating} <span>{product.reviews}</span>
+
+          {(currentProducts?.length > 0 && !isLoading) &&
+            currentProducts.map((product) => {
+              const currentImageIndex = imageIndexes[product.id] || 0; // Use product-specific image index
+
+              return (
+                <SwiperSlide key={product.id}>
+                  <div className="bg-white shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg overflow-hidden">
+                    <div className="card-img">
+                      <Image
+                        src={product?.images[currentImageIndex]?.src} // Fallback image if no images available
+                        alt={product?.images[currentImageIndex]?.alt || "default"}
+                        width={300}
+                        height={200}
+                        className="object-cover w-full"
+                        priority // Preload images
+                      />
+                    </div>
+                    <div className="content p-4 flex flex-col text-center">
+                      <h3 className="text-md font-medium font-content tracking-wide">{product.name}</h3>
+                      <h2 className="font-content text-lg font-medium mt-2">{product.price}</h2>
+                      <h2>
+                        <span className="line-through text-gray-400 text-sm">{product.oldPrice}</span>
+                      </h2>
+                      <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-2">
+                        ⭐ {product.rating} <span>{product.reviews}</span>
+                      </div>
+                      <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-bold px-2 py-1">
+                        {Math.round(((product?.regular_price*1-product?.price*1)/product?.regular_price*1)*100)}%
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-bold px-2 py-1">
-                    {product.discount}
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </section>
