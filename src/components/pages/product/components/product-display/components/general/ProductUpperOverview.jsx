@@ -20,7 +20,11 @@ export default function ProductUpperOverview({
   }
 }) {
   const dispatch = useDispatch();
-  const { wishlistUtils: { wishlistItem = {}, handleWishlist = () => { } } } = useProductUtils(product);
+  const {
+    cartUtils: { cartItem, addToCart },
+    wishlistUtils: { wishlistItem, handleWishlist }
+  }
+    = useProductUtils(cartProduct);
   const userData = useSelector(data => data.userDataSlice)
 
   const wishlistaction = () => {
