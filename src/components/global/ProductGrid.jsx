@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCartListService, getWishListService } from "@/app/api/cms/nodeapi/DetailService";
 import { cart } from "@/redux/slices/cart";
 import { wishlist } from "@/redux/slices/wishlist";
+import { loaderData } from "@/redux/slices/loader";
 
 
 const ProductGrid = ({
@@ -17,7 +18,7 @@ const ProductGrid = ({
   const userData = useSelector(data => data.userDataSlice);
   useEffect(() => {
     setProductList(products)
-
+    dispatch(loaderData.clear())
     if (userData) {
 
       fetchCartList()

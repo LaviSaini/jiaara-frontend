@@ -26,6 +26,8 @@ import LoginModel from "../model/LoginModel";
 import { addToCartService, addToWishListService, deleteCartItem, deleteWishListService } from "@/app/api/cms/nodeapi/DetailService";
 import { cart } from "@/redux/slices/cart";
 import { wishlist } from "@/redux/slices/wishlist";
+import Loader from "../model/Loader";
+import { loaderData } from "@/redux/slices/loader";
 
 
 export default function Product({
@@ -48,13 +50,12 @@ export default function Product({
     general: <></>
   }
 }) {
-  console.log("product", product)
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const { activeRoute, isRouteActive } = useRouteActive();
 
   const { screenWidth, breakpoints: { xxs, xs, sm, md, lg, xl, xxl } } = useWindowSize();
-
+  const [isLoading, setIsLoading] = useState(false);
   const getWordLimit = () => {
 
     if (screenWidth < xxs) {
@@ -100,16 +101,16 @@ export default function Product({
     = useProductUtils(cartProduct);
   const userData = useSelector(data => data.userDataSlice)
   const cartList = useSelector(state => state?.cartReducer ?? []);
-
+  // const loaderData = useSelector(data => data.loaderReducer)
   const checkIsUserLogin = (type) => {
     if (!userData) {
-      toast('login required', { type: 'error' })
       setIsModelOpen(true)
       return;
     }
     if (type == 'cart') {
       addItemToCart(1, 'new')
     } else if (type == 'wishlist') {
+      debugger
       if (wishlistItem) {
         deleteWishList(wishlistItem?.product_id)
       } else {
@@ -119,10 +120,12 @@ export default function Product({
     }
   }
   const deleteWishList = async (productId) => {
+    dispatch(loaderData.add(true));
     const response = await deleteWishListService(userData?.userId, productId);
     if (response?.response?.success) {
       handleWishlist()
     }
+    dispatch(loaderData.add(false));
   }
   const addItemToWishList = async () => {
     const requestObject = {
@@ -130,49 +133,68 @@ export default function Product({
       productId: product?.id,
       data: JSON.stringify(product)
     }
+    // setIsLoading(true)
+    dispatch(loaderData.add(true));
     const response = await addToWishListService(requestObject);
     if (response?.response?.success) {
       handleWishlist()
     } else {
       toast('Something Went Wrong!', { type: 'error' })
     }
+    // setIsLoading(false)
+    dispatch(loaderData.add(false));
+
   }
   const addItemToCart = async (quantity, type) => {
     const requestObject = {
       userId: userData?.userId,
       productId: product?.id,
       quantity: quantity,
-      img: product?.image,
+      img: product?.images[0]?.src,
       name: product?.name,
       price: product?.price
     }
+
     const cartItem = cartList.filter(data => data.product_id == product?.id);
     if (cartItem[0]?.quantity === 1 && quantity == -1) {
-      const response = await deleteCartItem(userData?.userId, cartItem[0]?.product_id);
-      if (response) {
-        if (response?.response?.success) {
-          dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+      dispatch(loaderData.add(true));
+      try {
+        const response = await deleteCartItem(userData?.userId, cartItem[0]?.product_id);
+        if (response) {
+          if (response?.response?.success) {
+            dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+          } else {
+            toast('Something Went Wrong!', { type: 'error' })
+          }
         } else {
           toast('Something Went Wrong!', { type: 'error' })
         }
-      } else {
-        toast('Something Went Wrong!', { type: 'error' })
+      } catch (error) {
+        toast('something Went Wrong!', { type: 'error' })
       }
+      dispatch(loaderData.add(false));
     } else {
-      const response = await addToCartService(requestObject);
-      if (response?.response?.success) {
-        if (type == 'new') {
-          addToCart()
-        } else if (type == 'update') {
-          if (quantity == 1) {
-            dispatch(cart.incrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
-          } else {
-            dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+      dispatch(loaderData.add(true));
+      try {
+        const response = await addToCartService(requestObject);
+        if (response?.response?.success) {
+          if (type == 'new') {
+            addToCart()
+          } else if (type == 'update') {
+            if (quantity == 1) {
+              dispatch(cart.incrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+            } else {
+              dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+            }
           }
+        } else {
+          toast('Something Went Wrong!', { type: 'error' })
         }
-      } else {
-        toast('Something Went Wrong!', { type: 'error' })
+
+      } catch (error) {
+        toast("Something Went Wrong!", { type: "error" })
       }
+      dispatch(loaderData.add(false));
     }
 
   }

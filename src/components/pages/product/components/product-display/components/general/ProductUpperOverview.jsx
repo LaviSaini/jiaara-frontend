@@ -4,6 +4,9 @@ import Icon from "@/components/general/Icon";
 import useProductUtils from "@/utils/hooks/global/useProductUtils";
 
 import { WISHLIST } from "@/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { loaderData } from "@/redux/slices/loader";
+import { addToWishListService, deleteWishListService } from "@/app/api/cms/nodeapi/DetailService";
 
 
 export default function ProductUpperOverview({
@@ -16,9 +19,45 @@ export default function ProductUpperOverview({
     general: <></>
   }
 }) {
+  const dispatch = useDispatch();
+  const { wishlistUtils: { wishlistItem = {}, handleWishlist = () => { } } } = useProductUtils(product);
+  const userData = useSelector(data => data.userDataSlice)
 
-  const { wishlistUtils: { wishlistItem = {}, handleWishlist = () => {} } } = useProductUtils(product);
+  const wishlistaction = () => {
+    console.log(wishlistItem)
+    debugger
+    if (wishlistItem) {
 
+      deleteWishList(product?.id)
+    } else {
+      addItemToWishList();
+    }
+  }
+  const deleteWishList = async (productId) => {
+    dispatch(loaderData.add(true));
+    const response = await deleteWishListService(userData?.userId, productId);
+    if (response?.response?.success) {
+      handleWishlist()
+    }
+    dispatch(loaderData.add(false));
+  }
+  const addItemToWishList = async () => {
+    const requestObject = {
+      userId: userData?.userId,
+      productId: product?.id,
+      data: JSON.stringify(product)
+    }
+    console.log(requestObject)
+    dispatch(loaderData.add(true));
+    const response = await addToWishListService(requestObject);
+    if (response?.response?.success) {
+      handleWishlist()
+    } else {
+      toast('Something Went Wrong!', { type: 'error' })
+    }
+    dispatch(loaderData.add(false));
+
+  }
   return (
     <div className={`wrapper flex justify-between items-left ${className}`}>
       <div className="product-overview-upper">
@@ -27,7 +66,7 @@ export default function ProductUpperOverview({
         </h2>
 
         <div className="wrapper flex items-center gap-3 py-1 text-primaryFont">
-          <Rating className="product-rating text-lg" given={product?.rating ?? 0}/>
+          <Rating className="product-rating text-lg" given={product?.rating ?? 0} />
           <div className="ratings-count text-xs uppercase opacity-50">
             {`${product?.ratingCount ?? 0} Ratings`}
           </div>
@@ -37,7 +76,7 @@ export default function ProductUpperOverview({
       {icon &&
         <button
           className={`wishlist-icon-btn`}
-          onClick={handleWishlist}
+          onClick={wishlistaction}
         >
           {(icon?.general || icon?.active || icon?.inactive) &&
             <Icon
@@ -47,6 +86,6 @@ export default function ProductUpperOverview({
           }
         </button>
       }
-    </div>  
+    </div>
   );
 }

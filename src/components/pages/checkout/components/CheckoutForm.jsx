@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 
 import { cart } from '@/redux/slices/cart';
 import { coupon } from '@/redux/slices/coupon';
+import Loader from '@/components/model/Loader';
 
 export default function CheckoutForm({ className = "", currentItems = [], clearItems = () => { } }) {
 
@@ -467,9 +468,10 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
       </form>
       {
         isLoading ?
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-          </div>
+          // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          //   <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          // </div>
+          <Loader></Loader>
           :
           ''
       }

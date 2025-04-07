@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
   font-family: 'The Signature';
   src: url('/fonts/Thesignature.ttf') format('truetype');
@@ -133,5 +134,33 @@ input[type="number"] {
 
   .overlay-black-50::after {
     @apply overlay opacity-50 bg-black;
+  }
+
+  .loginModel {
+    width: 25%;
+  }
+
+  @media (max-width:1200px) {
+    .loginModel {
+      width: 35%;
+    }
+  }
+
+  @media (max-width:920px) {
+    .loginModel {
+      width: 45%;
+    }
+  }
+
+  @media (max-width:768px) {
+    .loginModel {
+      width: 50%;
+    }
+  }
+
+  @media (max-width:480px) {
+    .loginModel {
+      width: 90%;
+    }
   }
 }

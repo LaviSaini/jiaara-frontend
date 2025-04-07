@@ -5,7 +5,7 @@ import wishlistReducer from "@/redux/slices/wishlist";
 import buyNowReducer from "@/redux/slices/buyNow";
 import userDataSlice from '@/redux/slices/userdata';
 import couponSlice from '@/redux/slices/coupon';
-
+import loaderReducer from '@/redux/slices/loader';
 const PERSISTENCE_KEY = 'redux_state';
 
 
@@ -28,7 +28,8 @@ const store = configureStore({
     wishlistReducer,
     buyNowReducer,
     userDataSlice,
-    couponSlice
+    couponSlice,
+    loaderReducer
   },
   preloadedState: loadPersistedState()
 });

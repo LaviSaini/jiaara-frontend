@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import useNavigationType from "@/utils/hooks/general/useNavigationType";
 import { useRouter } from 'next/navigation'
 import Icon from "@/components/general/Icon";
+import { loaderData } from "@/redux/slices/loader";
 
 export default function LogIn({ isPopUp, userlogin }) {
   const userData = useSelector(data => data.userDataSlice)
@@ -24,8 +25,9 @@ export default function LogIn({ isPopUp, userlogin }) {
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
     console.log(data)
+    dispatch(loaderData.add(true));
     const response = await loginService(data);
-    console.log(response)
+    dispatch(loaderData.add(false))
     if (response?.response?.success) {
       if (isPopUp) {
         userlogin(response?.response?.data)

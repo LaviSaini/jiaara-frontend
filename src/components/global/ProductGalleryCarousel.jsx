@@ -33,7 +33,6 @@ export default function ProductGalleryCarousel({
   }
 
 } = {}) {
-  console.log("HELO HELO", product)
 
   const { dispatch } = useContext(context);
 
@@ -138,7 +137,7 @@ export default function ProductGalleryCarousel({
 
   return (
     (product?.images?.length > 0 &&
-      <div
+      <div style={{ boxShadow: '0 4px 33px rgba(0, 0, 0, 0.2)', borderRadius: '5px', overflow: 'hidden' }}
         ref={carouselNodeRef}
         className={`alice-carousel-wrapper ${media.contClassName} bg-senaryBackground`}
         onMouseEnter={() => setIsCarouselHovered(true)}

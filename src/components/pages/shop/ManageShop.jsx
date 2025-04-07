@@ -15,6 +15,8 @@ export default function ManageShop({ className = "", params }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log(params)
+  const { id } = params;
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -36,8 +38,8 @@ export default function ManageShop({ className = "", params }) {
       url.searchParams.append("page", currentPage);
       url.searchParams.append("per_page", 20);
 
-      if (categoryId) {
-        url.searchParams.append("category", categoryId);
+      if (id) {
+        url.searchParams.append("category", id);
       }
 
       const response = await fetch(url);
