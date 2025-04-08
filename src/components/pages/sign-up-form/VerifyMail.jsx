@@ -40,7 +40,6 @@ export default function VerifyMail({ email }) {
 
   const verify = async () => {
     const otp = inputRefs.current.map((input) => input.value).join(""); // Get values and join them
-    console.log("OTP Entered:", otp);
     const response = await verifyOtpService(email, otp);
     if (response?.response?.success) {
       toast(`${response?.response?.message}`, { type: 'success' })
