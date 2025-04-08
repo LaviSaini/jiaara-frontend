@@ -72,99 +72,74 @@ export default function Collections({ className = "" }) {
         Collections
       </h2>
       <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-16">
-
-        <div className="flex gap-6">
-        <div className="w-96 flex-none">
-          <a
-            href={collections?.[0].link}
-            className="relative group overflow-hidden rounded-2xl"
-          >
-            <Image
-              src={collections?.[0].image}
-              // alt={item.title}
-              width={400}
-              height={300}
-              className={`w-full h-56 sm:h-48 md:h-52 lg:h-72 object-cover rounded-2xl`}
-            />
-            <div className="absolute bottom-0 left-0 w-full text-white p-3 flex justify-between items-center">
-              <span className="font-heading text-2xl font-medium">{collections?.[0].title}</span>
-              <span className="text-xl border rounded-full px-2 py-1">→</span>
-            </div>
-          </a>
-          </div>
-          <div className="w-96 flex-1">
+        <div className="flex gap-5 mb-4">
+          <div className="flex-none w-[40%] h-[330px]">
             <a
-            href={collections?.[1].link}
-            className="relative group overflow-hidden rounded-2xl"
-          >
-            <Image
-              src={collections?.[1].image}
-              // alt={item.title}
-              width={400}
-              height={300}
-              className={`w-full h-56 sm:h-48 md:h-52 lg:h-72 object-cover rounded-2xl`}
-            />
-            <div className="absolute bottom-0 left-0 w-full text-white p-3 flex justify-between items-center">
-              <span className="font-heading text-2xl font-medium">{collections?.[1].title}</span>
-              <span className="text-xl border rounded-full px-2 py-1">→</span>
+              href={collections?.[0].link}
+              className="overflow-hidden rounded-2xl w-full"
+            >
+              <Image
+                src={collections?.[0].image}
+                className="w-full h-full object-cover rounded-2xl"
+                width={400}
+                height={300}
+              />
+            </a>
+          </div>
+          <div className="flex-auto bg-collectionBackground rounded-2xl px-8 pt-[50px]">
+            <h2 className="text-3xl font-semibold text-primaryFont mb-4">{collections?.[0].title}</h2>
+            <p className="text-primaryFont mb-3 font-content text-sm leading-6 tracking-wide">
+              Discover the charm of timeless elegance with our exclusive Clover Jewelry Collection. Inspired by 
+              the symbol of luck, love, and prosperity, each piece in this collection captures the delicate beauty 
+              of the clover leaf, reimagined in stunning designs that resonate with grace and sophistication. 
+              Whether you're drawn to the enchanting allure of nature or the promise of good fortune, our Clover 
+              Jewelry Line offers a perfect blend of style and sentiment. Adorn yourself with the elegance of 
+              clover-inspired artistry, and let your luck shine through every piece.
+            </p>
+            <div className="flex justify-end md:justify-end">
+              <button className="border-2 border-primaryFont  text-primaryFont font-medium py-2 px-2 rounded-full">
+                <span className="text-xl">→</span>
+              </button>
             </div>
-          </a>
           </div>
         </div>
-        <div className="flex gap-6 mt-6">
-          <div className="w-auto flex-none">
-            <a
-            href={collections?.[2].link}
-            className="relative group overflow-hidden rounded-2xl"
-          >
-            <Image
-              src={collections?.[2].image}
-              // alt={item.title}
-              width={400}
-              height={300}
-              className={`w-full h-56 sm:h-48 md:h-52 lg:h-72 object-cover rounded-2xl`}
-            />
-            <div className="absolute bottom-0 left-0 w-full text-white p-3 flex justify-between items-center">
-              <span className="font-heading text-2xl font-medium">{collections?.[2].title}</span>
-              <span className="text-xl border rounded-full px-2 py-1">→</span>
+        <div class="flex gap-5">
+          <div class="w-[20%] flex-none bg-collectionBackground rounded-2xl px-8  pt-[50px]">
+          <h2 className="text-3xl font-semibold text-primaryFont mb-4">{collections?.[0].title}</h2>
+            <p className="text-primaryFont mb-3 font-content text-sm leading-6 tracking-wide">
+            Introducing the Harmony Collection. Our bead jewelry line is crafted with meticulous attention to detail, blending colors, textures, and materials to create pieces that resonate with balance and unity.
+            </p>
+            <div className="flex justify-end md:justify-end">
+              <button className="border-2 border-primaryFont  text-primaryFont font-medium py-2 px-2 rounded-full">
+                <span className="text-xl">→</span>
+              </button>
             </div>
-          </a>
           </div>
-          <div className="w-64 flex-1">
+          <div class="flex-1 w-[40%] h-[330px]">
             <a
-            href={collections?.[3].link}
-            className="relative group overflow-hidden rounded-2xl"
-          >
-            <Image
-              src={collections?.[3].image}
-              // alt={item.title}
-              width={400}
-              height={300}
-              className={`w-full h-56 sm:h-48 md:h-52 lg:h-72 object-cover rounded-2xl`}
-            />
-            <div className="absolute bottom-0 left-0 w-full text-white p-3 flex justify-between items-center">
-              <span className="font-heading text-2xl font-medium">{collections?.[3].title}</span>
-              <span className="text-xl border rounded-full px-2 py-1">→</span>
-            </div>
-          </a>
+              href={collections?.[0].link}
+              className="overflow-hidden rounded-2xl w-full"
+            >
+              <Image
+                src={collections?.[0].image}
+                className="w-full h-full object-cover rounded-2xl"
+                width={400}
+                height={300}
+              />
+            </a>
           </div>
-          <div className="w-64 flex-1">
+          <div class="flex-1 w-[40%] h-[330px]">
             <a
-            href={collections?.[4].link}
-            className="relative group overflow-hidden rounded-2xl"
-          >
-            <Image
-              src={collections?.[4].image}
-              // alt={item.title}
-              width={400}
-              height={300}
-              className={`w-full h-56 sm:h-48 md:h-52 lg:h-72 object-cover rounded-2xl`}
-            />
-            <div className="absolute bottom-0 left-0 w-full text-white p-3 flex justify-between items-center">
-              <span className="font-heading text-2xl font-medium">{collections?.[4].title}</span>
-              <span className="text-xl border rounded-full px-2 py-1">→</span>
-            </div>
-          </a>
+              href={collections?.[0].link}
+              className="overflow-hidden rounded-2xl w-full"
+            >
+              <Image
+                src={collections?.[0].image}
+                className="w-full h-full object-cover rounded-2xl"
+                width={400}
+                height={300}
+              />
+            </a>
           </div>
         </div>
       </div>
