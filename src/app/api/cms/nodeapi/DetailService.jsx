@@ -85,6 +85,14 @@ export async function deleteWishListService(userId, productId) {
     })
     return response.data;
 }
+export async function clearCart(userId) {
+    const response = await httpService.delete(`/cart/clear-cart/${userId}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
 export async function getWishListService(userId) {
     const response = await httpService.get(`/wishlist/get-wishlist/${userId}`, {
         headers: {

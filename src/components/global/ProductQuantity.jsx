@@ -28,6 +28,7 @@ export default function ProductQuantity({
   stockLimit = undefined,
   callDecrement,
   callIncrement,
+  inStock = true,
   callback = () => { }
 }) {
 
@@ -47,10 +48,10 @@ export default function ProductQuantity({
   }, [isProductPage, cartQtyCount]);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    qtyInputRef.current.readOnly = !isProductPage ? true : false;
-  }, [isProductPage]);
+  //   qtyInputRef.current.readOnly = !isProductPage ? true : false;
+  // }, [isProductPage]);
 
 
   const isOutOfStock = () => {
@@ -119,9 +120,12 @@ export default function ProductQuantity({
 
 
   return (
-    <div className={`quantity ${theClassName}`}>
-      <button
-        className={`
+    <>
+      {
+        inStock ?
+          <div className={`quantity ${theClassName}`}>
+            <button
+              className={`
           increment-btn
           flex justify-center items-center
           rounded-s-sm
@@ -129,28 +133,28 @@ export default function ProductQuantity({
           ${buttonClassName}
            
         `}
-        type="button"
-        onClick={handleIncrement}
+              type="button"
+              onClick={handleIncrement}
 
-      >
-        <Icon className="plus-icon" icon={incrementIcon} />
-      </button>
-      <input
-        ref={qtyInputRef}
-        className={`bg-white 
+            >
+              <Icon className="plus-icon" icon={incrementIcon} />
+            </button>
+            <input
+              ref={qtyInputRef}
+              className={`bg-white 
           quantity-count
           input-selection-black
           ${!isProductPage ? "cursor-default" : ""}
           ${inputClassName}
           ${isOutOfStock() ? "opacity-50" : ""}
         `}
-        autoComplete="off"
-        value={quantity}
-        onChange={handleQtyInput}
-        disabled={true}
-      />
-      <button
-        className={`
+              autoComplete="off"
+              value={quantity}
+              onChange={handleQtyInput}
+              disabled={true}
+            />
+            <button
+              className={`
           decrement-btn
           flex justify-center items-center
           rounded-e-sm
@@ -158,12 +162,19 @@ export default function ProductQuantity({
           ${buttonClassName}
            }
         `}
-        type="button"
-        onClick={handleDecrement}
+              type="button"
+              onClick={handleDecrement}
 
-      >
-        <Icon className="minus-icon" icon={decrementIcon} />
-      </button>
-    </div>
+            >
+              <Icon className="minus-icon" icon={decrementIcon} />
+            </button>
+          </div>
+          :
+          <div className={`text-red-600`}>Out Of Stock</div>
+      }
+
+
+    </>
+
   );
 }

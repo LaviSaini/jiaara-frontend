@@ -165,26 +165,27 @@ export default function UserProductsList({
                 />
               }
 
-              {context.isCart &&
-                <ProductQuantity
-                  theClassName="h-[2rem] flex items-stretch ms-1 rounded bg-white xs:ms-0"
-                  inputClassName={`
+
+              <ProductQuantity
+                theClassName="h-[2rem] flex items-stretch ms-1 rounded bg-white xs:ms-0"
+                inputClassName={`
                     w-[1.5rem] px-2 py-1 rounded-sm outline-none
                     text-center text-xs
                     input-selection-primaryFont
                     focus:ring-1 hover:ring-1 focus:ring-primaryFont hover:ring-secondaryBackground xs:w-[2.5rem] xs:text-base
                     sm:px-3 sm:py-2
                   `}
-                  buttonsClassName="px-2 py-2 text-xs bg-primaryFont text-white xs:text-sm sm:px-3 sm:py-2 sm:text-base"
-                  incrementIcon={FiPlus}
-                  decrementIcon={FiMinus}
-                  callDecrement={(e) => handleIncrementAndDecrement(e, product)}
-                  callIncrement={(e) => handleIncrementAndDecrement(e, product)}
-                  productId={product?.product_id}
-                  cartQtyCount={product?.quantity}
-                  stockLeft={product?.stockQuantity ? product?.stockQuantity : STOCK_LEFT_FALLBACK_VALUE}
-                />
-              }
+                buttonsClassName="px-2 py-2 text-xs bg-primaryFont text-white xs:text-sm sm:px-3 sm:py-2 sm:text-base"
+                incrementIcon={FiPlus}
+                decrementIcon={FiMinus}
+                callDecrement={(e) => handleIncrementAndDecrement(e, product)}
+                callIncrement={(e) => handleIncrementAndDecrement(e, product)}
+                productId={product?.product_id}
+                cartQtyCount={product?.quantity}
+                inStock={product?.inStock}
+                stockLeft={product?.stockQuantity ? product?.stockQuantity : STOCK_LEFT_FALLBACK_VALUE}
+              />
+
 
               {context.isCart &&
                 <button

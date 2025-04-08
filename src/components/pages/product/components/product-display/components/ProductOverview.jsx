@@ -240,7 +240,8 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
           if (type == 'one') {
             dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem?.quantity + quantity }));
           } else {
-            dispatch(cart.decrementQty({ productId: product?.id, quantity: 0 }))
+            dispatch(cart.remove(product?.id))
+            // dispatch(cart.decrementQty({ productId: product?.id, quantity: 0 }))
           }
         } else {
           toast('Something Went Wrong!', { type: 'error' })

@@ -1,6 +1,6 @@
 'use client';
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import UserProductsStatus from "@/components/global/UserProductsStatus";
 import CartHead from "@/components/pages/cart/components/CartHead";
@@ -14,11 +14,13 @@ import { useEffect, useState } from "react";
 import { gerProductDetailService, getCartListService, getRelatedProductIdsService } from "@/app/api/cms/nodeapi/DetailService";
 import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation'
+import { loaderData } from "@/redux/slices/loader";
 
 
 export default function CartManagement() {
 
   const isClient = useClient();
+  const dispatch = useDispatch();
   const router = useRouter();
   const cartItems = useSelector(state => state?.cartReducer ?? []);
   const userData = useSelector(data => data.userDataSlice)
@@ -30,30 +32,18 @@ export default function CartManagement() {
       router.push('/sign-in')
     }
   }, [cartItems])
+  // useEffect(() => { dispatch(loaderData.clear()) }, [])
   const getCartlist = async () => {
+    dispatch(loaderData.add(true));
     const response = await getCartListService(userData?.userId);
     if (response?.response?.success) {
       setCartList(response?.response?.data);
-      const productIds = response?.response?.data?.map(element => element?.product_id)
-      // getRelatedProduct(productIds)
     } else {
 
     }
+    dispatch(loaderData.clear())
   }
-  const getRelatedProduct = async (productids) => {
-    let ids = ''
-    productids.forEach((element, index) => {
-      ids = ids + 'product_ids[]=' + element;
-    })
-    const response = await getRelatedProductIdsService(ids);
-    if (response) {
-      const productId = response?.products?.map((element) => element?.id);
-      // const response2 = await gerProductDetailService();
-      // console.log('res', response2)
-    } else {
-      toast('Something Went Wrong!', { type: 'error' })
-    }
-  }
+
   return (
     (isClient &&
       <div className="cart-page flex flex-col">
