@@ -24,7 +24,6 @@ export default function CartManagement() {
   const userData = useSelector(data => data.userDataSlice)
   const [cartList, setCartList] = useState([]);
   useEffect(() => {
-    console.log("Called after udpate")
     if (userData) {
       getCartlist();
     } else {
@@ -33,11 +32,9 @@ export default function CartManagement() {
   }, [cartItems])
   const getCartlist = async () => {
     const response = await getCartListService(userData?.userId);
-    console.log(response)
     if (response?.response?.success) {
       setCartList(response?.response?.data);
       const productIds = response?.response?.data?.map(element => element?.product_id)
-      console.log(productIds)
       // getRelatedProduct(productIds)
     } else {
 
@@ -48,12 +45,9 @@ export default function CartManagement() {
     productids.forEach((element, index) => {
       ids = ids + 'product_ids[]=' + element;
     })
-    console.log(ids)
     const response = await getRelatedProductIdsService(ids);
-    console.log(response)
     if (response) {
       const productId = response?.products?.map((element) => element?.id);
-      console.log(productId)
       // const response2 = await gerProductDetailService();
       // console.log('res', response2)
     } else {
@@ -85,10 +79,10 @@ export default function CartManagement() {
           <OrderSummary className="px-[8vw] mt-5" cartItems={cartList} />
         }
         <KeyBenefits className="mt-10" />
-        {cartItems?.length > 0
+        {/* {cartItems?.length > 0
           &&
           <RelatedProducts className="mt-5 mb-10" cartItems={cartItems} />
-        }
+        } */}
       </div>
     )
   );

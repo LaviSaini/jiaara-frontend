@@ -110,7 +110,6 @@ export default function Product({
     if (type == 'cart') {
       addItemToCart(1, 'new')
     } else if (type == 'wishlist') {
-      debugger
       if (wishlistItem) {
         deleteWishList(wishlistItem?.product_id)
       } else {

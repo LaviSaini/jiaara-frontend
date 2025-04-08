@@ -9,6 +9,8 @@ import Validation from "@/components/general/Validation";
 
 import { getProductsByIds } from "@/utils/functions/api/cms/woocommerce/products";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loaderData } from "@/redux/slices/loader";
 
 
 export default function ManageProduct({ className = "", params }) {
@@ -19,10 +21,9 @@ export default function ManageProduct({ className = "", params }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
-
+  const dispatch = useDispatch();
   const fetchProduct = async () => {
     if (!id) return;
-    console.log('dfdfjjjjjjj', id)
     setIsLoading(true);
     setIsError(false);
 
@@ -33,12 +34,19 @@ export default function ManageProduct({ className = "", params }) {
       // if (!response.ok) {
       //   throw new Error(`Error: ${response.statusText}`);
       // }
-      const url2 = `https://cms.jiaarajewellery.com/wp-json/custom-api/v1/products?product_id=${id}`;
-      const response2 = await fetch(url2);
-      const resul2 = await response2.json();
-      // const result = await response.json();
-      setData(resul2?.product);
-      setIsSuccess(true);
+      // const url2 = `https://cms.jiaarajewellery.com/wp-json/custom-api/v1/products?product_id=${id}`;
+      // const response2 = await fetch(url2);
+      // const resul2 = await response2.json();
+      // // const result = await response.json();
+      // setData(resul2?.product);
+      // setIsSuccess(true);
+      const url = `https://cms.jiaarajewellery.com/wp-json/wc/v3/products/${id}?consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`;
+      const response = await fetch(url);
+      const result = await response.json();
+      // console.log('sdfkjlsfd', result)
+      setData(result)
+
+      setIsSuccess(true)
     } catch (error) {
       setIsError(true);
       console.error("Error fetching product:", error);
@@ -49,6 +57,7 @@ export default function ManageProduct({ className = "", params }) {
 
   useEffect(() => {
     fetchProduct();
+    dispatch(loaderData.clear())
   }, [id]);
 
   // if (isNaN(id)) {
@@ -89,7 +98,7 @@ export default function ManageProduct({ className = "", params }) {
         <KeyBenefits />
         <RelatedProducts
           currentProductId={id}
-          relatedProductIds={data?.relatedProductIds}
+          relatedProductIds={data?.related_ids}
         />
       </div>
     )

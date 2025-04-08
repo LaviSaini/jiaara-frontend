@@ -20,8 +20,8 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
     setIsError(false);
 
     try {
-      const idsQuery = relatedProductIds.map(id => `product_ids[]=${id}`).join("&");
-      const url = `https://cms.jiaarajewellery.com/wp-json/wp/v2/getRelatedProduct?${idsQuery}`;
+      const idsQuery = relatedProductIds.map(id => `${id}`).join(",");
+      const url = `https://cms.jiaarajewellery.com/wp-json/wc/v3/products?include=${idsQuery}&consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -30,6 +30,9 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
 
       const result = await response.json();
       setData(result);
+      setProductList(result);
+      const newArr = result.map((element) => creatNewObj(element));
+      setCartProduct(newArr)
       setIsSuccess(true);
     } catch (error) {
       setIsError(true);
@@ -38,19 +41,20 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
       setIsLoading(false);
     }
   };
-
+  const [product, setProductList] = useState([])
+  const [cartProduct, setCartProduct] = useState([]);
   useEffect(() => {
     fetchRelatedProducts();
   }, [currentProductId, relatedProductIds]);
 
-  const { products } = data || [];
-  const [cartProduct, setcartproduct] = useState([])
-  useEffect(() => {
-    const newArrat = products?.map((element) => {
-      return creatNewObj(element)
-    })
-    setcartproduct(newArrat)
-  }, [products])
+  // const { products } = data || [];
+  // const [cartProduct, setcartproduct] = useState([])
+  // useEffect(() => {
+  //   const newArrat = products?.map((element) => {
+  //     return creatNewObj(element)
+  //   })
+  //   setcartproduct(newArrat)
+  // }, [products])
   const creatNewObj = (data) => {
     const reqObj = {
 
@@ -69,7 +73,7 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
   }
   return (
     <section id="related-products">
-      {isSuccess && products.length > 0 &&
+      {product.length > 0 &&
         <ProductsCarousel
           className="related-products pb-12"
           headingClassName="text-center text-2xl uppercase text-primaryFont"
@@ -77,7 +81,7 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
           sliderClassName="select-none cursor-grab active:cursor-grabbing"
           slideClassName="mx-[2.5vw]"
           slideInnerClassName="flex flex-col gap-3"
-          data={{ products, cartProduct: cartProduct }}
+          data={{ products: product, cartProduct: cartProduct }}
         />
       }
     </section>

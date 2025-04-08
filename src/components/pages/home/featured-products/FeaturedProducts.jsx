@@ -74,7 +74,6 @@ export default function FeaturedProducts(
     }
     const result = await response.json();
     const result2 = await response2.json();
-    console.log('Result', result)
     setBestSellet(result);
     setTrending(result2);
     setProductArray(result);
@@ -98,7 +97,6 @@ export default function FeaturedProducts(
     // }
   }
   const addItemToCart = async (isRemove, isOld, item) => {
-    console.log(item)
     const requestObject = {
       userId: userData?.userId,
       productId: item?.id,
@@ -107,7 +105,6 @@ export default function FeaturedProducts(
       name: item?.name,
       price: item?.price
     }
-    console.log(requestObject)
     const response = await addToCartService(requestObject);
     if (response?.response?.success) {
       if (type == 'new') {
@@ -145,19 +142,19 @@ export default function FeaturedProducts(
           >Trending</button>
         </div>
         <div className="w-full max-w-[85vw] mx-auto mt-7">
-      <Swiper
-      // install Swiper modules
-      modules={[Navigation, Pagination, Autoplay]}
-      slidesPerView={4}
-      autoplay={{ delay: 3000, disableOnInteraction: false }}
-      breakpoints={{
-        320: { slidesPerView: 1, spaceBetween: 10 },
-        768: { slidesPerView: 2, spaceBetween: 20 },
-        1024: { slidesPerView: 3, spaceBetween: 30 },
-        1200: { slidesPerView: 4, spaceBetween: 50 },
-      }}
-    >
-          {productArray.map((product, index) => (
+          <Swiper
+            // install Swiper modules
+            modules={[Navigation, Pagination, Autoplay]}
+            slidesPerView={4}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            breakpoints={{
+              320: { slidesPerView: 1, spaceBetween: 10 },
+              768: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 30 },
+              1200: { slidesPerView: 4, spaceBetween: 50 },
+            }}
+          >
+            {productArray.map((product, index) => (
               <SwiperSlide index={index} key={product.id}>
                 <div className="relative mx-5x">
                   <img
@@ -180,10 +177,10 @@ export default function FeaturedProducts(
                 </div>
               </SwiperSlide>
             ))}
-    </Swiper>
-      </div>
-        
-          {/* <Slider className="mt-8">
+          </Swiper>
+        </div>
+
+        {/* <Slider className="mt-8">
             {productArray.map((product, index) => (
               <Slide index={index} key={product.id}>
                 <div className="relative mx-5">
@@ -208,7 +205,7 @@ export default function FeaturedProducts(
               </Slide>
             ))}
           </Slider> */}
-          {/* <div className="flex justify-between mt-6">
+        {/* <div className="flex justify-between mt-6">
           <ButtonBack className="bg-gray-800 text-white p-2 rounded">Back</ButtonBack>
           <ButtonNext className="bg-gray-800 text-white p-2 rounded">Next</ButtonNext>
         </div> */}

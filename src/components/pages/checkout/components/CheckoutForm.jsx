@@ -37,7 +37,6 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
   const methods = useForm({ mode: "onChange" });
   const couponApplied = useSelector(data => data.couponSlice);
   const userData = useSelector(data => data.userDataSlice)
-  console.log("from checkout", couponApplied)
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -203,7 +202,6 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           }
 
           const finalResponse = await finalCallService(req);
-          console.log('final response', finalResponse)
           if (finalResponse?.response?.success) {
             toast('Order Placed Successfully', { type: 'success' })
             // dispatch(cart.addAll([]))

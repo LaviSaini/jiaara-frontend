@@ -24,7 +24,6 @@ export default function LogIn({ isPopUp, userlogin }) {
   const method = useForm();
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
-    console.log(data)
     dispatch(loaderData.add(true));
     const response = await loginService(data);
     dispatch(loaderData.add(false))
@@ -38,7 +37,6 @@ export default function LogIn({ isPopUp, userlogin }) {
       fetchWishList(response?.response?.data?.id)
       router.push('/')
     } else {
-      console.log("false")
       toast(`${response?.response?.message}`, { type: 'error' })
     }
   }

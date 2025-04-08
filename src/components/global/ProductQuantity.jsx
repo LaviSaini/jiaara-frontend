@@ -127,17 +127,17 @@ export default function ProductQuantity({
           rounded-s-sm
           font-semibold
           ${buttonClassName}
-          ${disableIncrementButton() ? "opacity-50" : ""}
+           
         `}
         type="button"
         onClick={handleIncrement}
-        disabled={disableIncrementButton()}
+
       >
         <Icon className="plus-icon" icon={incrementIcon} />
       </button>
       <input
         ref={qtyInputRef}
-        className={`
+        className={`bg-white 
           quantity-count
           input-selection-black
           ${!isProductPage ? "cursor-default" : ""}
@@ -147,7 +147,7 @@ export default function ProductQuantity({
         autoComplete="off"
         value={quantity}
         onChange={handleQtyInput}
-        disabled={isOutOfStock()}
+        disabled={true}
       />
       <button
         className={`
@@ -156,11 +156,11 @@ export default function ProductQuantity({
           rounded-e-sm
           font-semibold
           ${buttonClassName}
-          ${disableDecrementButton() ? "opacity-50" : ""}
+           }
         `}
         type="button"
         onClick={handleDecrement}
-        disabled={disableDecrementButton()}
+
       >
         <Icon className="minus-icon" icon={decrementIcon} />
       </button>

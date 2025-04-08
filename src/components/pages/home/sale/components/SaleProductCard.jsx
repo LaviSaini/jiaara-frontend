@@ -62,7 +62,6 @@ export default function SaleProductCard({
     wishlistUtils: { wishlistItem, handleWishlist }
   }
     = useProductUtils(creatNewObj(product));
-  console.log(wishlistItem)
   const dispatch = useDispatch()
   const [isModelOpen, setIsModelOpen] = useState(false);
   const userData = useSelector(data => data.userDataSlice)

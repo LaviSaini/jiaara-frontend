@@ -17,7 +17,6 @@ export default function CreatePass() {
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false)
   const onSubmit = async (data) => {
-    console.log(data)
     if (isLoading) {
       return;
     }
@@ -32,10 +31,7 @@ export default function CreatePass() {
       return;
     }
     setIsLoading(true);
-    console.log(requestObject)
-    console.log(agreement)
     const response = await createAccountService(requestObject);
-    console.log(response)
     if (response?.response?.success) {
       toast(`${response?.response?.message}`, { type: 'success' })
       methods.reset()

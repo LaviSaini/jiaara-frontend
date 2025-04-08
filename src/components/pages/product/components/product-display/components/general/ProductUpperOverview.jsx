@@ -7,11 +7,15 @@ import { WISHLIST } from "@/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { loaderData } from "@/redux/slices/loader";
 import { addToWishListService, deleteWishListService } from "@/app/api/cms/nodeapi/DetailService";
+import LoginModel from "@/components/model/LoginModel";
+import { useState } from "react";
 
 
 export default function ProductUpperOverview({
   className = "",
   product = null,
+  cartProduct = null,
+
   icon = {
     className: "text-2xl text-primaryFont",
     active: WISHLIST?.activeIcon,
@@ -25,11 +29,15 @@ export default function ProductUpperOverview({
     wishlistUtils: { wishlistItem, handleWishlist }
   }
     = useProductUtils(cartProduct);
-  const userData = useSelector(data => data.userDataSlice)
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
+  const userData = useSelector(data => data.userDataSlice)
   const wishlistaction = () => {
-    console.log(wishlistItem)
-    debugger
+    if (!userData) {
+
+      setIsModelOpen(true)
+      return;
+    }
     if (wishlistItem) {
 
       deleteWishList(product?.id)
@@ -51,7 +59,6 @@ export default function ProductUpperOverview({
       productId: product?.id,
       data: JSON.stringify(product)
     }
-    console.log(requestObject)
     dispatch(loaderData.add(true));
     const response = await addToWishListService(requestObject);
     if (response?.response?.success) {
@@ -85,11 +92,13 @@ export default function ProductUpperOverview({
           {(icon?.general || icon?.active || icon?.inactive) &&
             <Icon
               className={`${icon?.className}`}
-              icon={wishlistItem?.isWishlist ? icon?.active : icon?.inactive ?? icon?.general}
+              icon={wishlistItem ? icon?.active : icon?.inactive}
             />
           }
         </button>
       }
+      <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
+
     </div>
   );
 }

@@ -68,8 +68,7 @@ export default function Sale() {
       setIsLoading(true)
       const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/wc/v3/products?category=${categoryId}&consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`);
       if (response?.status === 200) {
-        response?.data?.filter(item=>item.on_sale);
-        console.log(response.data,"responseDaatat")
+        response?.data?.filter(item => item.on_sale);
         setCurrentProducts(response.data);
         setIsLoading(false)
       } else {
@@ -156,7 +155,7 @@ export default function Sale() {
                         ⭐ {product.rating} <span>{product.reviews}</span>
                       </div>
                       <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-bold px-2 py-1">
-                        {Math.round(((product?.regular_price*1-product?.price*1)/product?.regular_price*1)*100)}%
+                        {Math.round(((product?.regular_price * 1 - product?.price * 1) / product?.regular_price * 1) * 100)}%
                       </div>
                     </div>
                   </div>

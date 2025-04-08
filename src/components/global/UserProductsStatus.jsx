@@ -26,7 +26,6 @@ function UserProductsStatus({
   const [currentActiveTab, setCurrentActiveTab] = useState(FIRST_TAB_INDEX);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  console.log(titles)
   const manageCurrentActiveTab = useCallback(({ index = null, titleId = null }) => {
 
     if (currentActiveTab === index) {

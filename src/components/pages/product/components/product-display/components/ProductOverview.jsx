@@ -23,13 +23,18 @@ import useProductUtils from "@/utils/hooks/global/useProductUtils";
 import INR from "@/utils/functions/general/INR";
 
 import { CHECKOUT } from "@/routes";
+import { useDispatch, useSelector } from "react-redux";
+import LoginModel from "@/components/model/LoginModel";
+import { addToCartService, deleteCartItem } from "@/app/api/cms/nodeapi/DetailService";
+import { cart } from "@/redux/slices/cart";
+import { loaderData } from "@/redux/slices/loader";
 
 const INITIAL_QTY = 1;
 const NO_STOCK_QTY = 0;
 const stockLimit = 15;
 
 
-export default function ProductOverview({ product = null }) {
+export default function ProductOverview({ product = null, cartProduct = null }) {
 
   const { data: { triggered } = {}, data: { states } = {} } = useContext(context) || {};
   const isZoomed = (triggered && states?.zoomableImage?.isZoomed) || false;
@@ -51,7 +56,7 @@ export default function ProductOverview({ product = null }) {
 
   const addToCartButtonRef = useRef(null);
   const [isAddToCartBtnLoading, setIsAddToCartBtnLoading] = useState(false);
-  
+
   const [quantity, setQuantity] = useState(INITIAL_QTY);
 
   const [error, setError] = useState({});
@@ -61,21 +66,23 @@ export default function ProductOverview({ product = null }) {
     setQuantity(receivedQuantity);
   }
 
+  const userData = useSelector(data => data.userDataSlice)
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   const {
     cartUtils: { cartItem, addToCart },
     buyNowUtils: { theBuyNow },
   }
-    = useProductUtils(product);
-
-    
+    = useProductUtils(cartProduct);
+  const cartList = useSelector(state => state?.cartReducer ?? []);
+  const dispatch = useDispatch();
   let stockQuantity = product?.stockQuantity ? product?.stockQuantity : stockLimit;
   stockQuantity -= (cartItem?.cartQtyCount ?? 0);
 
 
   const getStockStatus = () => {
 
-    if (product?.inStock) {
+    if (product?.stock_status == 'instock') {
 
       if (product?.stockQuantity) {
         return `${product?.stockQuantity} item(s) left in Stock`;
@@ -115,7 +122,7 @@ export default function ProductOverview({ product = null }) {
     if (quantity > currentStockQuantity) {
       setQuantity(currentStockQuantity > 0 ? INITIAL_QTY : NO_STOCK_QTY);
     }
-    
+
     if (currentStockQuantity > 0) {
       enableAddToCartButton();
     }
@@ -137,13 +144,13 @@ export default function ProductOverview({ product = null }) {
     if (isValid) {
 
       theBuyNow(quantity);
-      
+
       saveCurrentRoute();
       router.push(CHECKOUT.pathname);
     }
   }
 
-  
+
   const getError = useCallback(() => {
 
     if (quantity > stockLimit) {
@@ -175,15 +182,108 @@ export default function ProductOverview({ product = null }) {
 
   }, [quantity, stockQuantity]);
 
+  const checkIsUserLogin = () => {
+    if (!userData) {
+      setIsModelOpen(true)
+      return;
+    }
+    if (cartItem) {
+      deletecart('all')
+    } else {
+      addItemToCart(1, 'new')
+    }
+  }
+  const addItemToCart = async (quantity, type) => {
+    const requestObject = {
+      userId: userData?.userId,
+      productId: product?.id,
+      quantity: quantity,
+      img: product?.images[0]?.src,
+      name: product?.name,
+      price: product?.price
+    }
 
+    const cartItem = cartList.filter(data => data.product_id == product?.id);
+    if (cartItem[0]?.quantity === 1 && quantity == -1) {
+      deletecart('one', quantity);
+    } else {
+      dispatch(loaderData.add(true));
+      try {
+        const response = await addToCartService(requestObject);
+        if (response?.response?.success) {
+          if (type == 'new') {
+            addToCart()
+          } else if (type == 'update') {
+            if (quantity == 1) {
+              dispatch(cart.incrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+            } else {
+              dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
+            }
+          }
+        } else {
+          toast('Something Went Wrong!', { type: 'error' })
+        }
+
+      } catch (error) {
+        toast("Something Went Wrong!", { type: "error" })
+      }
+      dispatch(loaderData.add(false));
+    }
+
+  }
+  const deletecart = async (type, quantity) => {
+    dispatch(loaderData.add(true));
+    try {
+      const response = await deleteCartItem(userData?.userId, cartItem?.product_id);
+      if (response) {
+        if (response?.response?.success) {
+          if (type == 'one') {
+            dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem?.quantity + quantity }));
+          } else {
+            dispatch(cart.decrementQty({ productId: product?.id, quantity: 0 }))
+          }
+        } else {
+          toast('Something Went Wrong!', { type: 'error' })
+        }
+      } else {
+        toast('Something Went Wrong!', { type: 'error' })
+      }
+    } catch (error) {
+      toast('something Went Wrong!', { type: 'error' })
+    }
+    dispatch(loaderData.add(false));
+  }
+  const handleIncrementAndDecrement = (item) => {
+    if (item == 1) {
+      addItemToCart(1, 'update')
+    } else if (item == -1) {
+      addItemToCart(-1, 'update')
+    }
+
+  }
   useEffect(() => {
 
     const error = getError();
     setError(error);
-    
+
   }, [getError]);
 
+  const creatNewObj = (data) => {
+    const reqObj = {
 
+      "user_id": '',
+      "cart_id": '',
+      "created_date": '',
+      "product_id": data?.id,
+      "quantity": 0,
+      "img": data?.image,
+      "price": data?.price,
+      "name": data?.name,
+      "status": 's'
+
+    }
+    return reqObj
+  }
   return (
     <>
       <div
@@ -194,7 +294,7 @@ export default function ProductOverview({ product = null }) {
         }
       >
       </div>
-      
+
       <div
         className={`
           product-overview-lower
@@ -207,6 +307,7 @@ export default function ProductOverview({ product = null }) {
         <ProductUpperOverview
           className="w-full hidden md:flex md:justify-between md:items-start md:gap-5 xl:w-[95%]"
           product={product}
+          cartProduct={creatNewObj(product)}
         />
 
         <div className="wrapper flex flex-wrap items-center gap-4 xs:justify-around md:flex-col md:items-start xl:w-[95%]">
@@ -230,13 +331,13 @@ export default function ProductOverview({ product = null }) {
 
           <div className={`
             stock-status text-sm sm:text-base
-            ${product?.inStock ? "text-green-600" : "text-red-600"}
+            ${product?.stock_status == 'instock' ? "text-green-600" : "text-red-600"}
           `}>
             {getStockStatus()}
           </div>
-          
+
         </div>
-        
+
         <div className="product-highlight-wrapper px-[1vw] md:px-0 text-primaryFont xl:w-[95%]">
           <Content
             className="product-highlight-text py-1 text-xs sm:text-sm lg:text-base"
@@ -248,20 +349,28 @@ export default function ProductOverview({ product = null }) {
         </div>
 
         <div className="actions flex flex-col gap-5 xl:w-[95%]">
-          
+
           <div className="wrapper flex justify-between items-center mt-2">
-            <ProductQuantity
-              productId={product.id}
-              theClassName="flex items-stretch"
-              inputClassName="w-[2.7rem] px-2 py-1 text-center text-sm bg-septenaryBackground sm:text-base sm:py-2"
-              buttonsClassName="px-3 py-2 text-sm bg-white sm:text-base sm:py-2"
-              incrementIcon={FiPlus}
-              decrementIcon={FiMinus}
-              stockLeft={stockQuantity}
-              stockLimit={stockLimit}
-              callback={getQuantity}
-              cartQtyCount={quantity}
-            />
+            {
+              cartItem ?
+                <ProductQuantity
+                  productId={product.id}
+                  theClassName="flex items-stretch"
+                  inputClassName="w-[2.7rem] px-2 py-1 text-center text-sm bg-white sm:text-base sm:py-2"
+                  buttonsClassName="px-3 py-2 text-sm bg-white sm:text-base sm:py-2"
+                  incrementIcon={FiPlus}
+                  decrementIcon={FiMinus}
+                  stockLeft={stockQuantity}
+                  stockLimit={stockLimit}
+                  callback={getQuantity}
+                  callDecrement={handleIncrementAndDecrement}
+                  callIncrement={handleIncrementAndDecrement}
+                  cartQtyCount={cartItem?.quantity}
+                />
+                :
+                ''
+            }
+
 
             <button
               ref={addToCartButtonRef}
@@ -275,16 +384,16 @@ export default function ProductOverview({ product = null }) {
                 md:px-[3vw]
                 md:text-sm
                 lg:px-[5vw]
-                ${(!product?.inStock || error) ? "opacity-50" : ""}
+                ${(product?.stock_status != 'instock') ? "opacity-50" : ""}
               `}
-              disabled={!product?.inStock || error}
-              onClick={handleAddToCartButton}
+              disabled={product?.stock_status != 'instock'}
+              onClick={() => checkIsUserLogin()}
             >
-              Add to Cart
+              {cartItem ? 'Remove' : 'Add to Cart'}
             </button>
           </div>
 
-          {error && 
+          {error &&
             <p className="error text-red-500 text-xs">
               {(!isAddToCartBtnLoading && error?.message) ?? ""}
             </p>
@@ -304,6 +413,8 @@ export default function ProductOverview({ product = null }) {
             Buy Now
           </Link>
         </div>
+        <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
+
       </div>
     </>
   );

@@ -54,7 +54,7 @@ export default function ProductsCarousel({
 
   const [isTouchInteracting, setIsTouchInteracting] = useState(false);
   const [keepPlaying, setKeepPlaying] = useState(isPlaying);
-
+  console.log()
 
   const { data: { triggered } = {}, data: { states } = {} } = useContext(context) || {};
 
@@ -105,7 +105,7 @@ export default function ProductsCarousel({
         isIntrinsicHeight
         visibleSlides={visibleSlidesCount}
         totalSlides={products.length}
-        isPlaying={keepPlaying}
+        isPlaying={true}
         interval={interval}
         playDirection={playDirection}
         touchEnabled={isTouchInteracting}

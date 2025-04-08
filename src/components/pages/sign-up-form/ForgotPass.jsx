@@ -20,11 +20,9 @@ export default function ForgotPass() {
 
     setuseremail(data?.email)
     if (isSending) return;
-    console.log(data)
     setIsSending(true);
     const response = await sendCodeService(data?.email);
     setIsSending(false);
-    console.log(response)
     if (response?.response?.success) {
       toast(`${response?.response?.message}`, { type: 'success' })
       setIsOTPSend(true)

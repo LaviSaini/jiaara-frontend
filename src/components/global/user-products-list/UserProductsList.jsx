@@ -20,6 +20,8 @@ import { STOCK_LEFT_FALLBACK_VALUE } from "@/utils/constants";
 
 import { PRODUCT } from "@/routes";
 import { addToCartService, deleteCartItem } from "@/app/api/cms/nodeapi/DetailService";
+import { toast } from "react-toastify";
+import { loaderData } from "@/redux/slices/loader";
 
 
 export default function UserProductsList({
@@ -45,15 +47,15 @@ export default function UserProductsList({
 
   const removeCartItem = async (productId) => {
     // dispatch(cart.remove(productId));
-    debugger
+    dispatch(loaderData.add(true))
     const response = await deleteCartItem(userData?.userId, productId);
-    console.log(response)
     if (response?.response?.success) {
       dispatch(cart.remove(productId))
     }
+    dispatch(loaderData.add(false))
+
   }
   const handleIncrementAndDecrement = (item, product) => {
-    console.log(item, product)
     if (item == 1) {
       addItemToCart(1, 'update', product)
     } else if (item == -1) {
@@ -71,33 +73,48 @@ export default function UserProductsList({
       price: product?.price
     }
     const cartItem = productsList.find(data => data.product_id == product?.product_id);
-    console.log(cartItem)
     if (cartItem?.quantity === 1 && quantity == -1) {
-      const response = await deleteCartItem(userData?.userId, cartItem?.product_id);
-      if (response) {
-        if (response?.response?.success) {
-          dispatch(cart.decrementQty({ productId: product?.product_id, quantity: cartItem?.quantity + quantity }));
+      dispatch(loaderData.add(true))
+      try {
+        const response = await deleteCartItem(userData?.userId, cartItem?.product_id);
+        if (response) {
+          if (response?.response?.success) {
+            dispatch(cart.decrementQty({ productId: product?.product_id, quantity: cartItem?.quantity + quantity }));
+          } else {
+            toast('Something Went Wrong!', { type: 'error' })
+          }
         } else {
           toast('Something Went Wrong!', { type: 'error' })
         }
-      } else {
+      } catch (error) {
         toast('Something Went Wrong!', { type: 'error' })
       }
+      dispatch(loaderData.add(false))
+
     } else {
-      const response = await addToCartService(requestObject);
-      if (response?.response?.success) {
-        if (type == 'new') {
-          addToCart()
-        } else if (type == 'update') {
-          if (quantity == 1) {
-            dispatch(cart.incrementQty({ productId: product?.product_id, quantity: cartItem?.quantity + quantity }));
-          } else {
-            dispatch(cart.decrementQty({ productId: product?.product_id, quantity: cartItem?.quantity + quantity }));
+      dispatch(loaderData.add(true))
+
+      try {
+        const response = await addToCartService(requestObject);
+        if (response?.response?.success) {
+          if (type == 'new') {
+            addToCart()
+          } else if (type == 'update') {
+            if (quantity == 1) {
+              dispatch(cart.incrementQty({ productId: product?.product_id, quantity: cartItem?.quantity + quantity }));
+            } else {
+              dispatch(cart.decrementQty({ productId: product?.product_id, quantity: cartItem?.quantity + quantity }));
+            }
           }
+        } else {
+          toast('Something Went Wrong!', { type: 'error' })
         }
-      } else {
+      } catch (error) {
         toast('Something Went Wrong!', { type: 'error' })
       }
+      dispatch(loaderData.add(false))
+
+
     }
 
   }

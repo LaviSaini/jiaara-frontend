@@ -26,7 +26,6 @@ export default function LoginModel({
     });
 
     const userLogin = (data) => {
-        console.log(data)
         dispatch(userdata.add({ userId: data?.id }));
         fetchCartList(data?.id);
         fetchWishList(data?.id)

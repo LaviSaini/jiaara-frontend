@@ -16,7 +16,6 @@ export default function CreatePass({ email }) {
   const [isVisibleFirst, setIsVisibleFirst] = useState(false);
   const [isVisibleSecond, setIsVisibleSecond] = useState(false);
   const onSubmit = async (data) => {
-    console.log(data)
     if (data?.confirmpassword != data?.newpassword) {
       setIsSame(true);
       return;

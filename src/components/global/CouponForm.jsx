@@ -60,7 +60,6 @@ export default function CouponForm({ className = "" }) {
   useEffect(() => {
     if (couponApplied) {
       setIsApplied(true)
-      console.log(couponApplied)
       setValue('couponCode', couponApplied?.title)
       setMessage(couponApplied?.details)
       setIsInValid(true)

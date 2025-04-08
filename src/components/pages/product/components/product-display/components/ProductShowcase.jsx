@@ -2,7 +2,7 @@ import "@/styles/pure-react-carousel.css";
 
 import { useState, useRef } from "react";
 
-import { 
+import {
   CarouselProvider,
   Slider,
   Slide,
@@ -27,12 +27,12 @@ export default function ProductShowcase({ product = null }) {
   const secondaryCarouselRef = useRef(null);
 
   const currContRef = useRef(null);
-  
+
   const { screenWidth, breakpoints: { md } } = useWindowSize();
 
   const { goToSlide } = useGoToSlide();
 
-  useCurrentSlide({ 
+  useCurrentSlide({
     carouselRef: primaryCarouselRef,
     onSlideChange: onPrimarySlideChange
   });
@@ -43,23 +43,23 @@ export default function ProductShowcase({ product = null }) {
   ] = useState(undefined);
 
   const [preventSecondarySlide, setPreventSecondarySlide] = useState(false);
-  
-  const { 
+
+  const {
     sliderTrayWrapClassName,
     carouselSlidePaddingBottom: secondaryCarouselSlidePaddingBottom
   }
-   = useRemoveExcessBottomPadding({
-    carouselParentNodeRef: currContRef,
-    sliderTrayWrapClassName: "secondary-display-product-carousel",
-    paddingBottom: screenWidth < md ? "0%" : "470%"
-  });
+    = useRemoveExcessBottomPadding({
+      carouselParentNodeRef: currContRef,
+      sliderTrayWrapClassName: "secondary-display-product-carousel",
+      paddingBottom: screenWidth < md ? "0%" : "470%"
+    });
 
 
   function onPrimarySlideChange(primarySlideIndex) {
 
     setSecondaryCarouselSelectedSlideIndex(primarySlideIndex);
 
-    if(preventSecondarySlide) {
+    if (preventSecondarySlide) {
       setPreventSecondarySlide(false);
     }
     else {
@@ -80,7 +80,7 @@ export default function ProductShowcase({ product = null }) {
       slideIndex
     });
   };
-  
+
   const applySecondaryCarouselSlideSelection = slideIndex => {
 
     if (secondaryCarouselSelectedSlideIndex === slideIndex) {
@@ -95,7 +95,22 @@ export default function ProductShowcase({ product = null }) {
     }
     return {};
   }
-  
+  const creatNewObj = (data) => {
+    const reqObj = {
+
+      "user_id": '',
+      "cart_id": '',
+      "created_date": '',
+      "product_id": data?.id,
+      "quantity": 0,
+      "img": data?.image,
+      "price": data?.price,
+      "name": data?.name,
+      "status": 's'
+
+    }
+    return reqObj
+  }
   return (
     <div
       ref={currContRef}
@@ -105,11 +120,13 @@ export default function ProductShowcase({ product = null }) {
         <ProductUpperOverview
           className="w-full flex justify-between items-start gap-5 px-[4vw]"
           product={product}
+          cartProduct={creatNewObj(product)}
+
         />
       }
 
       {/* Primary Display Product Carousel */}
-      {product?.gallery?.length > 0 &&
+      {product?.images?.length > 0 &&
         <CarouselProvider
           ref={primaryCarouselRef}
           className="primary-display-product-carousel w-[95vw] relative md:w-[40vw] lg:w-[24rem]"
@@ -117,10 +134,10 @@ export default function ProductShowcase({ product = null }) {
           naturalSlideHeight={125}
           isIntrinsicHeight
           visibleSlides={1}
-          totalSlides={product?.gallery?.length}
+          totalSlides={product?.images?.length}
         >
           <Slider className="primary-product-variations-slider select-none cursor-grab active:cursor-grabbing">
-            {product?.gallery?.map((productImage, index) =>
+            {product?.images?.map((productImage, index) =>
               <Slide
                 key={index}
                 index={index}
@@ -148,14 +165,14 @@ export default function ProductShowcase({ product = null }) {
             )}
           </Slider>
           <div className="primary-dots-cont w-full absolute flex flex-wrap justify-center items-center bottom-0">
-            <DotGroup className="dot-group mb-3"/>
+            <DotGroup className="dot-group mb-3" />
           </div>
         </CarouselProvider>
       }
 
 
       {/* Secondary Display Product Carousel */}
-      {product?.gallery?.length > 0 &&
+      {product?.images?.length > 0 &&
         <CarouselProvider
           ref={secondaryCarouselRef}
           className="secondary-display-product-carousel w-[96vw] flex justify-center items-center md:w-auto"
@@ -163,7 +180,7 @@ export default function ProductShowcase({ product = null }) {
           naturalSlideHeight={125}
           isIntrinsicHeight={screenWidth < md}
           visibleSlides={4}
-          totalSlides={product?.gallery?.length}
+          totalSlides={product?.images?.length}
           orientation={screenWidth < md ? "horizontal" : "vertical"}
         >
           <Slider
@@ -174,7 +191,7 @@ export default function ProductShowcase({ product = null }) {
               ${screenWidth >= md ? "flex flex-col items-center justify-center gap-2" : ""}
             `}
           >
-            {product?.gallery?.map((productImage, index) =>
+            {product?.images?.map((productImage, index) =>
               <Slide
                 key={index}
                 index={index}
@@ -198,7 +215,7 @@ export default function ProductShowcase({ product = null }) {
                 />
               </Slide>
             )}
-          </Slider>          
+          </Slider>
         </CarouselProvider>
       }
     </div>
