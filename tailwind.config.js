@@ -40,6 +40,7 @@ module.exports = {
         secondaryLight: "#F9F9F9",
         tertiaryLight: "#DFDFDF",
         quaternaryLight: "#D7D7D7",
+        collectionBackground: '#ecd2db',
       },
     },
   },

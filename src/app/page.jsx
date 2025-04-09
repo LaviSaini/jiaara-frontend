@@ -10,6 +10,7 @@ import Sale from "@/components/pages/home/sale/Sale";
 import FollowOnInstagram from "@/components/pages/home/follow-on-instagram/FollowOnInstagram";
 import FeaturedDeals from "@/components/pages/home/featured-deals/FeaturedDeals";
 import JiaaraStory from "@/components/pages/home/JiaaraStory";
+import SendGift from "@/components/pages/home/SendGift";
 
 
 export default function Home() {
@@ -18,13 +19,14 @@ export default function Home() {
     <div className="homepage flex flex-col gap-12">
       <Hero/>
       <Categories/>
-      <Collections/>
       <FeaturedProducts/>
       <FeaturedDeals/>
       <Sale/>
       <KeyBenefits/>
       <CelebrityStyle/>
       {/* <JiaaraStory/> */}
+      <Collections/>
+      <SendGift/>
       <BuildingWithPurpose/>
       <FollowOnInstagram/>
       <Testimonials/>

@@ -135,7 +135,7 @@ export default function Sale() {
               return (
                 <SwiperSlide key={product.id}>
                   <div className="bg-white shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg overflow-hidden">
-                    <div className="card-img">
+                    <div className="card-img h-[180px] w-full" >
                       <Image
                         src={product?.images[currentImageIndex]?.src} // Fallback image if no images available
                         alt={product?.images[currentImageIndex]?.alt || "default"}
@@ -145,8 +145,8 @@ export default function Sale() {
                         priority // Preload images
                       />
                     </div>
-                    <div className="content p-4 flex flex-col text-center">
-                      <h3 className="text-md font-medium font-content tracking-wide">{product.name}</h3>
+                    <div className="content p-4 flex flex-col text-left">
+                      <h3 className="text-xs font-medium font-content tracking-wide">{product.name}</h3>
                       <h2 className="font-content text-lg font-medium mt-2">{product.price}</h2>
                       <h2>
                         <span className="line-through text-gray-400 text-sm">{product.oldPrice}</span>
@@ -156,6 +156,10 @@ export default function Sale() {
                       </div>
                       <div className="absolute top-0 left-0 bg-red-600 text-white text-sm font-bold px-2 py-1">
                         {Math.round(((product?.regular_price * 1 - product?.price * 1) / product?.regular_price * 1) * 100)}%
+                      </div>
+                      <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-2">
+                        <span className='bg-collectionBackground rounded-xl px-2 py-1 text-xs'>L</span>
+                        <span className='bg-collectionBackground rounded-xl px-2 py-1 text-xs'>C</span>
                       </div>
                     </div>
                   </div>
