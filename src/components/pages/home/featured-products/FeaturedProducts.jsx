@@ -15,24 +15,9 @@ import { addToCartService, addToWishListService, deleteWishListService } from '@
 import { loaderData } from '@/redux/slices/loader';
 import { wishlist } from '@/redux/slices/wishlist';
 import createObjCommanFunction from '@/utils/functions/general/createCartWishlistObje';
+import { cart } from '@/redux/slices/cart';
 
-const products = {
-  bestSeller: [
-    { id: 1, title: 'Etch Chain Bracelet', price: '₹ 9,200.00', image: 'http://localhost:3000/_next/image?url=https%3A%2F%2Fcms.jiaarajewellery.com%2Fwp-content%2Fuploads%2F2024%2F11%2FNecklaces.webp&w=1920&q=75' },
-    { id: 2, title: 'Heart Pearl Hoops', price: '₹ 6,300.00', image: 'http://localhost:3000/_next/image?url=https%3A%2F%2Fcms.jiaarajewellery.com%2Fwp-content%2Fuploads%2F2024%2F11%2FEarrings.webp&w=1920&q=75' },
-    { id: 3, title: 'Etch Chain Bracelet', price: '₹ 9,200.00', image: 'http://localhost:3000/_next/image?url=https%3A%2F%2Fcms.jiaarajewellery.com%2Fwp-content%2Fuploads%2F2024%2F11%2FJhumkas.webp&w=1920&q=75' },
-    { id: 4, title: 'Heart Pearl Hoops', price: '₹ 6,300.00', image: 'http://localhost:3000/_next/image?url=https%3A%2F%2Fcms.jiaarajewellery.com%2Fwp-content%2Fuploads%2F2024%2F11%2FJhumkas.webp&w=1920&q=75' },
-    { id: 5, title: 'Etch Chain Bracelet', price: '₹ 9,200.00', image: 'http://localhost:3000/_next/image?url=https%3A%2F%2Fcms.jiaarajewellery.com%2Fwp-content%2Fuploads%2F2024%2F11%2FNecklaces.webp&w=1920&q=75' },
-    { id: 6, title: 'Heart Pearl Hoops', price: '₹ 6,300.00', image: 'http://localhost:3000/_next/image?url=https%3A%2F%2Fcms.jiaarajewellery.com%2Fwp-content%2Fuploads%2F2024%2F11%2FEarrings.webp&w=1920&q=75' },
-  ],
-  trending: [
-    { id: 7, title: 'Danbury Ring', price: '₹ 7,500.00', image: '/images/ring.jpg' },
-    { id: 8, title: 'Sahara Pearl Anklet', price: '₹ 5,200.00', image: '/images/anklet.jpg' },
-    { id: 9, title: 'Sahara Pearl Anklet', price: '₹ 5,200.00', image: '/images/anklet.jpg' },
-    { id: 10, title: 'Sahara Pearl Anklet', price: '₹ 5,200.00', image: '/images/anklet.jpg' },
-    { id: 11, title: 'Sahara Pearl Anklet', price: '₹ 5,200.00', image: '/images/anklet.jpg' },
-  ]
-};
+
 export default function FeaturedProducts(
   {
     icon = {
@@ -65,6 +50,14 @@ export default function FeaturedProducts(
   }
   function getProductItemFromWishlist(productId) {
     const data = wishlistData.find(data => data.product_id == productId);
+    if (data) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function getProductItemFromCart(productId) {
+    const data = cartList.find(data => data.product_id == productId);
     if (data) {
       return true;
     } else {
@@ -105,7 +98,11 @@ export default function FeaturedProducts(
         addItemToWishList(product)
       }
     } else {
-
+      if (getProductItemFromCart(product.id)) {
+        toast("Item already added to cart!", { type: 'success' })
+        return;
+      }
+      addItemToCart(product);
     }
   }
   const deleteWishList = async (productId) => {
@@ -145,29 +142,34 @@ export default function FeaturedProducts(
     // setIsLoading(false)
 
   }
-  const addItemToCart = async (isRemove, isOld, item) => {
+  const addItemToCart = async (product) => {
     const requestObject = {
       userId: userData?.userId,
-      productId: item?.id,
-      quantity: isRemove ? -1 : 1,
-      img: item?.images[0]?.src,
-      name: item?.name,
-      price: item?.price
+      productId: product?.id,
+      quantity: 1,
+      img: product?.images[0]?.src,
+      name: product?.name,
+      price: product?.price
     }
-    const response = await addToCartService(requestObject);
-    if (response?.response?.success) {
-      if (type == 'new') {
-        addToCart()
-      } else if (type == 'update') {
-        if (quantity == 1) {
-          dispatch(cart.incrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
-        } else {
-          dispatch(cart.decrementQty({ productId: product?.id, quantity: cartItem[0]?.quantity + quantity }));
-        }
+    try {
+      dispatch(loaderData.add(true))
+      const response = await addToCartService(requestObject);
+      if (response?.response?.success) {
+        toast("Item added to Cart!", { type: 'success' });
+        const obj = createObjCommanFunction(product);
+        dispatch(cart.addAll([...cartList, { ...obj, quantity: 1 }]))
+        dispatch(loaderData.clear());
+
+      } else {
+        toast('Something Went Wrong!', { type: 'error' })
       }
-    } else {
-      toast('Something Went Wrong!', { type: 'error' })
+      dispatch(loaderData.clear())
+    } catch (error) {
+      console.log(error)
+      toast("Something Went Wrong!", { type: 'error' })
+      dispatch(loaderData.add(false));
     }
+
   }
   const itemExistsInWishlist = (id) => {
 
@@ -222,7 +224,16 @@ export default function FeaturedProducts(
                         icon={getProductItemFromWishlist(product.id) ? icon?.active : icon?.inactive}
                       />
                     </button>
-                    <button className="bg-primaryBackground p-2 rounded-full shadow-lg" onClick={() => checkIsUserLogin('cart', product)}>🛒</button>
+                    {
+                      getProductItemFromCart(product.id) ?
+                        <button onClick={() => checkIsUserLogin('cart', product)} className="bg-primaryBackground p-2 rounded-full shadow-lg flex justify-center items-center">
+                          <span>&#10004;</span>
+                        </button>
+                        :
+                        <button className="bg-primaryBackground p-2 rounded-full shadow-lg" onClick={() => checkIsUserLogin('cart', product)}>🛒</button>
+
+                    }
+
                   </div>
                   <h3 className="mt-4 font-heading text-center text-xl tracking-wide">{product.name}</h3>
                   <p className="font-heading text-center text-lg tracking-wide">&#8377;

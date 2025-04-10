@@ -169,6 +169,7 @@ export default function Product({
         } else {
           toast('Something Went Wrong!', { type: 'error' })
         }
+        dispatch(loaderData.clear())
       } catch (error) {
         toast('something Went Wrong!', { type: 'error' })
       }

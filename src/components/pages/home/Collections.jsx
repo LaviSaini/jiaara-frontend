@@ -89,11 +89,11 @@ export default function Collections({ className = "" }) {
           <div className="flex-auto bg-collectionBackground rounded-2xl px-8 pt-[50px]">
             <h2 className="text-3xl font-semibold text-primaryFont mb-4">{collections?.[0].title}</h2>
             <p className="text-primaryFont mb-3 font-content text-sm leading-6 tracking-wide">
-              Discover the charm of timeless elegance with our exclusive Clover Jewelry Collection. Inspired by 
-              the symbol of luck, love, and prosperity, each piece in this collection captures the delicate beauty 
-              of the clover leaf, reimagined in stunning designs that resonate with grace and sophistication. 
-              Whether you're drawn to the enchanting allure of nature or the promise of good fortune, our Clover 
-              Jewelry Line offers a perfect blend of style and sentiment. Adorn yourself with the elegance of 
+              Discover the charm of timeless elegance with our exclusive Clover Jewelry Collection. Inspired by
+              the symbol of luck, love, and prosperity, each piece in this collection captures the delicate beauty
+              of the clover leaf, reimagined in stunning designs that resonate with grace and sophistication.
+              Whether you're drawn to the enchanting allure of nature or the promise of good fortune, our Clover
+              Jewelry Line offers a perfect blend of style and sentiment. Adorn yourself with the elegance of
               clover-inspired artistry, and let your luck shine through every piece.
             </p>
             <div className="flex justify-end md:justify-end">
@@ -103,11 +103,11 @@ export default function Collections({ className = "" }) {
             </div>
           </div>
         </div>
-        <div class="flex gap-5">
-          <div class="w-[20%] flex-none bg-collectionBackground rounded-2xl px-8  pt-[50px]">
-          <h2 className="text-3xl font-semibold text-primaryFont mb-4">{collections?.[0].title}</h2>
+        <div className="flex gap-5">
+          <div className="w-[20%] flex-none bg-collectionBackground rounded-2xl px-8  pt-[50px]">
+            <h2 className="text-3xl font-semibold text-primaryFont mb-4">{collections?.[0].title}</h2>
             <p className="text-primaryFont mb-3 font-content text-sm leading-6 tracking-wide">
-            Introducing the Harmony Collection. Our bead jewelry line is crafted with meticulous attention to detail, blending colors, textures, and materials to create pieces that resonate with balance and unity.
+              Introducing the Harmony Collection. Our bead jewelry line is crafted with meticulous attention to detail, blending colors, textures, and materials to create pieces that resonate with balance and unity.
             </p>
             <div className="flex justify-end md:justify-end">
               <button className="border-2 border-primaryFont  text-primaryFont font-medium py-2 px-2 rounded-full">
