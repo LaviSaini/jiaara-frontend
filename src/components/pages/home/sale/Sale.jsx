@@ -48,8 +48,10 @@ export default function Sale() {
     try {
       const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
       if (response?.status === 200) {
-        const firstCategory = response.data[0];
-        setCategories(response.data);
+        const result = response.data?.filter(item=>item.id!=15);
+        const firstCategory = result[0]
+        console.log(result,"firstCategory")
+        setCategories(result);
         setActiveTab(firstCategory);
         getProducts(firstCategory.id); // Fetch products for the first category
         setIsLoading(false);
