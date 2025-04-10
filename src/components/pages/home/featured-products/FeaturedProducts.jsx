@@ -8,10 +8,13 @@ import "swiper/css/pagination";
 import { WISHLIST } from '@/routes';
 import Icon from '@/components/general/Icon';
 import useProductUtils from '@/utils/hooks/global/useProductUtils';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoginModel from '@/components/model/LoginModel';
 import { toast } from 'react-toastify';
-import { addToCartService } from '@/app/api/cms/nodeapi/DetailService';
+import { addToCartService, addToWishListService, deleteWishListService } from '@/app/api/cms/nodeapi/DetailService';
+import { loaderData } from '@/redux/slices/loader';
+import { wishlist } from '@/redux/slices/wishlist';
+import createObjCommanFunction from '@/utils/functions/general/createCartWishlistObje';
 
 const products = {
   bestSeller: [
@@ -40,15 +43,17 @@ export default function FeaturedProducts(
     }
   }
 ) {
+  const dispatch = useDispatch();
   const [productArray, setProductArray] = useState([]);
   const [isModelOpen, setIsModelOpen] = useState(false);
 
   const userData = useSelector(data => data.userDataSlice)
   const cartList = useSelector(state => state?.cartReducer ?? []);
-  const wishlist = useSelector(state => state?.wishlistReducer ?? [])
+  const wishlistData = useSelector(state => state?.wishlistReducer ?? [])
   const [activeTab, setActiveTab] = useState('bestSeller');
   const [bestSeller, setBestSellet] = useState([]);
   const [trending, setTrending] = useState([]);
+
   const tabChange = (tab) => {
 
     setActiveTab(tab);
@@ -58,7 +63,14 @@ export default function FeaturedProducts(
       setProductArray(trending)
     }
   }
-
+  function getProductItemFromWishlist(productId) {
+    const data = wishlistData.find(data => data.product_id == productId);
+    if (data) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   const fetchProduct = async () => {
     const response = await fetch(
       "https://cms.jiaarajewellery.com/wp-json/wc/v3/products?consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6&status=publish&page=1&per_page=20"
@@ -80,21 +92,58 @@ export default function FeaturedProducts(
   }
   const checkIsUserLogin = (type, product) => {
     if (!userData) {
-      toast('login required', { type: 'error' })
       setIsModelOpen(true)
       return;
     }
-    if (type == 'cart') {
-      addItemToCart(1, 'new', product)
-    }
-    //  else if (type == 'wishlist') {
-    //   if (wishlistItem) {
-    //     deleteWishList(wishlistItem?.product_id)
-    //   } else {
-    //     addItemToWishList()
+    if (type == 'wish') {
+      console.log(product)
+      console.log(wishlistData)
+      if (getProductItemFromWishlist(product.id)) {
+        //delete from wishlist
+        deleteWishList(product.id)
+      } else {
+        addItemToWishList(product)
+      }
+    } else {
 
-    //   }
-    // }
+    }
+  }
+  const deleteWishList = async (productId) => {
+    try {
+
+
+      dispatch(loaderData.add(true));
+      const response = await deleteWishListService(userData?.userId, productId);
+      if (response?.response?.success) {
+
+        dispatch(wishlist.remove(productId))
+      }
+    } catch (error) {
+      dispatch(loaderData.clear())
+    }
+    dispatch(loaderData.add(false));
+  }
+  const addItemToWishList = async (product) => {
+    const requestObject = {
+      userId: userData?.userId,
+      productId: product?.id,
+      data: JSON.stringify(product)
+    }
+    // setIsLoading(true)
+    dispatch(loaderData.add(true));
+    try {
+      const response = await addToWishListService(requestObject);
+      if (response?.response?.success) {
+        dispatch(wishlist.add(createObjCommanFunction(product)))
+      } else {
+        toast('Something Went Wrong!', { type: 'error' })
+      }
+      dispatch(loaderData.add(false));
+    } catch (error) {
+      dispatch(loaderData.clear())
+    }
+    // setIsLoading(false)
+
   }
   const addItemToCart = async (isRemove, isOld, item) => {
     const requestObject = {
@@ -146,7 +195,7 @@ export default function FeaturedProducts(
             // install Swiper modules
             modules={[Navigation, Pagination, Autoplay]}
             slidesPerView={4}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            autoplay={{ delay: 3000000, disableOnInteraction: false }}
             breakpoints={{
               320: { slidesPerView: 1, spaceBetween: 10 },
               768: { slidesPerView: 2, spaceBetween: 20 },
@@ -163,10 +212,14 @@ export default function FeaturedProducts(
                     className="rounded-lg shadow-lg w-full h-[285px] object-cover"
                   />
                   <div className="absolute top-1/2 right-3 transform -translate-y-1/2 flex flex-col gap-2">
-                    <button className="bg-primaryBackground p-2 rounded-full shadow-lg">❤️
-                      <Icon
+                    <button onClick={() => checkIsUserLogin('wish', product)} className="bg-primaryBackground p-2 rounded-full shadow-lg flex justify-center items-center h-[40px] w-[40px]">
+                      {/* <Icon
                         className={`${icon?.className}`}
                         icon={icon?.active}
+                      /> */}
+                      <Icon
+                        className={`${icon?.className}`}
+                        icon={getProductItemFromWishlist(product.id) ? icon?.active : icon?.inactive}
                       />
                     </button>
                     <button className="bg-primaryBackground p-2 rounded-full shadow-lg" onClick={() => checkIsUserLogin('cart', product)}>🛒</button>

@@ -3,6 +3,7 @@
 import ProductsCarousel from '@/components/global/ProductsCarousel';
 import Validation from "@/components/general/Validation";
 import { useEffect, useState } from 'react';
+import createObjCommanFunction from '@/utils/functions/general/createCartWishlistObje';
 
 export default function Latest() {
   const [products, setProducts] = useState([]);
@@ -40,17 +41,9 @@ export default function Latest() {
     }
   }, [products]);
 
-  const creatNewObj = (data) => ({
-    user_id: '',
-    cart_id: '',
-    created_date: '',
-    product_id: data?.id,
-    quantity: 0,
-    img: data?.images?.[0]?.src || "", // Handling image properly
-    price: data?.price,
-    name: data?.name,
-    status: 's'
-  });
+  const creatNewObj = (data) => {
+    return createObjCommanFunction(data);
+  };
 
   if (loading) {
     return (
