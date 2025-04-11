@@ -48,8 +48,10 @@ export default function Sale() {
     try {
       const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
       if (response?.status === 200) {
-        const firstCategory = response.data[0];
-        setCategories(response.data);
+        const result = response.data?.filter(item => item.id != 15);
+        const firstCategory = result[0]
+        console.log(result, "firstCategory")
+        setCategories(result);
         setActiveTab(firstCategory);
         getProducts(firstCategory.id); // Fetch products for the first category
         setIsLoading(false);
@@ -68,8 +70,8 @@ export default function Sale() {
       setIsLoading(true)
       const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/wc/v3/products?category=${categoryId}&consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`);
       if (response?.status === 200) {
-        response?.data?.filter(item => item.on_sale);
-        setCurrentProducts(response.data);
+        const list = response?.data?.filter(item => item.on_sale);
+        setCurrentProducts(list);
         setIsLoading(false)
       } else {
         console.error("Failed to fetch products");
@@ -131,7 +133,7 @@ export default function Sale() {
           {(currentProducts?.length > 0 && !isLoading) &&
             currentProducts.map((product) => {
               const currentImageIndex = imageIndexes[product.id] || 0; // Use product-specific image index
-
+              // console.log(product)
               return (
                 <SwiperSlide key={product.id}>
                   <div className="bg-white shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg overflow-hidden">
@@ -147,9 +149,9 @@ export default function Sale() {
                     </div>
                     <div className="content p-4 flex flex-col text-left">
                       <h3 className="text-xs font-medium font-content tracking-wide">{product.name}</h3>
-                      <h2 className="font-content text-lg font-medium mt-2">{product.price}</h2>
+                      <h2 className="font-content text-lg font-medium mt-2">₹ {product.price.toLocaleString()}</h2>
                       <h2>
-                        <span className="line-through text-gray-400 text-sm">{product.oldPrice}</span>
+                        <span className="relative inline-block text-gray-500 old-price">₹ {product.regular_price.toLocaleString()}</span>
                       </h2>
                       <div className="flex items-center justify-center gap-2 text-sm text-gray-600 mt-2">
                         ⭐ {product.rating} <span>{product.reviews}</span>
