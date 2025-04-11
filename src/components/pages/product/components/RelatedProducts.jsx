@@ -4,6 +4,7 @@ import ProductsCarousel from "@/components/global/ProductsCarousel";
 
 import { getProductsByIds } from "@/utils/functions/api/cms/woocommerce/products";
 import { useEffect, useState } from "react";
+import createObjCommanFunction from "@/utils/functions/general/createCartWishlistObje";
 
 
 export default function RelatedProducts({ currentProductId = null, relatedProductIds = [] }) {
@@ -56,20 +57,7 @@ export default function RelatedProducts({ currentProductId = null, relatedProduc
   //   setcartproduct(newArrat)
   // }, [products])
   const creatNewObj = (data) => {
-    const reqObj = {
-
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
-
-    }
-    return reqObj
+    return createObjCommanFunction(data);
   }
   return (
     <section id="related-products">

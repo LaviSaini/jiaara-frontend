@@ -136,6 +136,7 @@ export default function Product({
     dispatch(loaderData.add(true));
     const response = await addToWishListService(requestObject);
     if (response?.response?.success) {
+      console.log(cartProduct, product)
       handleWishlist()
     } else {
       toast('Something Went Wrong!', { type: 'error' })
@@ -168,6 +169,7 @@ export default function Product({
         } else {
           toast('Something Went Wrong!', { type: 'error' })
         }
+        dispatch(loaderData.clear())
       } catch (error) {
         toast('something Went Wrong!', { type: 'error' })
       }

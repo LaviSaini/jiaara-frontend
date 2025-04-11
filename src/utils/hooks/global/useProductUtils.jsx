@@ -39,7 +39,9 @@ export default function useProductUtils(product = null) {
       dispatch(wishlist.remove(wishlistItem?.product_id))
     }
   }
-
+  const removeItemFromWishlist = (productId) => {
+    dispatch(wishlist.remove(productId))
+  }
 
   const theBuyNow = (quantity = 1) => {
 
@@ -63,7 +65,7 @@ export default function useProductUtils(product = null) {
     wishlistUtils: {
       wishlistItem,
       wishlistItems,
-      handleWishlist
+      handleWishlist,
     },
     buyNowUtils: {
       buyNowItem,
