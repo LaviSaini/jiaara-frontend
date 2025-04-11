@@ -207,3 +207,11 @@ export async function finalCallService(requestObject) {
     })
     return response.data;
 }
+export async function getOrderDetailById(orderId) {
+    const response = await httpService.get(`/cart/get-order-details/${orderId}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data;
+}
