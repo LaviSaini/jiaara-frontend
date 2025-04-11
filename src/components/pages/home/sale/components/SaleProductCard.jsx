@@ -21,6 +21,7 @@ import LoginModel from "@/components/model/LoginModel";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCartService, addToWishListService, deleteCartItem, deleteWishListService } from "@/app/api/cms/nodeapi/DetailService";
 import { cart } from "@/redux/slices/cart";
+import createObjCommanFunction from "@/utils/functions/general/createCartWishlistObje";
 
 
 const STOCK_LEFT_FALLBACK_VALUE = 15;
@@ -41,27 +42,12 @@ export default function SaleProductCard({
   const { displayText: productName } = useTruncateText({ text: product?.name, wordLimit: 4 });
 
 
-  const creatNewObj = (data) => {
-    const reqObj = {
 
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
-
-    }
-    return reqObj
-  }
   const {
     cartUtils: { cartItem, addToCart },
     wishlistUtils: { wishlistItem, handleWishlist }
   }
-    = useProductUtils(creatNewObj(product));
+    = useProductUtils(createObjCommanFunction(product));
   const dispatch = useDispatch()
   const [isModelOpen, setIsModelOpen] = useState(false);
   const userData = useSelector(data => data.userDataSlice)

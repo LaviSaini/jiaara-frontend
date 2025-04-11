@@ -36,6 +36,7 @@ import { cart } from '@/redux/slices/cart';
 import { userdata } from '@/redux/slices/userdata';
 import { coupon } from '@/redux/slices/coupon';
 import { getCartListService, getWishListService } from '@/app/api/cms/nodeapi/DetailService';
+import { loaderData } from '@/redux/slices/loader';
 
 const { HOME, SHOP, CATEGORIES, COLLECTIONS, CART, WISHLIST, SEARCH } = getAllRoutes();
 
@@ -107,6 +108,7 @@ export default function Header() {
   const [isParentCategoriesSuccess, setIsParentCategoriesSuccess] = useState(false);
 
   useEffect(() => {
+    dispatch(loaderData.clear())
     const fetchParentCategories = async () => {
       setIsParentCategoriesLoading(true);
       try {

@@ -28,6 +28,7 @@ import LoginModel from "@/components/model/LoginModel";
 import { addToCartService, deleteCartItem } from "@/app/api/cms/nodeapi/DetailService";
 import { cart } from "@/redux/slices/cart";
 import { loaderData } from "@/redux/slices/loader";
+import createObjCommanFunction from "@/utils/functions/general/createCartWishlistObje";
 
 const INITIAL_QTY = 1;
 const NO_STOCK_QTY = 0;
@@ -270,20 +271,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
   }, [getError]);
 
   const creatNewObj = (data) => {
-    const reqObj = {
-
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
-
-    }
-    return reqObj
+    return createObjCommanFunction(data);
   }
   return (
     <>

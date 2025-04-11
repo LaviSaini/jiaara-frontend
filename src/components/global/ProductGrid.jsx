@@ -8,6 +8,7 @@ import { getCartListService, getWishListService } from "@/app/api/cms/nodeapi/De
 import { cart } from "@/redux/slices/cart";
 import { wishlist } from "@/redux/slices/wishlist";
 import { loaderData } from "@/redux/slices/loader";
+import createObjCommanFunction from "@/utils/functions/general/createCartWishlistObje";
 
 
 const ProductGrid = ({
@@ -52,20 +53,7 @@ const ProductGrid = ({
     }
   }
   const creatNewObj = (data) => {
-    const reqObj = {
-
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
-
-    }
-    return reqObj
+    return createObjCommanFunction(data)
   }
   return (
     <div

@@ -19,6 +19,7 @@ import useRemoveExcessBottomPadding from "@/utils/hooks/pure-react-carousel/useR
 
 import setStatePromptly from "@/utils/functions/general/setStatePromptly";
 import ProductUpperOverview from "./general/ProductUpperOverview";
+import createObjCommanFunction from "@/utils/functions/general/createCartWishlistObje";
 
 
 export default function ProductShowcase({ product = null }) {
@@ -96,20 +97,7 @@ export default function ProductShowcase({ product = null }) {
     return {};
   }
   const creatNewObj = (data) => {
-    const reqObj = {
-
-      "user_id": '',
-      "cart_id": '',
-      "created_date": '',
-      "product_id": data?.id,
-      "quantity": 0,
-      "img": data?.image,
-      "price": data?.price,
-      "name": data?.name,
-      "status": 's'
-
-    }
-    return reqObj
+    return createObjCommanFunction(data);
   }
   return (
     <div
