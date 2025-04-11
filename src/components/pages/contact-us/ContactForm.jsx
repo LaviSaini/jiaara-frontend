@@ -30,20 +30,23 @@ export default function ContactForm({ className = "" }) {
     methods.reset()
   };
 
-
+  const assetsDirPath = `/assets/pages/contact-us`;
 
   return (
     <FormProvider {...methods}>
-
       <form
         className={`flex flex-col gap-5 ${className}`}
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <h2 className="form-heading mb-3 text-3xl font-semibold">
+
+        <div className="flex justify-end">
+          {/* <img src={`${assetsDirPath}/jiara-black.png`} alt="Jiara Logo" /> */}
+        </div>
+        <h2 className="font-content mb-3 text-3xl tracking-wide text-primaryFont ms-4">
           Have an enquiry?
         </h2>
 
-        <InputField
+        {/* <InputField
           input={{
             id: "first-name",
             className: "w-full px-3 py-2 border rounded-md border-gray-500 input-selection-black focus:ring-black hover:ring-gray-700",
@@ -142,14 +145,117 @@ export default function ContactForm({ className = "" }) {
               required: "Message is required."
             }
           }}
+        /> */}
+
+        <div className="flex gap-4">
+          <InputField
+            input={{
+              id: "first-name",
+              className: "w-full px-3 py-1 border rounded-md border-gray-500 input-selection-black focus:ring-black hover:ring-gray-700",
+              required: true,
+              inputName: 'firstname'
+            }}
+            label={{
+              className: "text-sm",
+              text: "First Name",
+              require: true
+            }}
+            validation={{
+              isEnabled: true,
+              messages: {
+                required: "First Name is required."
+              }
+            }}
+          />
+          <InputField
+            input={{
+              id: "last-name",
+              className: "w-full px-3 py-1 border rounded-md border-gray-500 input-selection-black focus:ring-black hover:ring-gray-700",
+              required: true,
+              inputName: 'lastname'
+            }}
+            label={{
+              className: "text-sm",
+              text: "Last Name",
+              require: true
+            }}
+            validation={{
+              isEnabled: true,
+              messages: {
+                required: "Last Name is required."
+              }
+            }}
+          />
+        </div>
+
+        <InputField
+          input={{
+            id: "email",
+            type: "email",
+            className: "w-full px-3 py-1 border rounded-md border-gray-500 input-selection-black focus:ring-black hover:ring-gray-700",
+            required: true,
+            inputName: 'email'
+          }}
+          label={{
+            className: "text-sm",
+            text: "Email Address",
+            require: true
+          }}
+          validation={{
+            isEnabled: true,
+            messages: {
+              required: "Email is required."
+            }
+          }}
         />
 
-        <button disabled={isSeding}
-          className="w-fit flex px-3 py-2 rounded-md text-sm bg-black text-white"
-          type="submit"
-        >
-          {isSeding ? 'Processing...' : 'Send Message'}
-        </button>
+        <InputField
+          input={{
+            id: "contact-number",
+            type: "number",
+            className: "w-full px-3 py-1 border rounded-md border-gray-500 input-selection-black focus:ring-black hover:ring-gray-700",
+            min: 0,
+            required: false,
+            inputName: 'phone'
+          }}
+          label={{
+            className: "text-sm",
+            text: "Contact Number"
+          }}
+          validation={{
+            isEnabled: true,
+          }}
+        />
+
+        <InputField
+          input={{
+            id: "message",
+            type: "textarea",
+            inputName: "message",
+            className: "w-full px-3 py-2 border rounded-md border-gray-500 input-selection-black focus:ring-black hover:ring-gray-700",
+            rows: 2,
+            required: true,
+          }}
+          label={{
+            className: "text-sm",
+            text: "Your Message",
+            require: true
+          }}
+          validation={{
+            isEnabled: true,
+            messages: {
+              required: "Message is required."
+            }
+          }}
+        />
+        <div className="flex justify-end">
+          <button disabled={isSeding}
+            className="font-contnet w-fit flex px-3 py-2 rounded-full text-sm bg-primaryFont text-white float-right"
+            type="submit"
+          >
+            {isSeding ? 'Processing...' : 'Send Message'}
+          </button>
+        </div>
       </form>
     </FormProvider>
 
