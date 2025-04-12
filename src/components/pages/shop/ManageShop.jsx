@@ -1,38 +1,29 @@
-"use client";
+// pages/shop/[id].js or src/components/pages/shop/ManageShop.jsx
+'use client'; // This marks the component as a Client Component
 
 import { useState, useEffect } from "react";
-
 import ProductGrid from "@/components/global/ProductGrid";
 import Pagination from "@/components/general/Pagination";
 import Validation from "@/components/general/Validation";
-
 import { useSelector } from "react-redux";
 
 export default function ManageShop({ className = "", params }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoryId, setCategoryId] = useState(null); // ✅ Define categoryId state
+  const [categoryId, setCategoryId] = useState(null);
   const buyNowItem = useSelector((state) => state?.userDataSlice);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = params;
+  const { id } = params || {}; // Handle undefined params safely
 
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const url = new URL(
-        "https://cms.jiaarajewellery.com/wp-json/wc/v3/products"
-      );
-      url.searchParams.append(
-        "consumer_key",
-        "ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5"
-      );
-      url.searchParams.append(
-        "consumer_secret",
-        "cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6"
-      );
+      const url = new URL("https://cms.jiaarajewellery.com/wp-json/wc/v3/products");
+      url.searchParams.append("consumer_key", "ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5");
+      url.searchParams.append("consumer_secret", "cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6");
       url.searchParams.append("status", "publish");
       url.searchParams.append("page", currentPage);
       url.searchParams.append("per_page", 20);
@@ -58,7 +49,7 @@ export default function ManageShop({ className = "", params }) {
 
   useEffect(() => {
     fetchProducts();
-  }, [categoryId, currentPage]); // ✅ Added categoryId in dependency array
+  }, [categoryId, currentPage]);
 
   if (loading) {
     return (

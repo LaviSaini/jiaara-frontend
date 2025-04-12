@@ -19,7 +19,6 @@ import { getCollections } from "@/utils/functions/api/cms/woocommerce/collection
 
 import { COLLECTIONS } from "@/routes";
 
-
 export default function Collections({ className = "" }) {
 
   // const [collections, setCollections] = useState(null);
@@ -60,7 +59,7 @@ export default function Collections({ className = "" }) {
   //   fetchCollections();
   // }, []);
 
-  // const collectionsUrl = isSuccess ?
+  // const collectionsUrl = isSuccess ? 
   //   collections.map(collection => COLLECTIONS.getPathname(collection?.id)) : [];
 
   return (
@@ -92,7 +91,7 @@ export default function Collections({ className = "" }) {
               Discover the charm of timeless elegance with our exclusive Clover Jewelry Collection. Inspired by
               the symbol of luck, love, and prosperity, each piece in this collection captures the delicate beauty
               of the clover leaf, reimagined in stunning designs that resonate with grace and sophistication.
-              Whether you're drawn to the enchanting allure of nature or the promise of good fortune, our Clover
+              Whether you&apos;re drawn to the enchanting allure of nature or the promise of good fortune, our Clover
               Jewelry Line offers a perfect blend of style and sentiment. Adorn yourself with the elegance of
               clover-inspired artistry, and let your luck shine through every piece.
             </p>
@@ -115,7 +114,7 @@ export default function Collections({ className = "" }) {
               </button>
             </div>
           </div>
-          <div class="flex-1 w-[40%] h-[330px]">
+          <div className="flex-1 w-[40%] h-[330px]">
             <a
               href={collections?.[0].link}
               className="overflow-hidden rounded-2xl w-full"
@@ -128,7 +127,7 @@ export default function Collections({ className = "" }) {
               />
             </a>
           </div>
-          <div class="flex-1 w-[40%] h-[330px]">
+          <div className="flex-1 w-[40%] h-[330px]">
             <a
               href={collections?.[0].link}
               className="overflow-hidden rounded-2xl w-full"
