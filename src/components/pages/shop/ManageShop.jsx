@@ -14,7 +14,7 @@ export default function ManageShop({ className = "", params }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = params;
+  const { id } = params || {};
   const pageSize = 20;
   const fetchProducts = async () => {
     setLoading(true);
