@@ -224,7 +224,7 @@ export default function Sale(
 
 
       {/* Category Tabs */}
-      <div className="flex flex-row items-center justify-center gap-12">
+      <div className="flex flex-row items-center justify-center gap-12 saleCategories">
         {categories?.map((tab) => (
           <button
             key={tab.id}
@@ -244,13 +244,13 @@ export default function Sale(
           !isLoading ? <div className="text-center text-gray-500 h-[135px]">No Product Found!</div> : ''
 
           :
-          <div className="w-full max-w-[90vw] mx-auto">
+          <div className="w-full max-w-[90vw] mx-auto saleSLider">
             <Swiper
               key={activeTab?.id} // Force re-render on tab change
               modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
               spaceBetween={18}
               slidesPerView={3}
-              autoplay={{ delay: 50000000, disableOnInteraction: false }}
+              autoplay={{ delay: 500000, disableOnInteraction: false }}
               breakpoints={{
                 320: { slidesPerView: 1, spaceBetween: 10 },
                 768: { slidesPerView: 2, spaceBetween: 20 },

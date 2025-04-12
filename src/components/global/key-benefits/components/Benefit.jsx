@@ -14,7 +14,7 @@ export default function Benefit({ className, icon, heading, text }) {
       ${className}
     `}>
       <Icon className="text-3xl" icon={icon}/>
-      <div className="content flex flex-col gap-1">
+      <div className="content flex flex-col gap-1 benefitDiv">
         <div className="heading text-2xl text-center capetillize font-heading">
           {heading}
         </div>

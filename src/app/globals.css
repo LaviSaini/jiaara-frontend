@@ -176,3 +176,41 @@ input[type="number"] {
     }
   }
 }
+
+/*Abhi legend css */
+
+@media (max-width:660px) {
+  #hero .carousel {
+    width: 100% !important;
+  }
+
+  footer .newsLetter {
+    margin-bottom: 50px;
+  }
+
+  .arrowDiv {
+    margin-bottom: 10px;
+  }
+
+  .saleCategories {
+    gap: 14px;
+  }
+  .benefitDiv{
+    width: 80%;
+  }
+}
+@media (max-width:1224px){
+  .arrowDiv {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width:500px){
+  .saleCategories {
+    gap: 10px;
+  }
+  .saleSLider {
+    margin:0px 18px;
+    width: 100% ;
+    max-width: 120vw !important;
+  }
+}

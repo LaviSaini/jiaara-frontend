@@ -96,52 +96,56 @@ export default function Collections({ className = "" }) {
               Jewelry Line offers a perfect blend of style and sentiment. Adorn yourself with the elegance of
               clover-inspired artistry, and let your luck shine through every piece.
             </p>
-            <div className="flex justify-end md:justify-end">
+            <div className="flex justify-end md:justify-end arrowDiv">
               <button className="border-2 border-primaryFont  text-primaryFont font-medium py-2 px-2 rounded-full">
                 <span className="text-xl">→</span>
               </button>
             </div>
           </div>
         </div>
-        <div className="flex gap-5">
-          <div className="w-[20%] flex-none bg-collectionBackground rounded-2xl px-8  pt-[50px]">
+        <div className="flex flex-col-reverse md:flex-row gap-5">
+          {/* First div - full width on all screen sizes */}
+          <div className="w-full md:w-[20%] flex-auto bg-collectionBackground rounded-2xl px-8 pt-[50px]">
             <h2 className="text-3xl font-semibold text-primaryFont mb-4">{collections?.[0].title}</h2>
             <p className="text-primaryFont mb-3 font-content text-sm leading-6 tracking-wide">
               Introducing the Harmony Collection. Our bead jewelry line is crafted with meticulous attention to detail, blending colors, textures, and materials to create pieces that resonate with balance and unity.
             </p>
-            <div className="flex justify-end md:justify-end">
-              <button className="border-2 border-primaryFont  text-primaryFont font-medium py-2 px-2 rounded-full">
+            <div className="flex justify-end arrowDiv">
+              <button className="border-2 border-primaryFont text-primaryFont font-medium py-2 px-2 rounded-full">
                 <span className="text-xl">→</span>
               </button>
             </div>
           </div>
-          <div class="flex-1 w-[40%] h-[330px]">
-            <a
-              href={collections?.[0].link}
-              className="overflow-hidden rounded-2xl w-full"
-            >
-              <Image
-                src={collections?.[0].image}
-                className="w-full h-full object-cover rounded-2xl"
-                width={400}
-                height={300}
-              />
-            </a>
-          </div>
-          <div class="flex-1 w-[40%] h-[330px]">
-            <a
-              href={collections?.[0].link}
-              className="overflow-hidden rounded-2xl w-full"
-            >
-              <Image
-                src={collections?.[0].image}
-                className="w-full h-full object-cover rounded-2xl"
-                width={400}
-                height={300}
-              />
-            </a>
+
+          {/* Container for second and third divs */}
+          <div className="flex gap-5">
+            {/* Second div */}
+            <div className="flex-1 w-[50%] h-[330px]">
+              <a href={collections?.[0].link} className="overflow-hidden rounded-2xl w-full block">
+                <Image
+                  src={collections?.[0].image}
+                  className="w-full h-full object-cover rounded-2xl"
+                  width={400}
+                  height={300}
+                />
+              </a>
+            </div>
+
+            {/* Third div */}
+            <div className="flex-1 w-[50%] h-[330px]">
+              <a href={collections?.[0].link} className="overflow-hidden rounded-2xl w-full block">
+                <Image
+                  src={collections?.[0].image}
+                  className="w-full h-full object-cover rounded-2xl"
+                  width={400}
+                  height={300}
+                />
+              </a>
+            </div>
           </div>
         </div>
+
+
       </div>
       {/* {isLoading ?
         <Validation

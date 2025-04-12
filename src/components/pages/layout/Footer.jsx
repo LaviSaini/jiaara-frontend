@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="bg-[#5D2C55] text-white py-10 lg:px-16 px-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-4">
         {/* Company Info */}
         <div className="lg:col-span-4 md:col-span-6">
           <h2 className="text-2xl font-bold">JIAARA</h2>
@@ -58,7 +58,7 @@ export default function Footer() {
         {/* Newsletter */}
         <div className="lg:col-span-3">
           <h3 className="font-semibold text-lg mb-4">JOIN NEWSLETTER</h3>
-          <div className="mt-2 flex items-center border-b border-white">
+          <div className="mt-2 flex items-center border-b border-white newsLetter">
             <input
               type="email"
               placeholder="Your Email"
