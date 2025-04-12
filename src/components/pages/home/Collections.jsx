@@ -77,6 +77,7 @@ export default function Collections({ className = "" }) {
                   </div>
                 </div>
 
+
                 {/* First Image Box */}
                 <div className="flex-1 w-[40%] h-[330px]">
                   <a href={`/collection/${item?.id}`} className="overflow-hidden rounded-2xl w-full">
