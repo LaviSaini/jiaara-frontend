@@ -38,7 +38,7 @@ export default function Testimonials() {
           spaceBetween={20}
           slidesPerView={3} // Show 2 testimonials at once
           slidesPerGroup={1} // Scroll 1 item at a time
-          autoplay={{ delay: 300000, disableOnInteraction: false }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
           direction="vertical"
           loop={true}
           className="w-full h-full"

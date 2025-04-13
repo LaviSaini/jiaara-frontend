@@ -59,7 +59,7 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
           {url &&
           <div>
             <Link
-              className="url border py-2 px-5 z-10 rounded-full uppercase tracking-wider font-content text-xs"
+              className="url border py-2 px-5 z-10 rounded-full uppercase tracking-wider font-content text-xs bg-primaryButton text-black"
               href={url}
             >
               Shop Now
