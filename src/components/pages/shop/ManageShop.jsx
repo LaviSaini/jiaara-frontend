@@ -14,6 +14,7 @@ export default function ManageShop({ className = "", params }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [totalProduct, setTotalProduct] = useState(0);
   const { id } = params || {};
   const pageSize = 20;
   const fetchProducts = async () => {
@@ -39,7 +40,19 @@ export default function ManageShop({ className = "", params }) {
       }
 
       const data = await response.json();
-      setProducts(data);
+      console.log(Object.keys(data))
+      console.log(data)
+      let arr = [];
+      const keys = Object.keys(data).slice(0, Object.keys(data).length - 1);
+      console.log(keys)
+      keys.forEach((element) => {
+        arr.push(data[element])
+      })
+      console.log(arr)
+
+      const page = Math.ceil(data['total_products'] / 20)
+      setTotalProduct(page);
+      setProducts(arr);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -82,12 +95,12 @@ export default function ManageShop({ className = "", params }) {
   return (
     <div className={`flex flex-col gap-5 my-10 ${className}`}>
       <ProductGrid products={products || []} />
-      {/* <Pagination
+      {<Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        totalPages={10} // Set a default totalPages or fetch from API
-      /> */}
-      <div style={{ marginTop: '20px' }}>
+        totalPages={totalProduct} // Set a default totalPages or fetch from API
+      />}
+      {/* <div style={{ marginTop: '20px' }}>
         <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
         <span style={{ margin: '0 10px' }}>Page {currentPage}</span>
         <button
@@ -96,7 +109,7 @@ export default function ManageShop({ className = "", params }) {
         >
           Next
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

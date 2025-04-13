@@ -17,7 +17,7 @@ import { createOrder } from "@/utils/functions/api/cms/woocommerce/orders";
 import { ORDER } from '@/routes';
 
 import { indianStates } from '@/utils/constants';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createOrderService, createPaymentOrder, finalCallService, verifyPaymentService } from '@/app/api/cms/nodeapi/DetailService';
 import { toast } from 'react-toastify';
 
@@ -29,7 +29,7 @@ import { loaderData } from '@/redux/slices/loader';
 export default function CheckoutForm({ className = "", currentItems = [], clearItems = () => { } }) {
 
   const router = useRouter();
-  const usedispatch=useDispatch();
+  const usedispatch = useDispatch();
   const { dispatch, data: { triggered } = {}, data: { objects } = {} } = useContext(context);
 
   const checkout = (triggered && objects?.checkout) || {};
@@ -54,7 +54,6 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
     }
     usedispatch(loaderData.add(true));
     if (scriptLoaded) {
-      debugger
       const totalPriceArray = currentItems.map((element) => element.price * element.quantity);
       const productIds = currentItems.filter(data => data.inStock).map((element) => element?.product_id);
       let totalSum = totalPriceArray.reduce((acc, cur) => acc + cur, 0);
@@ -85,6 +84,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           handler: function (response2) {
             // Success callback, handle success logic
             // setPaymentId(response.razorpay_payment_id)
+            dispatch(loaderData.clear())
             verifyPayment(response2.razorpay_payment_id, totalSum - discount, 'INR', response?.response?.data?.paymentId, data)
             // alert('Payment Successful! Payment ID: ' + response.razorpay_payment_id);
 
@@ -95,6 +95,12 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             name: data?.firstName + " " + data?.lastName, // Prefill the user's name, email, etc.
             email: data?.email,
             contact: data?.contactNumber
+          },
+          modal: {
+            // 👇 This triggers when popup is closed without completing payment
+            ondismiss: function () {
+              usedispatch(loaderData.clear())
+            }
           },
           theme: {
             color: '#F37254'
@@ -138,7 +144,6 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
         if (couponApplied) {
           coupontList.push({ code: couponApplied?.title })
         }
-        debugger
         let orderData = {
           payment_method: "Razorpay",
           payment_method_title: "Razor Pay",
@@ -164,7 +169,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             state: data.state,
             postcode: data.pinCode,
             country: 'IN',
-            phone:data.contactNumber
+            phone: data.contactNumber
           },
           line_items: list,
           coupon_lines: coupontList
@@ -176,21 +181,19 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             const req = {
               userId: userData?.userId, orderId: response?.data?.id, customPaymentId: customPaymentId
             }
-            debugger
             const finalResponse = await finalCallService(req);
-            debugger
             if (finalResponse?.response?.success) {
-              try{
+              try {
 
-              
-              toast('Order Placed Successfully', { type: 'success' })
-              localStorage.setItem('id', response?.data?.id)
-              usedispatch(cart.addAll([]))
-              usedispatch(coupon.clear())
-              usedispatch(loaderData.clear())
-              router.push('/thankyou')
-              }catch(error){
-                  console.log(error)
+
+                toast('Order Placed Successfully', { type: 'success' })
+                localStorage.setItem('id', response?.data?.id)
+                usedispatch(cart.addAll([]))
+                usedispatch(coupon.clear())
+                usedispatch(loaderData.clear())
+                router.push('/thankyou')
+              } catch (error) {
+                console.log(error)
               }
             } else {
               usedispatch(loaderData.clear())
@@ -452,7 +455,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           />
         </div>
       </form>
-      
+
 
     </FormProvider>
   );
