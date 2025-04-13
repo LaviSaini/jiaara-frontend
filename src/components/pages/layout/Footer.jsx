@@ -27,10 +27,10 @@ export default function Footer() {
               <ul className="space-y-2 text-sm">
                 <li>About Us</li>
                 <li>Store Locator</li>
-                <li>Careers</li>
+                {/* <li>Careers</li> */}
                 <li>Term of service</li>
-                <li>Jewelry Care</li>
-                <li>Sitemap</li>
+                {/* <li>Jewelry Care</li> */}
+                {/* <li>Sitemap</li> */}
               </ul>
             </div>
             <div>
@@ -45,11 +45,11 @@ export default function Footer() {
               <h3 className="font-semibold text-lg mb-4">CUSTOMER CARE</h3>
               <ul className="space-y-2 text-sm">
                 <li>Contact Us</li>
-                <li>FAQ&#39;s</li>
+                {/* <li>FAQ&#39;s</li> */}
                 <li>Shipping Policy</li>
-                <li>Returns and Exchanges</li>
-                <li>Refund Policy</li>
-                <li>Track Order</li>
+                {/* <li>Returns and Exchanges</li> */}
+                {/* <li>Refund Policy</li> */}
+                {/* <li>Track Order</li> */}
               </ul>
             </div>
           </div>

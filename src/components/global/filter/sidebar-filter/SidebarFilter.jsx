@@ -32,7 +32,7 @@ export default function SidebarFilter({ className = "" }) {
     const fetchCategories = async () => {
       try {
         const response = await Axios.get(
-          "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
+          "https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories"
         );
         setParentCategories(response.data);
         setIsCategoriesSuccess(true);
@@ -59,7 +59,7 @@ export default function SidebarFilter({ className = "" }) {
 
     try {
       const response = await fetch(
-        "https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?page=1&per_page=100&parent=0"
+        "https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?parent=15"
       );
 
       if (!response.ok) {

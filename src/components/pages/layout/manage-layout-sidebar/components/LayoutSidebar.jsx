@@ -9,27 +9,34 @@ import { storeData } from "@/context-API/actions/action.creators";
 import Sidebar from "@/components/general/Sidebar";
 import Accordion from "@/components/general/Accordion";
 
-import { useQuery } from "@tanstack/react-query";
 
 import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import useSidebarUtils from "@/utils/hooks/sidebar/useSidebarUtils";
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { userdata } from '@/redux/slices/userdata';
+import { buyNow } from '@/redux/slices/buyNow';
+import { wishlist } from '@/redux/slices/wishlist';
+import { cart } from '@/redux/slices/cart';
+import { coupon } from '@/redux/slices/coupon';
 
 import { CATEGORIES, COLLECTIONS } from "@/routes";
-
-import { getCategories } from "@/utils/functions/api/cms/woocommerce/categories";
-import { getCollections } from "@/utils/functions/api/cms/woocommerce/collections";
-
 import skipMap from "@/utils/functions/general/skipMap";
 import { Axios } from "axios";
 import { getCategorywpSevice } from "@/app/api/cms/nodeapi/DetailService";
 
 
 export default function LayoutSidebar() {
-
+  const router = useRouter();
   const { dispatch } = useContext(context);
-
+  const dispatchUser = useDispatch()
+  const userData = useSelector(data => data.userDataSlice)
+  const totalCartItems = useSelector(
+    state => state?.cartReducer?.reduce((sum, item) => sum + item?.quantity, 0) ?? 0
+  );
+  const totalWishlistItems = useSelector(state => state?.wishlistReducer?.length ?? 0);
   const { sidebarState: [isOpen, setIsOpen], innerRef } = useSidebarUtils();
 
 
@@ -40,7 +47,7 @@ export default function LayoutSidebar() {
     }
     storeComponentData();
 
-  }, [isOpen, setIsOpen, dispatch]);
+  }, [isOpen,setIsOpen, dispatch]);
 
 
   // const {
@@ -62,6 +69,7 @@ export default function LayoutSidebar() {
       setIsParentCategoriesLoading(true);
       try {
         const response = await getCategorywpSevice();
+        console.log(response, "sidebarresponse")
         setParentCategories(response);
         setIsParentCategoriesSuccess(true);
       } catch (error) {
@@ -75,6 +83,9 @@ export default function LayoutSidebar() {
     fetchParentCategories();
   }, []);
 
+  useEffect(()=>{
+    console.log(userData,"userData")
+  },[userData,isOpen])
 
   const [collections, setCollections] = useState(null);
   const [isCollectionsLoading, setIsCollectionsLoading] = useState(true);
@@ -87,7 +98,7 @@ export default function LayoutSidebar() {
 
     try {
       const response = await fetch(
-        "https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?page=1&per_page=100&parent=0"
+        "https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?parent=15"
       );
 
       if (!response.ok) {
@@ -164,9 +175,18 @@ export default function LayoutSidebar() {
     )
   );
 
+ const logout = () => {
+  dispatchUser(buyNow.clear())
+  dispatchUser(wishlist.clear())
+  dispatchUser(cart.clear())
+  dispatchUser(userdata.clear())
+  dispatchUser(coupon.clear())
+    setIsOpen(false)
 
+  }
   return (
     <Sidebar
+      key={userData?"logged-in":"logout"}
       innerRef={innerRef}
       isOpen={isOpen}
       innerClassName="bg-white w-64"
@@ -177,7 +197,7 @@ export default function LayoutSidebar() {
             className="border-primaryFont text-sm"
             titleClassName="uppercase"
             title={CATEGORIES?.title}
-            defaultState={true}
+            defaultState={false}
             content={
               <Categories
                 parentCategories={parentCategories}
@@ -203,7 +223,7 @@ export default function LayoutSidebar() {
             className="border-primaryFont text-sm"
             titleClassName="uppercase"
             title={COLLECTIONS?.title}
-            defaultState={true}
+            defaultState={false}
             contentClassName="content text-xs"
             content={
               <Collections
@@ -224,6 +244,31 @@ export default function LayoutSidebar() {
             }}
           />
         </li>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>router.push('/shop')}>
+          {`SHOP`}
+        </li>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>router.push('/wishlist')}>
+          {`MY WISHLIST (${totalWishlistItems})`}
+        </li>
+
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>router.push('/cart')}>
+          {`MY CART (${totalCartItems})`}
+        </li>
+
+        <li className="collections-item my-2">
+          {userData ? (
+            <div style={{ cursor: 'pointer' }} onClick={() => logout()}>
+              <div>LOGOUT</div>
+            </div>
+          ) : (
+            <div style={{ cursor: 'pointer' }}>
+              <div>
+                <Link href="/sign-in">LOGIN</Link>
+              </div>
+            </div>
+          )}
+        </li>
+
       </ul>
     </Sidebar>
   );

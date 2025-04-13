@@ -10,10 +10,10 @@ const wpServicev2 = Axios.create({
     baseURL: 'https://cms.jiaarajewellery.com/wp-json/wp/v2/'
 })
 const wpSercice3 = Axios.create({
-    baseURL: 'https://cms.jiaarajewellery.com/wp-json/cms/woocommerce'
+    baseURL: 'https://cms.jiaarajewellery.com/wp-json/custom/v1'
 })
 export async function getCategorywpSevice() {
-    const response = await wpSercice3.get(`categories/getCategories?page=1&per_page=5&parent=0`, {
+    const response = await wpSercice3.get(`/getCategories`, {
         headers: {
             'Content-Type': 'application/json'
         }

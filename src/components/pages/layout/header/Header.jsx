@@ -112,7 +112,7 @@ export default function Header() {
     const fetchParentCategories = async () => {
       setIsParentCategoriesLoading(true);
       try {
-        const response = await Axios.get("https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0");
+        const response = await Axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
         setParentCategories(response.data);
         setIsParentCategoriesSuccess(true);
       } catch (error) {
@@ -322,7 +322,7 @@ export default function Header() {
                       "bg-secondaryBackground text-primaryFont"
                     }   
                   `}
-                  options={isParentCategoriesSuccess ? requiredCategories(Object.values(parentCategories)) : []}
+                  options={isParentCategoriesSuccess ? requiredCategories(parentCategories) : []}
                   optionClassName={{
                     hover: `
                       ${isHeroSecVisible ?

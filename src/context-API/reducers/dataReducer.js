@@ -2,7 +2,7 @@ import { STORE_DATA } from "../actions/action.types";
 
 const dataReducer = (state, action) => {
   
-  const { typeOfData, data: newData } = action.payload;
+  const { typeOfData, data: newData } = action.payload || {};
 
   switch (action.type) {
 
