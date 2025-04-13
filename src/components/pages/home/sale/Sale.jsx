@@ -224,17 +224,21 @@ export default function Sale(
 
 
       {/* Category Tabs */}
-      <div className="flex flex-row items-center justify-center gap-12 saleCategories">
-        {categories?.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => tabChange(tab)}
-            className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${activeTab?.id === tab.id ? 'border-primaryFont' : 'border-transparent'}`}
-          >
-            {tab.name}
-          </button>
-        ))}
+      <div className="overflow-x-auto w-full scrollbar-width">
+        <div className="flex flex-row items-center gap-12 whitespace-nowrap px-4 saleCategories">
+          {categories?.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => tabChange(tab)}
+              className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${activeTab?.id === tab.id ? 'border-primaryFont' : 'border-transparent'
+                }`}
+            >
+              {tab.name}
+            </button>
+          ))}
+        </div>
       </div>
+
       {isLoading && <div className="text-center text-gray-500 h-[135px]">Loading...</div>}
 
       {/* Product Carousel */}
@@ -250,7 +254,7 @@ export default function Sale(
               modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
               spaceBetween={18}
               slidesPerView={3}
-              autoplay={{ delay: 500000, disableOnInteraction: false }}
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
               breakpoints={{
                 320: { slidesPerView: 1, spaceBetween: 10 },
                 768: { slidesPerView: 2, spaceBetween: 20 },
@@ -271,7 +275,7 @@ export default function Sale(
                             alt={product?.images[currentImageIndex]?.alt || "default"}
                             width={300}
                             height={200}
-                            className="object-cover w-[100%] h-[100%] object-cover"
+                            className="object-cover w-[100%] h-[100%] "
                             priority // Preload images
                           />
                         </div>

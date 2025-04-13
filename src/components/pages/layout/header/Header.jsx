@@ -224,7 +224,7 @@ export default function Header() {
       id="header"
       className={`
         w-full flex items-center fixed px-3 py-1 z-20
-        ${isHeroSecVisible ? "bg-transparent" : "bg-secondaryBackground"}
+        ${isHeroSecVisible ? "bg-secondaryBackground" : "bg-secondaryBackground"}
         md:px-5 lg:px-10
       `}
     >
@@ -233,7 +233,7 @@ export default function Header() {
         <div className="img-cont size-[100px] relative">
           <Image
             fill
-            src={isHeroSecVisible ? brandLogo?.white : brandLogo?.black}
+            src={isHeroSecVisible ? brandLogo?.black : brandLogo?.black}
             alt="brand-logo"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
@@ -258,7 +258,7 @@ export default function Header() {
                     nav-item-title
                     text-sm
                     text-primaryFont
-                    ${isHeroSecVisible ? "lg:text-white" : "lg:text-primaryFont"}
+                    ${isHeroSecVisible ? "lg:text-primaryFont" : "lg:text-primaryFont"}
                   `,
                   name: route?.title
                 }}
@@ -275,7 +275,7 @@ export default function Header() {
                     text-base
                     text-primaryFont
                     lg:hidden
-                    ${isHeroSecVisible ? "lg:text-white" : "lg:text-primaryFont"}
+                    ${isHeroSecVisible ? "lg:text-primaryFont" : "lg:text-primaryFont"}
                   `,
                   status: {
                     active: route?.activeIcon,
@@ -299,13 +299,13 @@ export default function Header() {
                     className: `
                       w-[8rem] pt-1 pb-2 uppercase bg-transparent
                       hover:ring-transparent focus:ring-transparent cursor-default 
-                      ${isHeroSecVisible ? "text-white" : "text-primaryFont"}
+                      ${isHeroSecVisible ? "text-primaryFont" : "text-primaryFont"}
                     `,
                     defaultValue: CATEGORIES?.title,
                     icon: {
                       className: `
                         mb-1 text-lg
-                        ${isHeroSecVisible ? "text-white" : "text-primaryFont"}
+                        ${isHeroSecVisible ? "text-primaryFont" : "text-primaryFont"}
                         ${isParentCategoriesLoading ? "text-xs animate-spin" : ""}
                       `,
                       theIcon:
@@ -318,7 +318,7 @@ export default function Header() {
                   dropdownClassName={`
                     w-[13rem] rounded-sm
                     ${isHeroSecVisible ?
-                      "backdrop-blur bg-opacity-20 bg-white text-white" :
+                      "bg-secondaryBackground text-primaryFont" :
                       "bg-secondaryBackground text-primaryFont"
                     }   
                   `}
@@ -326,7 +326,7 @@ export default function Header() {
                   optionClassName={{
                     hover: `
                       ${isHeroSecVisible ?
-                        "hover:backdrop-blur hover:bg-opacity-[1%] hover:bg-white hover:text-white" :
+                        "hover:bg-primaryFont hover:text-white" :
                         "hover:bg-primaryFont hover:text-white"
                       }
                     `,
@@ -347,13 +347,13 @@ export default function Header() {
                     className: `
                       w-[9rem] pt-1 pb-2 uppercase bg-transparent
                       hover:ring-transparent focus:ring-transparent cursor-default 
-                      ${isHeroSecVisible ? "text-white" : "text-primaryFont"}
+                      ${isHeroSecVisible ? "text-primaryFont" : "text-primaryFont"}
                     `,
                     defaultValue: COLLECTIONS?.title,
                     icon: {
                       className: `
                         mb-1 text-lg
-                        ${isHeroSecVisible ? "text-white" : "text-primaryFont"}
+                        ${isHeroSecVisible ? "text-primaryFont" : "text-primaryFont"}
                         ${isCollectionsLoading ? "text-xs animate-spin" : ""}
                       `,
                       theIcon:
@@ -366,7 +366,7 @@ export default function Header() {
                   dropdownClassName={`
                     w-[13rem] rounded-sm
                     ${isHeroSecVisible ?
-                      "backdrop-blur bg-opacity-20 bg-white text-white" :
+                      "bg-secondaryBackground text-primaryFont" :
                       "bg-secondaryBackground text-primaryFont"
                     }   
                   `}
@@ -374,7 +374,7 @@ export default function Header() {
                   optionClassName={{
                     hover: `
                       ${isHeroSecVisible ?
-                        "hover:backdrop-blur hover:bg-opacity-[1%] hover:bg-white hover:text-white" :
+                        "hover:bg-primaryFont hover:text-white" :
                         "hover:bg-primaryFont hover:text-white"
                       }
                     `,
@@ -390,7 +390,7 @@ export default function Header() {
           <ul className={`
             flex justify-center items-center gap-4 px-3
             text-lg
-            ${isHeroSecVisible ? "text-white" : "text-primaryFont"}
+            ${isHeroSecVisible ? "text-primaryFont" : "text-primaryFont"}
           `}>
             {
               userData ?
@@ -417,7 +417,7 @@ export default function Header() {
                           },
                           value: route?.id === "wishlist" ? totalWishlistItems : totalCartItems,
                           backgroundColor: `
-                        ${isHeroSecVisible ? "backdrop-blur bg-opacity-50 bg-white" : "bg-primaryFont"}
+                        ${isHeroSecVisible ? "bg-primaryFont" : "bg-primaryFont"}
                       `,
                           textColor: "text-white"
                         },
@@ -448,7 +448,7 @@ export default function Header() {
 
             {screenWidth < lg &&
               <HamburgerMenu
-                innerClassName={`w-4 h-px my-1 ${isHeroSecVisible ? "bg-white" : "bg-primaryFont"}`}
+                innerClassName={`w-4 h-px my-1 ${isHeroSecVisible ? "bg-primaryFont" : "bg-primaryFont"}`}
                 isOpen={isOpen}
                 onClick={toggleSidebar}
               />
@@ -458,7 +458,7 @@ export default function Header() {
           <hr className={`
             design-line
             w-full absolute top-[93%] right-0
-            ${isHeroSecVisible ? "border-white" : "border-primaryFont"}
+            ${isHeroSecVisible ? "border-primaryFont" : "border-primaryFont"}
           `} />
         </nav>
 

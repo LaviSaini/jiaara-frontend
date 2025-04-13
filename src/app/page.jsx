@@ -16,7 +16,7 @@ import SendGift from "@/components/pages/home/SendGift";
 export default function Home() {
 
   return (
-    <div className="homepage flex flex-col gap-12">
+    <div className="homepage flex flex-col gap-12 relative top-[100px]">
       <Hero/>
       <Categories/>
       <FeaturedProducts/>

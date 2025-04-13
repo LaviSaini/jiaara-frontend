@@ -22,9 +22,9 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center justify-center mx-5 md:mx-[10vw]">
-   <div className="col-span-1 max-w-md">
-    <h2 className="font-heading text-5xl md:text-6xl lg:text-6xl capitalize text-primaryFont mb-4">
+    <section id="testimonials" className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center justify-center mx-5 md:mx-[10vw] mb-[10vw]">
+   <div className="col-span-1 max-w-md testimonialsDiv">
+    <h2 className="font-heading text-5xl md:text-6xl lg:text-6xl capitalize text-primaryFont mb-4 testimonialHEading">
       What Our Customers Say!
     </h2>
     <p className="font-content text-md leading-7">
@@ -38,7 +38,7 @@ export default function Testimonials() {
           spaceBetween={20}
           slidesPerView={3} // Show 2 testimonials at once
           slidesPerGroup={1} // Scroll 1 item at a time
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          autoplay={{ delay: 300000, disableOnInteraction: false }}
           direction="vertical"
           loop={true}
           className="w-full h-full"

@@ -22,7 +22,7 @@
 
 
 body {
-  display: grid;
+  /* display: grid; */
   grid-template-rows: auto 1fr auto;
   min-height: 100dvh;
   overflow-x: hidden;
@@ -178,7 +178,7 @@ input[type="number"] {
 }
 
 /*Abhi legend css */
-
+/*Home*/
 @media (max-width:660px) {
   #hero .carousel {
     width: 100% !important;
@@ -198,6 +198,10 @@ input[type="number"] {
   .benefitDiv{
     width: 80%;
   }
+  /* .twoImageDivs{
+    display: flex;
+    flex-direction: column;
+  } */
 }
 @media (max-width:1224px){
   .arrowDiv {
@@ -207,10 +211,67 @@ input[type="number"] {
 @media (max-width:500px){
   .saleCategories {
     gap: 10px;
+    justify-content: flex-start;
   }
   .saleSLider {
     margin:0px 18px;
     width: 100% ;
-    max-width: 120vw !important;
+  }
+
+  .scrollbar-width{
+    scrollbar-width: none;
+  }
+
+  .footerForMob{
+    grid-template-columns: auto !important;
+  }
+  
+}
+
+@media only screen and (min-width:500px) and (max-width:992px){
+  footer .newsLetter {
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width:1024px){
+  footer .newsLetter {
+    margin-bottom: 50px;
+  }
+
+  .heightAuto{
+    max-height: 440px;
+  }
+
+  .testimonialsDiv
+  {
+max-width: unset !important;
+
+  }
+
+  .testimonialHEading{
+    text-align: center;
+  }
+}
+
+.saleCategories{
+  justify-content: center;
+}
+
+@media only screen and (min-width:1024px) and (max-width:1200px){
+  .beautifulCard{
+    flex-direction: column;
+  }
+}
+
+@media (max-width:992px){
+  .threeDivs{
+    flex-direction: column-reverse;
+  }
+  /* .twoImageDivs{
+    flex-direction: row;
+  } */
+  .threeDivs div{
+    width: 100% !important;
   }
 }

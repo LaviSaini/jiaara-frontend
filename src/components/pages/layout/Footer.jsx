@@ -1,9 +1,9 @@
 export default function Footer() {
   return (
     <footer className="bg-[#5D2C55] text-white py-10 lg:px-16 px-8">
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-12 gap-4 footerForMob">
         {/* Company Info */}
-        <div className="lg:col-span-4 md:col-span-6">
+        <div className="lg:col-span-4 ">
           <h2 className="text-2xl font-bold">JIAARA</h2>
           <h5 className="mt-4 text-lg font-bold">
           Jiara Creations Private Limited</h5>
@@ -20,7 +20,7 @@ export default function Footer() {
           <p className="mt-4 font-bold text-lg">+91 6396872895</p>
         </div>
 
-        <div className="lg:col-span-5 md:col-span-6">
+        <div className="lg:col-span-5 ">
           <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
               <h3 className="font-semibold text-lg mb-4">JIAARA</h3>

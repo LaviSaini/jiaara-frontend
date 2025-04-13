@@ -33,6 +33,7 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
             tracking-wider text-white
             sm:text-sm
             md:text-base
+            beautifulCard
           `}
         >
           {(item?.name || item?.count) &&
