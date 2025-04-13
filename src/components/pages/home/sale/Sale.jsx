@@ -75,7 +75,7 @@ export default function Sale(
       if (response?.status === 200) {
         const result = response.data?.filter(item => item.id != 15);
         const firstCategory = result[0]
-        console.log(result, "firstCategory")
+        // console.log(result, "firstCategory")
         setCategories(result);
         setActiveTab(firstCategory);
         getProducts(firstCategory.id); // Fetch products for the first category
@@ -94,8 +94,14 @@ export default function Sale(
     try {
       setIsLoading(true)
       const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/wc/v3/products?category=${categoryId}&consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`);
+      console.log(response.data, "firstCategory")
       if (response?.status === 200) {
-        const list = response?.data?.filter(item => item.on_sale);
+        let arr = [];
+        const keys = Object.keys(response?.data).slice(0, Object.keys(response?.data).length - 1);
+        keys.forEach((element) => {
+          arr.push(response?.data[element])
+        })
+        const list = arr?.filter(item => item.on_sale);
         setCurrentProducts(list);
         setIsLoading(false)
       } else {
