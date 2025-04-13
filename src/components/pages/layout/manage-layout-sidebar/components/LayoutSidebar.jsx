@@ -176,12 +176,12 @@ export default function LayoutSidebar() {
   );
 
  const logout = () => {
+  setIsOpen(false)
   dispatchUser(buyNow.clear())
   dispatchUser(wishlist.clear())
   dispatchUser(cart.clear())
   dispatchUser(userdata.clear())
   dispatchUser(coupon.clear())
-    setIsOpen(false)
 
   }
   return (
@@ -244,14 +244,14 @@ export default function LayoutSidebar() {
             }}
           />
         </li>
-        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>router.push('/shop')}>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>{setIsOpen(false);router.push('/shop');}}>
           {`SHOP`}
         </li>
-        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>router.push('/wishlist')}>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>{setIsOpen(false);router.push('/wishlist');}}>
           {`MY WISHLIST (${totalWishlistItems})`}
         </li>
 
-        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>router.push('/cart')}>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>{setIsOpen(false);router.push('/cart')}}>
           {`MY CART (${totalCartItems})`}
         </li>
 
@@ -262,7 +262,7 @@ export default function LayoutSidebar() {
             </div>
           ) : (
             <div style={{ cursor: 'pointer' }}>
-              <div>
+              <div onClick={()=>setIsOpen(false)}>
                 <Link href="/sign-in">LOGIN</Link>
               </div>
             </div>
