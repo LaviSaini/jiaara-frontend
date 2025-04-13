@@ -17,7 +17,7 @@ import { createOrder } from "@/utils/functions/api/cms/woocommerce/orders";
 import { ORDER } from '@/routes';
 
 import { indianStates } from '@/utils/constants';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createOrderService, createPaymentOrder, finalCallService, verifyPaymentService } from '@/app/api/cms/nodeapi/DetailService';
 import { toast } from 'react-toastify';
 
@@ -29,7 +29,7 @@ import { loaderData } from '@/redux/slices/loader';
 export default function CheckoutForm({ className = "", currentItems = [], clearItems = () => { } }) {
 
   const router = useRouter();
-
+  const usedispatch = useDispatch();
   const { dispatch, data: { triggered } = {}, data: { objects } = {} } = useContext(context);
 
   const checkout = (triggered && objects?.checkout) || {};
@@ -52,10 +52,10 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
     if (!userData) {
       router.push('/sign-in')
     }
-    dispatch(loaderData.add(true));
+    usedispatch(loaderData.add(true));
     if (scriptLoaded) {
       const totalPriceArray = currentItems.map((element) => element.price * element.quantity);
-      const productIds = currentItems.map((element) => element?.product_id).filter(data => data.inStock);
+      const productIds = currentItems.filter(data => data.inStock).map((element) => element?.product_id);
       let totalSum = totalPriceArray.reduce((acc, cur) => acc + cur, 0);
       let discount = 0;
       if (couponApplied) {
@@ -84,6 +84,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           handler: function (response2) {
             // Success callback, handle success logic
             // setPaymentId(response.razorpay_payment_id)
+            dispatch(loaderData.clear())
             verifyPayment(response2.razorpay_payment_id, totalSum - discount, 'INR', response?.response?.data?.paymentId, data)
             // alert('Payment Successful! Payment ID: ' + response.razorpay_payment_id);
 
@@ -95,6 +96,12 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             email: data?.email,
             contact: data?.contactNumber
           },
+          modal: {
+            // 👇 This triggers when popup is closed without completing payment
+            ondismiss: function () {
+              usedispatch(loaderData.clear())
+            }
+          },
           theme: {
             color: '#F37254'
           }
@@ -103,10 +110,10 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
         razorpay.open();
       } catch (error) {
         toast("Something Went Wrong!", { type: 'error' })
-        dispatch(loaderData.clear())
+        usedispatch(loaderData.clear())
       }
     } else {
-      dispatch(loaderData.clear())
+      usedispatch(loaderData.clear())
       toast("Something Went Wrong!", { type: "error" })
     }
   }
@@ -120,7 +127,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
       customPaymentId: customPaymentId
     }
 
-    dispatch(loaderData.add(true));
+    usedispatch(loaderData.add(true));
     try {
 
 
@@ -152,7 +159,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             postcode: data.pinCode,
             country: "IN",
             email: data.email,
-            phone: data.phone
+            phone: data.contactNumber
           },
           shipping: {
             first_name: data.firstName,
@@ -161,7 +168,8 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             city: data.city,
             state: data.state,
             postcode: data.pinCode,
-            country: 'IN'
+            country: 'IN',
+            phone: data.contactNumber
           },
           line_items: list,
           coupon_lines: coupontList
@@ -173,27 +181,32 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             const req = {
               userId: userData?.userId, orderId: response?.data?.id, customPaymentId: customPaymentId
             }
-
             const finalResponse = await finalCallService(req);
             if (finalResponse?.response?.success) {
-              toast('Order Placed Successfully', { type: 'success' })
-              localStorage.setItem('id', response?.data?.id)
-              dispatch(cart.addAll([]))
-              dispatch(coupon.clear())
-              dispatch(loaderData.clear())
-              router.push('/thankyou')
+              try {
+
+
+                toast('Order Placed Successfully', { type: 'success' })
+                localStorage.setItem('id', response?.data?.id)
+                usedispatch(cart.addAll([]))
+                usedispatch(coupon.clear())
+                usedispatch(loaderData.clear())
+                router.push('/thankyou')
+              } catch (error) {
+                console.log(error)
+              }
             } else {
-              dispatch(loaderData.clear())
+              usedispatch(loaderData.clear())
               toast('Please reach to support! Something went Wrong!', { type: 'error' })
               router.push('/')
 
             }
           } else {
-            dispatch(loaderData.clear())
+            usedispatch(loaderData.clear())
             toast('Something Went Wrong!', { type: "error" })
           }
         } catch (error) {
-          dispatch(loaderData.add(false));
+          usedispatch(loaderData.add(false));
           if (error?.response?.data?.data?.status == 400) {
             toast(error?.response?.data?.message, { type: 'error' })
           } else {
@@ -201,11 +214,11 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           }
         }
       } else {
-        dispatch(loaderData.add(false));
+        usedispatch(loaderData.add(false));
         toast("Something went wrong!", { type: 'error' })
       }
     } catch (error) {
-      dispatch(loaderData.add(false));
+      usedispatch(loaderData.add(false));
       toast("Something went wrong!", { type: 'error' })
     }
 
@@ -442,15 +455,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           />
         </div>
       </form>
-      {
-        isLoading ?
-          // <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          //   <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-          // </div>
-          <Loader></Loader>
-          :
-          ''
-      }
+
 
     </FormProvider>
   );
