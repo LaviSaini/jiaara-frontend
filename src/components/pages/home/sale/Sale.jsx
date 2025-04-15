@@ -260,7 +260,7 @@ export default function Sale(
               categories?.map((tab) => {
                 return (
                   <>
-                    <option key={tab.id} value={tab}>{tab.name}</option>
+                    <option key={tab.id} value={tab.id}>{tab.name}</option>
                   </>
                 )
               })
