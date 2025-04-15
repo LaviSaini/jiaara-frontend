@@ -23,6 +23,10 @@ export default function ConfirmOrder() {
       const response = await getOrderDetailById(orderId);
       console.log(response)
       if (response?.response?.success) {
+        if (response?.response?.data.products?.length == 0) {
+          fetchOrderDetail(orderId);
+          return;
+        }
         setOrderDetail(response?.response?.data)
         const subTotal = response?.response?.data?.products?.reduce((sum, item) => sum + item.total, 0)
         const shipping = response?.response?.data?.products?.reduce((sum, item) => sum + item.shippingAmount, 0)
