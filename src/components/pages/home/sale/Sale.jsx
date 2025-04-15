@@ -120,8 +120,8 @@ export default function Sale(
   // Handle category change
   const tabChange = (tab) => {
     console.log(tab)
-    setActiveTab(tab.id);
-    getProducts(tab.id); // Fetch products for the selected category
+    setActiveTab(tab);
+    getProducts(tab); // Fetch products for the selected category
   };
   function getProductItemFromWishlist(productId) {
     const data = wishlistData.find(data => data.product_id == productId);
