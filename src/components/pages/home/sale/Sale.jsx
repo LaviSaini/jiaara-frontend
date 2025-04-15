@@ -77,7 +77,7 @@ export default function Sale(
         const firstCategory = result[0]
         // console.log(result, "firstCategory")
         setCategories(result);
-        setActiveTab(firstCategory);
+        setActiveTab(firstCategory.id);
         getProducts(firstCategory.id); // Fetch products for the first category
         setIsLoading(false);
       } else {
@@ -88,7 +88,10 @@ export default function Sale(
       setIsLoading(false);
     }
   };
-
+  function getCat(id) {
+    const data = categories.find(data => data.id == id);
+    return data;
+  }
   // Fetch products for a specific category
   const getProducts = async (categoryId) => {
     try {
@@ -116,7 +119,8 @@ export default function Sale(
 
   // Handle category change
   const tabChange = (tab) => {
-    setActiveTab(tab);
+    console.log(tab)
+    setActiveTab(tab.id);
     getProducts(tab.id); // Fetch products for the selected category
   };
   function getProductItemFromWishlist(productId) {
@@ -230,19 +234,40 @@ export default function Sale(
 
 
       {/* Category Tabs */}
-      <div className="overflow-x-auto w-full scrollbar-width">
+      <div className="overflow-x-auto w-full scrollbar-width salestablist">
         <div className="flex flex-row items-center gap-12 whitespace-nowrap px-4 saleCategories">
           {categories?.map((tab) => (
             <button
               key={tab.id}
               onClick={() => tabChange(tab)}
-              className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${activeTab?.id === tab.id ? 'border-primaryFont' : 'border-transparent'
+              className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${activeTab == tab.id ? 'border-primaryFont' : 'border-transparent'
                 }`}
             >
               {tab.name}
             </button>
           ))}
         </div>
+      </div>
+      <div className='salestabselect  justify-end mr-[63px] w-[100%]' >
+        {/* <div>
+          <span>Category: </span>
+          <span>{getCat(activeTab)?.name}</span>
+        </div> */}
+        <div>
+
+          <select name="" id="" className='globalSelect' value={activeTab} onChange={e => tabChange(e.target.value)}>
+            {
+              categories?.map((tab) => {
+                return (
+                  <>
+                    <option key={tab.id} value={tab}>{tab.name}</option>
+                  </>
+                )
+              })
+            }
+          </select>
+        </div>
+
       </div>
 
       {isLoading && <div className="text-center text-gray-500 h-[135px]">Loading...</div>}
