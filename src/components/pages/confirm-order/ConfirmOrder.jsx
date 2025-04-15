@@ -3,6 +3,8 @@
 
 import { getOrderDetailById } from "@/app/api/cms/nodeapi/DetailService";
 import { loaderData } from "@/redux/slices/loader";
+import formatDate from "@/utils/functions/formatDate";
+import { ListboxLabel } from "@headlessui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,28 +20,80 @@ export default function ConfirmOrder() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [orderDetail, setOrderDetail] = useState(null);
   let count = 0;
-  const fetchOrderDetail = async (orderId) => {
-    dispatch(loaderData.add(true))
+  const fetchOrderDetail = async (orderData) => {
+    // dispatch(loaderData.add(true))
     try {
-      const response = await getOrderDetailById(orderId, count);
-      console.log(response)
-      if (response?.response?.success) {
-        if (response?.response?.data.products?.length == 0) {
-          count++
-          setTimeout(() => {
-            fetchOrderDetail(orderId);
-          }, 1500)
-          return;
-        }
-        setOrderDetail(response?.response?.data)
-        const subTotal = response?.response?.data?.products?.reduce((sum, item) => sum + item.total, 0)
-        const shipping = response?.response?.data?.products?.reduce((sum, item) => sum + item.shippingAmount, 0)
-        setSubTotal(subTotal);
-        setShippingPrice(shipping)
-      } else {
-        toast("Something Went Wrong!", { type: 'error' })
+      const data = JSON.parse(orderData)
+      console.log(data)
+      const obj = {
+        products: [],
+        customerDetails: {},
+        orderDetails: {}
       }
-      dispatch(loaderData.clear())
+      const list = data?.list?.map((element) => {
+        return {
+          "id": element?.product_id,
+          "title": element?.name,
+          "quantity": element?.quantity,
+          "shippingAmount": 0,
+          "price": element?.price,
+          "total": (element?.price) * (element?.quantity),
+          "image": element?.img
+
+        }
+      })
+      obj.products = list;
+      const orderDetail = {
+        "orderNumber": data?.orderNumber,
+        "date": formatDate(new Date()),
+        "paymentMethos": data?.data?.payment_method_title
+      }
+      obj.orderDetails = orderDetail
+      const customerDetail = {
+        "email": data?.data?.billing?.email,
+        "phone": data?.data?.billing?.phone,
+        "billingAddress": {
+          "id": '',
+          "order_id": '',
+          "address_type": "billing",
+          "first_name": data?.data?.billing?.first_name,
+          "last_name": data?.data?.billing?.last_name,
+          "company": null,
+          "address_1": data?.data?.billing?.address_1,
+          "address_2": null,
+          "city": data?.data?.billing?.city,
+          "state": data?.data?.billing?.state,
+          "postcode": data?.data?.billing?.postcode,
+          "country": data?.data?.billing?.country,
+          "email": data?.data?.billing?.email,
+          "phone": data?.data?.billing?.phone
+        }
+      }
+      obj.customerDetails = customerDetail
+      const subTotal = obj?.products?.reduce((sum, item) => sum + item.total, 0)
+      const shipping = obj?.products?.reduce((sum, item) => sum + item.shippingAmount, 0)
+      setSubTotal(subTotal);
+      setShippingPrice(shipping)
+      setOrderDetail(obj)
+      // const response = await getletOrderDetailById(orderId, count);
+      // console.log(response)
+      // if (response?.response?.success) {
+      //   if (response?.response?.data.products?.length == 0) {
+      //     count++
+      //     setTimeout(() => {
+      //       fetchOrderDetail(orderId);
+      //     }, 1500)
+      //     return;
+      //   }
+      //   setOrderDetail(response?.response?.data)
+      //   const subTotal = response?.response?.data?.products?.reduce((sum, item) => sum + item.total, 0)
+      //   const shipping = response?.response?.data?.products?.reduce((sum, item) => sum + item.shippingAmount, 0)
+      //   setSubTotal(subTotal);
+      //   setShippingPrice(shipping)
+      // } else {
+      //   toast("Something Went Wrong!", { type: 'error' })
+      // }
+      // dispatch(loaderData.clear())
     } catch (error) {
       toast("Something Went Wrong!", { type: 'error' })
       dispatch(loaderData.clear())
@@ -47,11 +101,11 @@ export default function ConfirmOrder() {
 
   }
   useEffect(() => {
-    const orderId = localStorage.getItem('id');
-    if (!orderId) {
+    const orderData = localStorage.getItem('order-data');
+    if (!orderData) {
       router.push('/')
     } else {
-      fetchOrderDetail(orderId)
+      fetchOrderDetail(orderData)
     }
     return () => {
       localStorage.removeItem('id')

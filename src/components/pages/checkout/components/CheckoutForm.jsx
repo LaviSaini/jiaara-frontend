@@ -174,6 +174,7 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
           line_items: list,
           coupon_lines: coupontList
         };
+
         try {
           setButtonMessage('creating order...')
           const response = await createOrderService(orderData);
@@ -187,7 +188,13 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
 
 
                 toast('Order Placed Successfully', { type: 'success' })
-                localStorage.setItem('id', response?.data?.id)
+                // localStorage.setItem('id', response?.data?.id)
+                let obj = {
+                  list: currentItems,
+                  data: orderData,
+                  orderNumber:  response?.data?.id
+                }
+                localStorage.setItem('order-data', JSON.stringify(obj));
                 usedispatch(cart.addAll([]))
                 usedispatch(coupon.clear())
                 usedispatch(loaderData.clear())

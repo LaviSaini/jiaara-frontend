@@ -23,7 +23,7 @@ export default function OrderCalculation({ className = "", cartItems = [] }) {
       (subtotal, cartItem) => subtotal + (cartItem?.price * cartItem?.quantity), 0
     );
 
-  const shippingCharge = (cartItemsSubtotal > (shipping?.minAmountOnOrder ?? 599) ? 0 : 80);
+  const shippingCharge = (cartItemsSubtotal > (shipping?.minAmountOnOrder ?? 1600) ? 0 : 80);
   const couponApplied = useSelector(data => data.couponSlice);
   // Calculate discount using useMemo
   const discountAmount = useMemo(() => {
@@ -56,7 +56,8 @@ export default function OrderCalculation({ className = "", cartItems = [] }) {
             Shipping
           </span>
           <span className="value">
-            {shippingCharge > 0 ? INR(shippingCharge) : "Free"}
+            {/* {shippingCharge > 0 ? INR(shippingCharge) : "Free"} */}
+            0
           </span>
         </div>
 
