@@ -207,8 +207,8 @@ export async function finalCallService(requestObject) {
     })
     return response.data;
 }
-export async function getOrderDetailById(orderId) {
-    const response = await httpService.get(`/cart/get-order-details/${orderId}`, {
+export async function getOrderDetailById(orderId, count) {
+    const response = await httpService.get(`/cart/get-order-details/${orderId}?query=${count}`, {
         headers: {
             'Content-Type': 'application/json'
         }

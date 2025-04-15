@@ -17,14 +17,18 @@ export default function ConfirmOrder() {
   const [shippingPrice, setShippingPrice] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [orderDetail, setOrderDetail] = useState(null);
+  let count = 0;
   const fetchOrderDetail = async (orderId) => {
     dispatch(loaderData.add(true))
     try {
-      const response = await getOrderDetailById(orderId);
+      const response = await getOrderDetailById(orderId, count);
       console.log(response)
       if (response?.response?.success) {
         if (response?.response?.data.products?.length == 0) {
-          fetchOrderDetail(orderId);
+          count++
+          setTimeout(() => {
+            fetchOrderDetail(orderId);
+          }, 1500)
           return;
         }
         setOrderDetail(response?.response?.data)
