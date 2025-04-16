@@ -15,7 +15,9 @@ module.exports = {
       },
       screens: {
         'xs': '425px',
-        '2xs': '375px'
+        '2xs': '375px',
+        'custom820': '820px',
+        'custom660': '660px'
       },
       fontSize: {
         '2xs': '0.625rem',

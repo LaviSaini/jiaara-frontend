@@ -3,7 +3,7 @@ import { IoPricetagsOutline, IoPricetagsSharp } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { RiUserLine, RiUserFill } from "react-icons/ri";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
-import { IoCart , IoCartOutline } from "react-icons/io5";
+import { IoCart, IoCartOutline } from "react-icons/io5";
 
 
 export const HOME = {
@@ -30,7 +30,7 @@ export const PRODUCT = {
 
 export const CATEGORIES = {
   id: "categories",
-  title: "Categories",
+  title: "Category",
   getPathname: (value = "") => `/category/${value}`
 }
 
@@ -52,7 +52,7 @@ export const SEARCH = {
   id: "search",
   title: "Search",
   generalIcon: CiSearch
-} 
+}
 
 export const WISHLIST = {
   id: "wishlist",
@@ -133,5 +133,5 @@ export function getAllRoutes() {
     SHIPPING_POLICY,
     TERMS_AND_CONDITIONS,
     RETURN_REFUND_CANCELLATION_POLICY
-  }); 
+  });
 }

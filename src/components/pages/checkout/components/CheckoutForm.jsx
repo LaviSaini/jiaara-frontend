@@ -185,14 +185,12 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
             const finalResponse = await finalCallService(req);
             if (finalResponse?.response?.success) {
               try {
-
-
                 toast('Order Placed Successfully', { type: 'success' })
                 // localStorage.setItem('id', response?.data?.id)
                 let obj = {
                   list: currentItems,
                   data: orderData,
-                  orderNumber:  response?.data?.id
+                  orderNumber: response?.data?.id
                 }
                 localStorage.setItem('order-data', JSON.stringify(obj));
                 usedispatch(cart.addAll([]))

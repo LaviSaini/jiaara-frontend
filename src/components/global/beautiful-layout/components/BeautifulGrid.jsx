@@ -20,35 +20,22 @@ export default function BeautifulGrid({ className = "", items = {} }) {
 
     rows.push(
       <React.Fragment key={pos}>
-
-        {/* Single card for small screens */}
-        {/* {screenWidth < md && (
-          <div className={`row-1`}>
-            <BeautifulCard
-              className="w-full"
-              item={itemsArr[pos]}
-              url={urlsArr[pos++]}
-            />
-          </div>
-        )} */}
-
         {/* Two-card row */}
         {pos < itemsArr.length && (
-          <div className="grid grid-cols-12 gap-4 lg:gap-8">
+          <div >
             <BeautifulCard
-              className={`col-span-12 md:col-span-6 lg:col-span-3
-              `}
+              className={`col-span-12 md:col-span-6 lg:col-span-3`}
               item={itemsArr[pos]}
               url={urlsArr[pos++]}
             />
-            {pos < itemsArr.length && (
+            {/* {pos < itemsArr.length && (
               <BeautifulCard
                 className="col-span-12 md:col-span-6 lg:col-span-3"
                 item={itemsArr[pos]}
                 url={urlsArr[pos++]}
               />
-            )}
-             <BeautifulCard
+            )} */}
+            {/* <BeautifulCard
               className={`col-span-12 md:col-span-6 lg:col-span-3`
               }
               item={itemsArr[pos]}
@@ -60,19 +47,19 @@ export default function BeautifulGrid({ className = "", items = {} }) {
                 item={itemsArr[pos]}
                 url={urlsArr[pos++]}
               />
-            )}
-            {screenWidth >= md && pos < itemsArr.length && (
+            )} */}
+            {/* {screenWidth >= md && pos < itemsArr.length && (
               <BeautifulCard
                 className="md:col-span-4"
                 item={itemsArr[pos]}
                 url={urlsArr[pos++]}
               />
-            )}
+            )} */}
           </div>
         )}
 
         {/* Three-card row */}
-        {pos < itemsArr.length && (
+        {/* {pos < itemsArr.length && (
           <div className="row-3 grid grid-cols-12 gap-2 md:grid-cols-11">
             <BeautifulCard
               className={`col-span-6 md:col-span-3`
@@ -95,13 +82,13 @@ export default function BeautifulGrid({ className = "", items = {} }) {
               />
             )}
           </div>
-        )}
+        )} */}
       </React.Fragment>
     );
   }
 
   return (
-    <div className={`${className} grid gap-y-2`}>
+    <div className={`catSecHome`}>
       {rows}
     </div>
   );

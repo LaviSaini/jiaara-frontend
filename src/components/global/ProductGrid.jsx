@@ -73,7 +73,7 @@ const ProductGrid = ({
             2xs:w-[42vw]
             sm:w-[27vw]
             lg:w-[18vw]
-            2xl:w-[14vw]
+            2xl:w-[18vw]
           `}
           imgContClassName={`
             w-full relative
@@ -81,12 +81,12 @@ const ProductGrid = ({
             2xs:h-[42vw]
             sm:h-[27vw]
             lg:h-[18vw]
-            2xl:h-[14vw]
+            2xl:h-[18vw]
           `}
           productDetailsContClassName="text-xs text-primaryFont"
           productNameClassName="uppercase"
-          btnTextClassName="text-2xs uppercase bg-primaryFont text-white xs:text-xs"
-          iconContClassName="text-lg p-2 bg-white text-black"
+          btnTextClassName="text-2xs uppercase bg-white text-primaryFont border border-primaryFont xs:text-xs hover:bg-primaryFont hover:text-white transition-colors duration-300 ease-in-out font-bold"
+          iconContClassName="text-lg p-2 bg-white  text-black "
           product={product}
           cartProduct={creatNewObj(product)}
         />

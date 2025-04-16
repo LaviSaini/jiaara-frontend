@@ -14,7 +14,7 @@ export default function BeautifulLayout({
   return (
     <div className={`${className} beautiful-layout`}>
       <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-16">
-        <BeautifulGrid items={items}/>
+        <BeautifulGrid items={items} />
       </div>
     </div>
   );

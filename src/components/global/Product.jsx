@@ -211,7 +211,25 @@ export default function Product({
 
   }
   return (
-    <div className={`product-cont flex flex-col items-center justify-center gap-3 z-10 ${className}`}>
+    <div className={`product-cont relative flex flex-col items-center justify-center gap-3 z-10 ${className}`}>
+
+      <div className="absolute top-2 right-2 z-10">
+        {/* {icon &&
+          <button
+            className={`wishlist-icon-btn ${iconContClassName}`}
+            onClick={() => checkIsUserLogin('wishlist')}
+          >
+            {(icon?.general || icon?.active || icon?.inactive) &&
+              <Icon
+                className={`${icon?.className}`}
+                icon={wishlistItem ? icon?.active : icon?.inactive}
+              />
+            }
+            {
+            }
+          </button>
+        } */}
+      </div>
       <ProductGalleryCarousel
         product={product}
         media={{
@@ -287,6 +305,7 @@ export default function Product({
             </button>
           }
         </div>
+
       }
       <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
 

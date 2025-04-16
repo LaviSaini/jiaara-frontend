@@ -239,7 +239,7 @@ export default function Sale(
           {categories?.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => tabChange(tab)}
+              onClick={() => tabChange(tab.id)}
               className={`font-heading text-center text-2xl capitalize text-primaryFont border-b-2 ${activeTab == tab.id ? 'border-primaryFont' : 'border-transparent'
                 }`}
             >
