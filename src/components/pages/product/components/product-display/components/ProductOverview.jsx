@@ -366,7 +366,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
                 mt-4
                 add-to-cart
                w-[100%] lg:w-[70%]
-                px-[8vw] py-2 rounded-sm
+                px-[8vw] py-2 
                 text-sm uppercase
                
                 2xs:px-[10vw]
@@ -392,7 +392,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
           <Link
             className={`
               buy-now
-              py-2 rounded-sm
+              py-2 
               text-center text-sm uppercase
                 
               rounded-[50px]
