@@ -56,12 +56,12 @@ const Accordion = ({
           {title}
         </span>
         <span className={`accordion-toggle-icon-cont ${iconClassName}`}>
-          {!isOpen ? <Icon icon={openIcon}/> : <Icon icon={closeIcon}/>}
+          {!isOpen ? <Icon icon={openIcon} /> : <Icon icon={closeIcon} />}
         </span>
       </button>
 
       {divider?.upper?.isEnabled &&
-        <hr className={`w-full ${divider.upper.className}`}/>
+        <hr className={`w-full ${divider.upper.className}`} />
       }
 
       <CSSTransition
@@ -80,7 +80,7 @@ const Accordion = ({
       </CSSTransition>
 
       {(isOpen && divider?.bottom?.isEnabled) &&
-        <hr className={`w-full ${divider.bottom.className}`}/>
+        <hr className={`w-full ${divider.bottom.className}`} />
       }
     </div>
   );

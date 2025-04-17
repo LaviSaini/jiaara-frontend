@@ -46,7 +46,7 @@ export default function ProductsCarousel({
       imgContClassName="relative w-[43vw] h-[43vw] sm:w-[29vw] sm:h-[29vw] lg:w-[21vw] lg:h-[21vw]"
       productDetailsContClassName="text-xs text-primaryFont"
       productNameClassName="uppercase"
-      btnTextClassName="text-2xs uppercase bg-primaryFont text-white xs:text-xs"
+      btnTextClassName="text-2xs uppercase bg-white text-primaryFont border border-primaryFont xs:text-xs hover:bg-primaryFont hover:text-white transition-colors duration-300 ease-in-out font-bold"
       iconContClassName="text-lg p-2 bg-white text-black"
     />
   } = {}

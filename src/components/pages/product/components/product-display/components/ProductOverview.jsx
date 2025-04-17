@@ -287,8 +287,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
       <div
         className={`
           product-overview-lower
-          flex flex-col gap-4 px-[4vw] pt-5
-          md:h-[30rem] md:px-[3vw] md:pt-0 md:overflow-y-auto
+          flex flex-col gap-4 px-[4vw] pt-5 md:px-[3vw] md:pt-0 md:overflow-y-auto
           xl:items-center
           ${isZoomed ? "hidden" : "block"}
         `}
@@ -339,7 +338,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
 
         <div className="actions flex flex-col gap-5 xl:w-[95%]">
 
-          <div className="wrapper flex justify-between items-center mt-2">
+          <div className="wrapper  mt-2">
             {
               cartItem ?
                 <ProductQuantity
@@ -364,21 +363,23 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
             <button
               ref={addToCartButtonRef}
               className={`
+                mt-4
                 add-to-cart
+               w-[100%] lg:w-[70%]
                 px-[8vw] py-2 rounded-sm
-                text-xs uppercase
-                bg-primaryFont text-white
+                text-sm uppercase
+               
                 2xs:px-[10vw]
-                sm:text-base
                 md:px-[3vw]
-                md:text-sm
                 lg:px-[5vw]
+                rounded-[50px]
+                bg-white text-primaryFont border border-primaryFont xs:text-xs hover:bg-primaryFont hover:text-white transition-colors duration-300 ease-in-out font-bold
                 ${(product?.stock_status != 'instock') ? "opacity-50" : ""}
               `}
               disabled={product?.stock_status != 'instock'}
               onClick={() => checkIsUserLogin()}
             >
-              {cartItem ? 'Remove' : 'Add to Cart'}
+              {cartItem ? 'REMOVE FROM CART' : 'ADD TO CART'}
             </button>
           </div>
 
@@ -393,7 +394,10 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
               buy-now
               py-2 rounded-sm
               text-center text-sm uppercase
-              bg-primaryFont text-white sm:text-base
+                
+              rounded-[50px]
+              w-[100%] lg:w-[70%]
+              bg-white text-primaryFont border border-primaryFont xs:text-xs hover:bg-primaryFont hover:text-white transition-colors duration-300 ease-in-out font-bold
               ${error ? "opacity-50 cursor-default" : ""}
             `}
             href={CHECKOUT.pathname}
