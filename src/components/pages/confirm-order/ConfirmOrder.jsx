@@ -108,7 +108,7 @@ export default function ConfirmOrder() {
       fetchOrderDetail(orderData)
     }
     return () => {
-      localStorage.removeItem('id')
+      localStorage.removeItem('order-data')
     }
   }, [])
   return (
