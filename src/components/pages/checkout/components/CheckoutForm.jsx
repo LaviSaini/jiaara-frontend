@@ -198,7 +198,6 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
                 usedispatch(loaderData.clear())
                 router.push('/thankyou')
               } catch (error) {
-                console.log(error)
               }
             } else {
               usedispatch(loaderData.clear())
@@ -230,7 +229,6 @@ export default function CheckoutForm({ className = "", currentItems = [], clearI
 
   }
   useEffect(() => {
-    console.log("Cart list", currentItems)
 
   }, [])
   useEffect(() => {

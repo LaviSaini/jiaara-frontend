@@ -41,6 +41,7 @@ export default function Sale(
   const [categories, setCategories] = useState([]);
   const [currentProducts, setCurrentProducts] = useState([]);
   const [imageIndexes, setImageIndexes] = useState({}); // Track image index for each product
+  const categoryList = useSelector(data => data.categorySlice)
 
   // Change images every 2 seconds (auto carousel effect) only for products with multiple images
   useEffect(() => {
@@ -70,23 +71,29 @@ export default function Sale(
 
   // Fetch categories from API
   const getCategories = async () => {
-    try {
-      const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
-      if (response?.status === 200) {
-        const result = response.data?.filter(item => item.id != 15);
-        const firstCategory = result[0]
-        // console.log(result, "firstCategory")
-        setCategories(result);
-        setActiveTab(firstCategory.id);
-        getProducts(firstCategory.id); // Fetch products for the first category
-        setIsLoading(false);
-      } else {
-        console.error("Failed to fetch categories");
-      }
-    } catch (error) {
-      console.error("Error fetching categories:", error.message);
-      setIsLoading(false);
-    }
+    // try {
+    //   const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
+    //   if (response?.status === 200) {
+    //     const result = response.data?.filter(item => item.id != 15);
+    //     const firstCategory = result[0]
+    //     // console.log(result, "firstCategory")
+    //     setCategories(result);
+    //     setActiveTab(firstCategory.id);
+    //     getProducts(firstCategory.id); // Fetch products for the first category
+    //     setIsLoading(false);
+    //   } else {
+    //     console.error("Failed to fetch categories");
+    //   }
+    // } catch (error) {
+    //   console.error("Error fetching categories:", error.message);
+    //   setIsLoading(false);
+    // }
+    const result = categoryList?.filter(item => item.id != 15);
+    const firstCategory = result[0];
+    setCategories(result);
+    setActiveTab(firstCategory.id);
+    getProducts(firstCategory.id);
+    setIsLoading(false)
   };
   function getCat(id) {
     const data = categories.find(data => data.id == id);
@@ -97,7 +104,6 @@ export default function Sale(
     try {
       setIsLoading(true)
       const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/wc/v3/products?category=${categoryId}&consumer_key=ck_89214419fed8645b0abbdd4d6b6c7f633ec584a5&consumer_secret=cs_99bfc8ad098536727decffbf2a61d33f1e2ac5e6`);
-      console.log(response.data, "firstCategory")
       if (response?.status === 200) {
         let arr = [];
         const keys = Object.keys(response?.data).slice(0, Object.keys(response?.data).length - 1);
@@ -119,7 +125,6 @@ export default function Sale(
 
   // Handle category change
   const tabChange = (tab) => {
-    console.log(tab)
     setActiveTab(tab);
     getProducts(tab); // Fetch products for the selected category
   };
@@ -224,7 +229,7 @@ export default function Sale(
   // Initial categories load
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [categoryList]);
 
   return (
     <section id="sale" className="flex flex-col items-center justify-center gap-7">

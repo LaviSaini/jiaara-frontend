@@ -136,7 +136,6 @@ export default function Product({
     dispatch(loaderData.add(true));
     const response = await addToWishListService(requestObject);
     if (response?.response?.success) {
-      console.log(cartProduct, product)
       handleWishlist()
     } else {
       toast('Something Went Wrong!', { type: 'error' })

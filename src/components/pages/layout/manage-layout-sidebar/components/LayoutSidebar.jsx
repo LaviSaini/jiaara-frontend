@@ -47,7 +47,7 @@ export default function LayoutSidebar() {
     }
     storeComponentData();
 
-  }, [isOpen,setIsOpen, dispatch]);
+  }, [isOpen, setIsOpen, dispatch]);
 
 
   // const {
@@ -69,7 +69,6 @@ export default function LayoutSidebar() {
       setIsParentCategoriesLoading(true);
       try {
         const response = await getCategorywpSevice();
-        console.log(response, "sidebarresponse")
         setParentCategories(response);
         setIsParentCategoriesSuccess(true);
       } catch (error) {
@@ -83,9 +82,8 @@ export default function LayoutSidebar() {
     fetchParentCategories();
   }, []);
 
-  useEffect(()=>{
-    console.log(userData,"userData")
-  },[userData,isOpen])
+  useEffect(() => {
+  }, [userData, isOpen])
 
   const [collections, setCollections] = useState(null);
   const [isCollectionsLoading, setIsCollectionsLoading] = useState(true);
@@ -175,18 +173,18 @@ export default function LayoutSidebar() {
     )
   );
 
- const logout = () => {
-  setIsOpen(false)
-  dispatchUser(buyNow.clear())
-  dispatchUser(wishlist.clear())
-  dispatchUser(cart.clear())
-  dispatchUser(userdata.clear())
-  dispatchUser(coupon.clear())
+  const logout = () => {
+    setIsOpen(false)
+    dispatchUser(buyNow.clear())
+    dispatchUser(wishlist.clear())
+    dispatchUser(cart.clear())
+    dispatchUser(userdata.clear())
+    dispatchUser(coupon.clear())
 
   }
   return (
     <Sidebar
-      key={userData?"logged-in":"logout"}
+      key={userData ? "logged-in" : "logout"}
       innerRef={innerRef}
       isOpen={isOpen}
       innerClassName="bg-white w-64"
@@ -244,14 +242,14 @@ export default function LayoutSidebar() {
             }}
           />
         </li>
-        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>{setIsOpen(false);router.push('/shop');}}>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={() => { setIsOpen(false); router.push('/shop'); }}>
           {`SHOP`}
         </li>
-        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>{setIsOpen(false);router.push('/wishlist');}}>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={() => { setIsOpen(false); router.push('/wishlist'); }}>
           {`MY WISHLIST (${totalWishlistItems})`}
         </li>
 
-        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={()=>{setIsOpen(false);router.push('/cart')}}>
+        <li className="collections-item my-2 border-b border-gray-200" style={{ cursor: 'pointer' }} onClick={() => { setIsOpen(false); router.push('/cart') }}>
           {`MY CART (${totalCartItems})`}
         </li>
 
@@ -262,7 +260,7 @@ export default function LayoutSidebar() {
             </div>
           ) : (
             <div style={{ cursor: 'pointer' }}>
-              <div onClick={()=>setIsOpen(false)}>
+              <div onClick={() => setIsOpen(false)}>
                 <Link href="/sign-in">LOGIN</Link>
               </div>
             </div>

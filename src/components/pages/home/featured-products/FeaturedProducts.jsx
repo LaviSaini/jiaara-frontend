@@ -89,8 +89,6 @@ export default function FeaturedProducts(
       return;
     }
     if (type == 'wish') {
-      console.log(product)
-      console.log(wishlistData)
       if (getProductItemFromWishlist(product.id)) {
         //delete from wishlist
         deleteWishList(product.id)
@@ -165,7 +163,6 @@ export default function FeaturedProducts(
       }
       dispatch(loaderData.clear())
     } catch (error) {
-      console.log(error)
       toast("Something Went Wrong!", { type: 'error' })
       dispatch(loaderData.add(false));
     }

@@ -40,15 +40,11 @@ export default function ManageShop({ className = "", params }) {
       }
 
       const data = await response.json();
-      console.log(Object.keys(data))
-      console.log(data)
       let arr = [];
       const keys = Object.keys(data).slice(0, Object.keys(data).length - 1);
-      console.log(keys)
       keys.forEach((element) => {
         arr.push(data[element])
       })
-      console.log(arr)
 
       const page = Math.ceil(data['total_products'] / 20)
       setTotalProduct(page);

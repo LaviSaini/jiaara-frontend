@@ -24,7 +24,6 @@ export default function ConfirmOrder() {
     // dispatch(loaderData.add(true))
     try {
       const data = JSON.parse(orderData)
-      console.log(data)
       const obj = {
         products: [],
         customerDetails: {},

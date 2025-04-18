@@ -8,36 +8,40 @@ import Validation from "@/components/general/Validation";
 
 import { CATEGORIES } from "@/routes";
 import { getCategorywpSevice } from "@/app/api/cms/nodeapi/DetailService";
+import { useSelector } from "react-redux";
 
 export default function Categories({ className = "" }) {
   const [parentCategories, setParentCategories] = useState([]); // Default to an empty array
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-
+  const categoryList = useSelector(data => data.categorySlice)
   // Fetch Categories Directly (Without useQuery)
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        // const response = await Axios.get(
-        //   "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
-        // );
+    // const fetchCategories = async () => {
+    //   try {
+    //     // const response = await Axios.get(
+    //     //   "https://cms.jiaarajewellery.com/wp-json/cms/woocommerce/categories/getCategories?page=1&per_page=5&parent=0"
+    //     // );
 
-        // if (!Array.isArray(response.data)) {
-        //   throw new Error("Invalid response format");
-        // }
-        const response = await getCategorywpSevice();
-        setParentCategories(response);
-        setIsError(false);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    //     // if (!Array.isArray(response.data)) {
+    //     //   throw new Error("Invalid response format");
+    //     // }
+    //     const response = await getCategorywpSevice();
+    //     setParentCategories(response);
+    //     setIsError(false);
+    //   } catch (error) {
+    //     console.error("Error fetching categories:", error);
+    //     setIsError(true);
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // };
 
-    fetchCategories();
-  }, []);
+    // fetchCategories();
+    setParentCategories(categoryList)
+
+    setIsLoading(false)
+  }, [categoryList]);
   // debugger
   const requiredCategories = Object.values(parentCategories)?.filter(
     (category) => category?.name !== "General"

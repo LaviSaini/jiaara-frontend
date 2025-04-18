@@ -37,6 +37,7 @@ import { userdata } from '@/redux/slices/userdata';
 import { coupon } from '@/redux/slices/coupon';
 import { getCartListService, getWishListService } from '@/app/api/cms/nodeapi/DetailService';
 import { loaderData } from '@/redux/slices/loader';
+import { categoryData } from '@/redux/slices/category';
 
 const { HOME, SHOP, CATEGORIES, COLLECTIONS, CART, WISHLIST, SEARCH } = getAllRoutes();
 
@@ -113,6 +114,7 @@ export default function Header() {
       setIsParentCategoriesLoading(true);
       try {
         const response = await Axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories");
+        dispatch(categoryData.addAll(response.data))
         setParentCategories(response.data);
         setIsParentCategoriesSuccess(true);
       } catch (error) {
