@@ -6,7 +6,7 @@ const assetsDirPath = "/assets/pages/homepage/SendGift";
 export default function SendGift() {
   return (
     <section className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-16">
-      <div className="flex mb-4">
+      <div className="flex flex-col md:flex-row mb-4">
           <div className="flex-auto relative bg-[#c788a1]/80 flex items-center justify-center p-8 md:p-12 text-center">
             {/* Ribbon background image */}
             <img
@@ -24,7 +24,7 @@ export default function SendGift() {
               </p>
             </div>
           </div>
-        <div className="flex-none w-[35%] h-[380px]">
+        <div className="flex-none w-full md:w-[35%] h-[300px] md:h-[380px]">
           <img
             src={`${assetsDirPath}/gift-box.jpeg`} // Replace with your gift box image path
             alt="Gift Boxes"
