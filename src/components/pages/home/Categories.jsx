@@ -56,6 +56,7 @@ export default function Categories({ className = "" }) {
       id="shop-by-categories"
       className={`grid items-center gap-y-12 ${className}`}
     >
+    <div className="px-4 sm:px-6 lg:px-5 xl:px-24 2xl:px-36">
       <h2 className="font-heading text-center text-4xl capitalize text-primaryFont">
         {`Shop by ${CATEGORIES?.title}`}
       </h2>
@@ -84,6 +85,7 @@ export default function Categories({ className = "" }) {
           }}
         />
       )}
+      </div>
     </section>
   );
 }
