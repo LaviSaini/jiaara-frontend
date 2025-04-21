@@ -190,6 +190,10 @@ input[type="number"] {
     .loginModel {
       width: 90%;
     }
+
+    .thankyouModel {
+      height: 100%;
+    }
   }
 }
 

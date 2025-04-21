@@ -29,7 +29,7 @@ export default function ThankYouModal({
                 <div className="modal-cont fixed inset-0 bg-black/50 flex justify-center items-center z-30">
                     <div
                         ref={modalRef}
-                        className={`modal bg-white rounded-lg p-4 loginModel ${className}`}
+                        className={`modal bg-white rounded-lg p-4 thankyouModel ${className}`}
                     >
                         <div className="flex justify-end " onClick={() => closeModel()}>
                             <Icon icon={'/assets/icons/close.png'} className="relative size-[15px]   " />
