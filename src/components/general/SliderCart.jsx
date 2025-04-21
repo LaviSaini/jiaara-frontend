@@ -120,7 +120,7 @@ export default function SlideCart({ isOpen, onClose, item }) {
         if (!formData.city) newErrors.city = 'City is required';
         if (!formData.state) newErrors.state = 'State is required';
         if (!formData.pincode) newErrors.pincode = 'Pincode is required';
-        if (formData.email && !emailRegex.test(formData.email)) newErrors.email = 'Enter a valid email';
+        if (formData.email || !emailRegex.test(formData.email)) newErrors.email = 'Enter a valid email';
 
         return newErrors;
     };
@@ -585,7 +585,7 @@ export default function SlideCart({ isOpen, onClose, item }) {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm text-primaryFont font-medium mb-1">E-mail <span className="text-gray-400">(optional)</span></label>
+                                    <label className="block text-sm text-primaryFont font-medium mb-1">E-mail<span className="text-red-500">*</span></label>
                                     <input type="email" name="email" value={formData.email} onChange={handleChange}
                                         className={`w-full border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500`} />
                                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
