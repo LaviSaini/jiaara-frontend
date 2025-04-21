@@ -117,7 +117,7 @@ export default function ProductShowcase({ product = null }) {
       {product?.images?.length > 0 &&
         <CarouselProvider
           ref={primaryCarouselRef}
-          className="primary-display-product-carousel w-[95vw] relative md:w-[40vw] lg:w-[24rem]"
+          className="primary-display-product-carousel w-[94vw] relative md:w-[40vw] lg:w-[24rem]"
           naturalSlideWidth={100}
           naturalSlideHeight={125}
           isIntrinsicHeight
