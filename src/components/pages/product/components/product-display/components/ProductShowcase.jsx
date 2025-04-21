@@ -163,7 +163,7 @@ export default function ProductShowcase({ product = null }) {
       {product?.images?.length > 0 &&
         <CarouselProvider
           ref={secondaryCarouselRef}
-          className="secondary-display-product-carousel w-[96vw] flex justify-center items-center md:w-auto"
+          className="secondary-display-product-carousel w-[94vw] flex justify-center items-center md:w-auto"
           naturalSlideWidth={100}
           naturalSlideHeight={125}
           isIntrinsicHeight={screenWidth < md}
