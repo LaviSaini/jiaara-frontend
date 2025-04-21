@@ -110,7 +110,7 @@ export default function ConfirmOrder() {
   }, [])
   return (
     <>
-      <div className="min-h-screen bg-[#F5EDE3] flex justify-center items-center p-8">
+      <div className="min-h-screen bg-[#F5EDE3] flex justify-center items-center p-[0.5rem] sm:p-8">
         <div className="bg-white py-2 px-10 rounded-2xl shadow-lg w-full max-w-4xl">
           <div className="text-center">
             <div className="mb-6">
