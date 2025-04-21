@@ -91,8 +91,8 @@ export default function Sale(
     const result = categoryList?.filter(item => item.id != 15);
     const firstCategory = result[0];
     setCategories(result);
-    setActiveTab(firstCategory.id);
-    getProducts(firstCategory.id);
+    setActiveTab(firstCategory?.id);
+    getProducts(firstCategory?.id);
     setIsLoading(false)
   };
   function getCat(id) {

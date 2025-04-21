@@ -29,6 +29,9 @@ import { addToCartService, deleteCartItem } from "@/app/api/cms/nodeapi/DetailSe
 import { cart } from "@/redux/slices/cart";
 import { loaderData } from "@/redux/slices/loader";
 import createObjCommanFunction from "@/utils/functions/general/createCartWishlistObje";
+import SlideCart from "@/components/general/SliderCart";
+import { buyNow } from "@/redux/slices/buyNow";
+import ThankYouModal from "@/components/model/ThankYouModal";
 
 const INITIAL_QTY = 1;
 const NO_STOCK_QTY = 0;
@@ -39,7 +42,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
 
   const { data: { triggered } = {}, data: { states } = {} } = useContext(context) || {};
   const isZoomed = (triggered && states?.zoomableImage?.isZoomed) || false;
-
+  const [isCartOpen, setCartOpen] = useState(false);
   const router = useRouter();
 
   const { saveRoute: saveCurrentRoute } = usePreviousRoute();
@@ -139,16 +142,18 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
 
 
   const handleBuyNowButton = (event, isValid) => {
-
-    event.preventDefault();
-
-    if (isValid) {
-
-      theBuyNow(quantity);
-
-      saveCurrentRoute();
-      router.push(CHECKOUT.pathname);
+    console.log(product)
+    let newObj = createObjCommanFunction(product);
+    newObj.quantity = 1;
+    if (product?.on_sale) {
+      newObj.sale = true;
+    } else {
+      newObj.sale = false
     }
+    newObj.regularPrice = product?.regular_price
+    console.log(newObj)
+    dispatch(buyNow.add([newObj]))
+    setCartOpen(true)
   }
 
 
@@ -273,6 +278,11 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
   const creatNewObj = (data) => {
     return createObjCommanFunction(data);
   }
+  const [openThankYouModel, setThankYouModel] = useState(false);
+  const closeBuYNowOrder = () => {
+    setCartOpen(false);
+    setThankYouModel(true);
+  }
   return (
     <>
       <div
@@ -389,7 +399,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
             </p>
           }
 
-          <Link
+          <button
             className={`
               buy-now
               py-2 
@@ -400,14 +410,19 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
               bg-white text-primaryFont border border-primaryFont xs:text-xs hover:bg-primaryFont hover:text-white transition-colors duration-300 ease-in-out font-bold
               ${error ? "opacity-50 cursor-default" : ""}
             `}
-            href={CHECKOUT.pathname}
-            onClick={event => handleBuyNowButton(event, !error)}
+
+            onClick={event => handleBuyNowButton()}
           >
             Buy Now
-          </Link>
+          </button>
         </div>
         <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
-
+        <SlideCart
+          isOpen={isCartOpen}
+          onClose={() => closeBuYNowOrder()}
+        // item={product}
+        />
+        <ThankYouModal isOpen={openThankYouModel} closeModel={() => setThankYouModel(false)} />
       </div>
     </>
   );

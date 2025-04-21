@@ -106,9 +106,7 @@ export default function ConfirmOrder() {
     } else {
       fetchOrderDetail(orderData)
     }
-    return () => {
-      localStorage.removeItem('order-data')
-    }
+
   }, [])
   return (
     <>

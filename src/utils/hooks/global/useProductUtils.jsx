@@ -46,7 +46,7 @@ export default function useProductUtils(product = null) {
   const theBuyNow = (quantity = 1) => {
 
     quantity = !isNaN(quantity) ? quantity : 1;
-    dispatch(buyNow.add({ product, cartQtyCount: quantity }));
+    dispatch(buyNow.add({ product, quantity: quantity }));
   }
 
   const clearBuyNow = useCallback(() => {

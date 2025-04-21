@@ -152,9 +152,17 @@ input[type="number"] {
     width: 25%;
   }
 
+  .thankyouModel {
+    width: 70%;
+  }
+
   @media (max-width:1200px) {
     .loginModel {
       width: 35%;
+    }
+
+    .thankyouModel {
+      width: 80%;
     }
   }
 
@@ -167,6 +175,10 @@ input[type="number"] {
   @media (max-width:768px) {
     .loginModel {
       width: 50%;
+    }
+
+    .thankyouModel {
+      width: 100%;
     }
 
     .catSecHome {
