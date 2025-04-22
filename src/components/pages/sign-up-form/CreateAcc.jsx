@@ -72,7 +72,7 @@ export default function CreatePass() {
                 <InputField
                   input={{
                     id: "first-name",
-                    className: "w-full px-3 py-1 border rounded-md border-gray-300 input-selection-black",
+                    className: "w-full px-3 py-2 border rounded-md border-gray-300 input-selection-black",
                     required: true,
                     inputName: 'firstName'
                   }}
@@ -92,7 +92,7 @@ export default function CreatePass() {
                 <InputField
                   input={{
                     id: "Last-name",
-                    className: "w-full px-3 py-1 border rounded-md border-gray-300 input-selection-black",
+                    className: "w-full px-3 py-2 border rounded-md border-gray-300 input-selection-black",
                     required: true,
                     inputName: 'LastName'
                   }}
@@ -113,7 +113,7 @@ export default function CreatePass() {
                 <InputField
                   input={{
                     id: "Email Address",
-                    className: "w-full px-3 py-1 border rounded-md border-gray-300 input-selection-black",
+                    className: "w-full px-3 py-2 border rounded-md border-gray-300 input-selection-black",
                     required: true,
                     type: 'email',
                     inputName: 'email'
@@ -136,7 +136,7 @@ export default function CreatePass() {
                 <InputField
                   input={{
                     id: "new-password",
-                    className: "w-full px-3 py-1 border rounded-md border-gray-300 input-selection-black",
+                    className: "w-full px-3 py-2 border rounded-md border-gray-300 input-selection-black",
                     required: true,
                     inputName: 'newpassword',
                     type: isVisible ? 'text' : 'password'
@@ -154,12 +154,12 @@ export default function CreatePass() {
                     }
                   }}
                 />
-                <Icon className="absolute size-[15px] right-[11px] top-[37px]" icon={`/assets/icons/${!isVisible ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisible(!isVisible)} />
+                <Icon className="absolute size-[15px] right-[11px] top-[42px]" icon={`/assets/icons/${!isVisible ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisible(!isVisible)} />
               </div>
               <div class="flex" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                 <div className="flex align-content-center justify-content-lg-start">
                   <input type="checkbox" value={agreement} onChange={(e) => { setAgreement(e.target.checked); e.target.checked ? setShowError(false) : setShowError(true) }} id="terms" class="h-3 w-3 text-indigo-600 rounded focus:ring-indigo-500" />
-                  <label htmlFor="terms" class="ml-2  text-gray-600" style={{ fontSize: '8px' }}>I agree to all terms and privacy policy</label>
+                  <label htmlFor="terms" class="ml-2  text-gray-600" style={{ fontSize: '10px' }}>I agree to all terms and privacy policy</label>
                 </div>
 
                 <button

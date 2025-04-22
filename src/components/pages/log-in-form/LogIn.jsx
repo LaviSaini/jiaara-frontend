@@ -86,7 +86,7 @@ export default function LogIn({ isPopUp, userlogin }) {
               <InputField
                 input={{
                   id: "Email Address",
-                  className: "w-full px-3 py-1 border rounded-md border-gray-300 input-selection-black",
+                  className: "w-full px-3 py-2 border rounded-md border-gray-300 input-selection-black",
                   required: true,
                   inputName: 'email'
                 }}

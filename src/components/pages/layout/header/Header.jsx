@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { context } from "@/context-API/context";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ import NavItem from '@/components/general/NavItem';
 import NavItemDropdown from '@/components/general/AutoSelect';
 import HamburgerMenu from '@/components/general/HamburgerMenu';
 
-import { MdOutlineArrowDropDown } from "react-icons/md";
+import { MdOutlineArrowDropDown, MdOutlineSupervisorAccount } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import useWindowSize from '@/utils/hooks/general/useWindowSize';
@@ -50,7 +50,19 @@ const brandLogo = {
 export default function Header() {
   const dispatch = useDispatch();
   const { screenWidth, breakpoints: { md, lg } } = useWindowSize();
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
 
+  // Close popup on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const { isActive: isHomepage } = useRouteActive({ href: HOME?.pathname });
 
@@ -395,58 +407,84 @@ export default function Header() {
             ${isHeroSecVisible ? "text-primaryFont" : "text-primaryFont"}
           `}>
             {
-              userData ?
 
-                [WISHLIST, CART].map(route =>
-                  <NavItem
-                    key={route?.id}
-                    href={{
-                      pathname: route?.pathname
-                    }}
-                    icon={{
-                      status: {
-                        active: route?.activeIcon,
-                        inactive: route?.inactiveIcon,
-                        general: route?.generalIcon
-                      },
+              [WISHLIST, CART].map(route =>
+                <NavItem
+                  key={route?.id}
+                  href={{
+                    pathname: route?.pathname
+                  }}
+                  icon={{
+                    status: {
+                      active: route?.activeIcon,
+                      inactive: route?.inactiveIcon,
+                      general: route?.generalIcon
+                    },
+                    badge: {
                       badge: {
-                        badge: {
-                          size: "15px",
-                          textSize: "text-2xs",
-                          position: {
-                            top: "-8px",
-                            left: "13px"
-                          },
-                          value: route?.id === "wishlist" ? totalWishlistItems : totalCartItems,
-                          backgroundColor: `
+                        size: "15px",
+                        textSize: "text-2xs",
+                        position: {
+                          top: "-8px",
+                          left: "13px"
+                        },
+                        value: route?.id === "wishlist" ? totalWishlistItems : totalCartItems,
+                        backgroundColor: `
                         ${isHeroSecVisible ? "bg-primaryFont" : "bg-primaryFont"}
                       `,
-                          textColor: "text-white"
-                        },
-                        isBadgeEnabled: route?.isBadgeEnabled
-                      }
-                    }}
-                    enabled={enableNavItem(route, [], lg)}
-                  />
-                )
+                        textColor: "text-white"
+                      },
+                      isBadgeEnabled: route?.isBadgeEnabled
+                    }
+                  }}
+                  enabled={enableNavItem(route, [], lg)}
+                />
+              )
 
-                :
-                ''
+
             }
 
-            {
-              userData ?
-                <div style={{ cursor: 'pointer' }} onClick={() => logout()}>
-                  <div style={{ border: '1px solid', borderRadius: '15px', padding: '3px 10px 4px 10px', fontSize: '16px', lineHeight: '20px' }}>Logout</div>
-                </div>
-                :
 
-                <div style={{ cursor: 'pointer' }}>
-                  <div style={{ border: '1px solid', borderRadius: '15px', padding: '3px 10px 4px 10px', fontSize: '16px', lineHeight: '20px' }}>
-                    <Link href={'/sign-in'}>Login</Link>
+            <>
+              <div className='relative' ref={menuRef}>
+
+                {/* <div style={{ cursor: 'pointer' }} onClick={() => logout()}>
+                      <div style={{ border: '1px solid', borderRadius: '15px', padding: '3px 10px 4px 10px', fontSize: '16px', lineHeight: '20px' }}>Logout</div>
+                    </div> */}
+                {/* <MdOutlineSupervisorAccount /> */}
+                <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg"
+                  width="40" height="40"
+                  viewBox="0 0 40 40"
+                  fill="none">
+                  {/* <circle cx="20" cy="20" r="20" fill="#E5E7EB" /> */}
+
+                  <path d="M28 30v-2a6 6 0 0 0-6-6h-4a6 6 0 0 0-6 6v2"
+                    stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="20" cy="14" r="4"
+                    stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                {open && (
+                  <div className="absolute right-0 mt-2 top-[30px] w-[8rem] bg-white shadow-lg rounded-md py-2 z-50 text-center">
+                    <button onClick={() => setOpen(!open)} className='block px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white'>
+
+                      <Link href={'/forgot-password'} >Forgot Password</Link>
+                    </button>
+                    {/* <a href="/profile" className="block px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white">Profile</a>
+                        <a href="/settings" className="block px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white">Settings</a> */}
+                    {
+                      userData ?
+                        <button className="block w-full text-left px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white text-center" onClick={() => { logout(); setOpen(!open) }}>Logout</button>
+                        :
+                        <button onClick={() => setOpen(!open)} className="block w-full text-left px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white text-center"><Link href={'/sign-in'}>Login</Link></button>
+                    }
+
                   </div>
-                </div>
-            }
+                )}
+              </div>
+
+            </>
+
+
 
             {screenWidth < lg &&
               <HamburgerMenu
