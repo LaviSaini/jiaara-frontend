@@ -120,7 +120,11 @@ export default function SlideCart({ isOpen, onClose, item }) {
         if (!formData.city) newErrors.city = 'City is required';
         if (!formData.state) newErrors.state = 'State is required';
         if (!formData.pincode) newErrors.pincode = 'Pincode is required';
-        if (formData.email || !emailRegex.test(formData.email)) newErrors.email = 'Enter a valid email';
+        if (!formData.email) {
+            newErrors.email = 'Email is required';
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Enter a valid email';
+        }
 
         return newErrors;
     };
