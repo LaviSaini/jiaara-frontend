@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import { sendCodeService, verifyOtpService } from "@/app/api/cms/nodeapi/DetailService";
 import { toast } from "react-toastify";
 import CreatePass from "./CreatePass";
+import ButtonInnerLoader from "@/components/general/ButtonInnerLoader";
 
 export default function VerifyMail({ email }) {
   const inputRefs = useRef([]);
@@ -39,8 +40,11 @@ export default function VerifyMail({ email }) {
   }
 
   const verify = async () => {
+    if (isVerifying) return;
+    setIsVerifying(true);
     const otp = inputRefs.current.map((input) => input.value).join(""); // Get values and join them
     const response = await verifyOtpService(email, otp);
+    setIsVerifying(false)
     if (response?.response?.success) {
       toast(`${response?.response?.message}`, { type: 'success' })
       setIsVerified(true);
@@ -81,9 +85,9 @@ export default function VerifyMail({ email }) {
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', marginBottom: '30px' }}>
                 <button
                   onClick={() => verify()}
-                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont"
+                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont flex justify-center"
                 >
-                  Verify
+                  {isVerifying ? <ButtonInnerLoader /> : 'Verify'}
                 </button>
               </div>
             </div>

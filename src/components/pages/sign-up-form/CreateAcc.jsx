@@ -9,6 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { createAccountService } from "@/app/api/cms/nodeapi/DetailService";
 import { toast } from "react-toastify";
 import Icon from "@/components/general/Icon";
+import ButtonInnerLoader from "@/components/general/ButtonInnerLoader";
 
 export default function CreatePass() {
   const methods = useForm();
@@ -32,6 +33,7 @@ export default function CreatePass() {
     }
     setIsLoading(true);
     const response = await createAccountService(requestObject);
+    setIsLoading(false);
     if (response?.response?.success) {
       toast(`${response?.response?.message}`, { type: 'success' })
       methods.reset()
@@ -152,7 +154,7 @@ export default function CreatePass() {
                     }
                   }}
                 />
-                <Icon className="absolute size-[15px] right-[11px] bottom-[11px]" icon={`/assets/icons/${!isVisible ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisible(!isVisible)} />
+                <Icon className="absolute size-[15px] right-[11px] top-[37px]" icon={`/assets/icons/${!isVisible ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisible(!isVisible)} />
               </div>
               <div class="flex" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
                 <div className="flex align-content-center justify-content-lg-start">
@@ -161,9 +163,9 @@ export default function CreatePass() {
                 </div>
 
                 <button
-                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont"
+                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont flex justify-center"
                 >
-                  {!isLoading ? 'Sign Up' : 'processing...'}
+                  {!isLoading ? 'Sign Up' : <ButtonInnerLoader />}
                 </button>
               </div>
               {

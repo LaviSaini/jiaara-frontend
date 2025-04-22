@@ -12,12 +12,17 @@ export default function CartHead({ className = "", cartItemsCount = 0 }) {
   const userData = useSelector(data => data.userDataSlice)
 
   const clear = async () => {
-    dispatch(loaderData.add(true))
-    const response = await clearCart(userData?.userId);
-    if (response?.response?.success) {
-      dispatch(cart.clear());
+    if (cartItemsCount > 0) {
+
+      dispatch(loaderData.add(true))
+      const response = await clearCart(userData?.userId);
+      if (response?.response?.success) {
+        dispatch(cart.clear());
+      } else if (!response?.response?.success) {
+        dispatch(loaderData.clear())
+      }
+      dispatch(loaderData.clear())
     }
-    dispatch(loaderData.clear())
   }
 
 

@@ -16,17 +16,22 @@ import useNavigationType from "@/utils/hooks/general/useNavigationType";
 import { useRouter } from 'next/navigation'
 import Icon from "@/components/general/Icon";
 import { loaderData } from "@/redux/slices/loader";
+import ButtonInnerLoader from "@/components/general/ButtonInnerLoader";
 
 export default function LogIn({ isPopUp, userlogin }) {
   const userData = useSelector(data => data.userDataSlice)
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter()
   const method = useForm();
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
-    dispatch(loaderData.add(true));
+    if (isLoading) {
+      return;
+    }
+    setLoading(true);
     const response = await loginService(data);
-    dispatch(loaderData.add(false))
+    setLoading(false)
     if (response?.response?.success) {
       if (isPopUp) {
         userlogin(response?.response?.data)
@@ -119,7 +124,7 @@ export default function LogIn({ isPopUp, userlogin }) {
                     }
                   }}
                 />
-                <Icon className="absolute size-[15px] right-[11px] bottom-[11px]" icon={`/assets/icons/${!isVisible ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisible(!isVisible)} />
+                <Icon className="absolute size-[15px] right-[11px] top-[42px]" icon={`/assets/icons/${!isVisible ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisible(!isVisible)} />
 
               </div>
               <div className="text-blue-700" style={{ marginTop: '3px', cursor: 'pointer', display: 'flex', justifyContent: 'end', fontSize: '12px' }}>
@@ -130,9 +135,9 @@ export default function LogIn({ isPopUp, userlogin }) {
               <div class=" flex justify-center !mt-28 !mb-10">
                 <button
 
-                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont"
+                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont flex justify-center"
                 >
-                  Login
+                  {isLoading ? <ButtonInnerLoader /> : 'Login'}
                 </button>
               </div>
             </form>

@@ -9,20 +9,25 @@ import { updatePasswordService } from "@/app/api/cms/nodeapi/DetailService";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/general/Icon";
+import ButtonInnerLoader from "@/components/general/ButtonInnerLoader";
 export default function CreatePass({ email }) {
   const method = useForm();
   const router = useRouter();
   const [isSame, setIsSame] = useState(false);
   const [isVisibleFirst, setIsVisibleFirst] = useState(false);
   const [isVisibleSecond, setIsVisibleSecond] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const onSubmit = async (data) => {
+    if (isProcessing) return;
     if (data?.confirmpassword != data?.newpassword) {
       setIsSame(true);
       return;
     }
 
     setIsSame(false)
+    setIsProcessing(true);
     const response = await updatePasswordService(email, data?.confirmpassword);
+    setIsProcessing(false);
     if (response?.response?.success) {
       toast(`${response?.response?.message}`, { type: "success" });
       router.push('/sign-in')
@@ -64,7 +69,7 @@ export default function CreatePass({ email }) {
                     }
                   }}
                 />
-                <Icon className="absolute size-[15px] right-[11px] bottom-[11px]" icon={`/assets/icons/${!isVisibleFirst ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisibleFirst(!isVisibleFirst)} />
+                <Icon className="absolute size-[15px] right-[11px] top-[42px]" icon={`/assets/icons/${!isVisibleFirst ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisibleFirst(!isVisibleFirst)} />
               </div>
               <div className="relative">
 
@@ -89,7 +94,7 @@ export default function CreatePass({ email }) {
                     }
                   }}
                 />
-                <Icon className="absolute size-[15px] right-[11px] bottom-[11px]" icon={`/assets/icons/${!isVisibleSecond ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisibleSecond(!isVisibleSecond)} />
+                <Icon className="absolute size-[15px] right-[11px] top-[42px]" icon={`/assets/icons/${!isVisibleSecond ? 'eye' : 'hidden'}.png`} onClick={() => setIsVisibleSecond(!isVisibleSecond)} />
               </div>
               {
                 isSame ?
@@ -102,9 +107,9 @@ export default function CreatePass({ email }) {
 
               <div class=" flex justify-center !mt-28 !mb-10">
                 <button
-                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont"
+                  className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont flex justify-center"
                 >
-                  Save
+                  {isProcessing ? <ButtonInnerLoader /> : 'Save'}
                 </button>
               </div>
             </form>

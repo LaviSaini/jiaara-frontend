@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import { useState } from "react";
 import VerifyMail from "./VerifyMail";
+import ButtonInnerLoader from "@/components/general/ButtonInnerLoader";
 
 export default function ForgotPass() {
   const method = useForm();
@@ -17,7 +18,6 @@ export default function ForgotPass() {
   const [useremail, setuseremail] = useState('');
   const [isSending, setIsSending] = useState(false);
   const onSubmit = async (data) => {
-
     setuseremail(data?.email)
     if (isSending) return;
     setIsSending(true);
@@ -61,9 +61,9 @@ export default function ForgotPass() {
                   />
                   <div class=" flex justify-center !mt-18 send-c-btn">
                     <button
-                      className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont"
+                      className="w-40 text-white text-sm font-medium py-3 rounded-full bg-primaryFont flex justify-center"
                     >
-                      {!isSending ? 'Send Code' : 'sending...'}
+                      {!isSending ? 'Send Code' : <ButtonInnerLoader />}
                     </button>
 
                   </div>
