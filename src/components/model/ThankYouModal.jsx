@@ -26,7 +26,7 @@ export default function ThankYouModal({
     return (
         (isOpen &&
             createPortal(
-                <div className="modal-cont fixed inset-0 bg-black/50 flex justify-center items-center z-30 overflow-scroll">
+                <div className="modal-cont fixed inset-0 bg-black/50 flex justify-center items-center z-30 ">
                     <div
                         ref={modalRef}
                         className={`modal bg-white rounded-lg p-4 thankyouModel ${className}`}

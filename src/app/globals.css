@@ -154,6 +154,8 @@ input[type="number"] {
 
   .thankyouModel {
     width: 70%;
+    height: 100%;
+    overflow: scroll;
   }
 
   @media (max-width:1200px) {
@@ -191,10 +193,7 @@ input[type="number"] {
       width: 90%;
     }
 
-    .thankyouModel {
-      height: 100%;
-      overflow: scroll;
-    }
+    .thankyouModel {}
   }
 }
 

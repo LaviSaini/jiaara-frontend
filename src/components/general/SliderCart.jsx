@@ -323,7 +323,7 @@ export default function SlideCart({ isOpen, onClose, item }) {
                             localStorage.setItem('order-data', JSON.stringify(obj))
                             setOrderProcessing(true);
                             setProcessingText('');
-                            onClose();
+                            onClose('auto');
 
                         } else {
                             setProcessingText(false);
@@ -387,7 +387,7 @@ export default function SlideCart({ isOpen, onClose, item }) {
                                     />
                                 </div>
                             </div>
-                            <div className="flex justify-end cursor-pointer" onClick={() => onClose()}>
+                            <div className="flex justify-end cursor-pointer" onClick={() => onClose('self')}>
                                 <Icon icon={'/assets/icons/close.png'} className="relative size-[15px]   " />
                             </div>
                         </div>

@@ -279,9 +279,12 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
     return createObjCommanFunction(data);
   }
   const [openThankYouModel, setThankYouModel] = useState(false);
-  const closeBuYNowOrder = () => {
+  const closeBuYNowOrder = (e) => {
+    console.log(e)
     setCartOpen(false);
-    setThankYouModel(true);
+    if (e != 'self') {
+      setThankYouModel(true);
+    }
   }
   return (
     <>
@@ -419,7 +422,7 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
         <LoginModel isOpen={isModelOpen} closeModel={() => { setIsModelOpen(false); }} />
         <SlideCart
           isOpen={isCartOpen}
-          onClose={() => closeBuYNowOrder()}
+          onClose={(e) => closeBuYNowOrder(e)}
         // item={product}
         />
         <ThankYouModal isOpen={openThankYouModel} closeModel={() => setThankYouModel(false)} />
