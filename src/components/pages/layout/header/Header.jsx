@@ -453,7 +453,7 @@ export default function Header() {
                     </div> */}
                 {/* <MdOutlineSupervisorAccount /> */}
                 <svg onClick={() => setOpen(!open)} xmlns="http://www.w3.org/2000/svg"
-                  width="40" height="40"
+                  width="30" height="30"
                   viewBox="0 0 40 40"
                   fill="none">
                   {/* <circle cx="20" cy="20" r="20" fill="#E5E7EB" /> */}
@@ -465,7 +465,7 @@ export default function Header() {
                 </svg>
                 {open && (
                   <div className="absolute right-0 mt-2 top-[30px] w-[8rem] bg-white shadow-lg rounded-md py-2 z-50 text-center">
-                    <button onClick={() => setOpen(!open)} className='block px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white'>
+                    <button onClick={() => setOpen(!open)} className='block w-full text-left px-2 py-2 text-primaryFont text-xs hover:bg-primaryFont hover:text-white text-center'>
 
                       <Link href={'/forgot-password'} >Forgot Password</Link>
                     </button>
