@@ -7,7 +7,7 @@ import Pagination from "@/components/general/Pagination";
 import Validation from "@/components/general/Validation";
 import { useSelector } from "react-redux";
 
-export default function ManageShop({ className = "", params }) {
+export default function ManageShop({ className = "", params, fromSearch, otherClasses = '' }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryId, setCategoryId] = useState(null);
   const buyNowItem = useSelector((state) => state?.userDataSlice);
@@ -28,8 +28,10 @@ export default function ManageShop({ className = "", params }) {
       url.searchParams.append("status", "publish");
       url.searchParams.append("page", currentPage);
       url.searchParams.append("per_page", 20);
+      if (fromSearch) {
+        url.searchParams.append("category", 87);
 
-      if (id) {
+      } else {
         url.searchParams.append("category", id);
       }
 
@@ -90,7 +92,7 @@ export default function ManageShop({ className = "", params }) {
 
   return (
     <div className={`flex flex-col gap-5 my-10 ${className}`}>
-      <ProductGrid products={products || []} />
+      <ProductGrid products={products || []} otherClasses={otherClasses} />
       {<Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

@@ -408,7 +408,7 @@ export default function Header() {
           `}>
             {
 
-              [WISHLIST, CART].map(route =>
+              [WISHLIST, CART, SEARCH].map(route =>
                 <NavItem
                   key={route?.id}
                   href={{

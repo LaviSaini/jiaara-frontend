@@ -51,6 +51,7 @@ export const SIGN_IN = {
 export const SEARCH = {
   id: "search",
   title: "Search",
+  pathname: '/search',
   generalIcon: CiSearch
 }
 

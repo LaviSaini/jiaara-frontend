@@ -13,7 +13,8 @@ import createObjCommanFunction from "@/utils/functions/general/createCartWishlis
 
 const ProductGrid = ({
   className = "",
-  products = null
+  products = null,
+  otherClasses = ""
 }) => {
   const [productList, setProductList] = useState([]);
   const userData = useSelector(data => data.userDataSlice);
@@ -59,7 +60,7 @@ const ProductGrid = ({
     <div
       className={`
         product-grid
-        flex flex-wrap justify-between items-center gap-x-[5vw] gap-y-10 px-5 py-5
+         ${otherClasses} justify-between items-center gap-x-[5vw] gap-y-10 px-5 py-5
         xs:px-[5vw]
         sm:justify-start sm:px-[4vw]
         ${className}
