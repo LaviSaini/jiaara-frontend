@@ -158,6 +158,14 @@ input[type="number"] {
     overflow: scroll;
   }
 
+  .alice-carousel-wrapper{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 2px !important;
+  }
+
+  .alice-carousel__dots{
+    margin: 0px 3px 5px !important;
+  }
+
   @media (max-width:1200px) {
     .loginModel {
       width: 35%;

@@ -11,13 +11,16 @@ import FollowOnInstagram from "@/components/pages/home/follow-on-instagram/Follo
 import FeaturedDeals from "@/components/pages/home/featured-deals/FeaturedDeals";
 import JiaaraStory from "@/components/pages/home/JiaaraStory";
 import SendGift from "@/components/pages/home/SendGift";
+import FilterBar from "@/components/global/filter/FilterBar";
 
 
 export default function Home() {
 
   return (
     <div className="homepage flex flex-col gap-12 relative top-[100px]">
+
       <Hero/>
+      <FilterBar/>
       <Categories/>
       <FeaturedProducts/>
       <FeaturedDeals/>
