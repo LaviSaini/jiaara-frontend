@@ -3,11 +3,14 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from "react";
 import axios from "axios"; // Assuming you are using axios
+import { useDispatch } from "react-redux";
+import { collectionData } from "@/redux/slices/collection";
 
 export default function Collections({ className = "" }) {
   const [collection, setCollection] = useState([]);
   const [isClient, setIsClient] = useState(false); // Flag to track if it's a client-side environment
   const router = useRouter();
+  const dispatch=useDispatch();
 
   // Extract image URLs from gallery HTML (you might want to modify this part)
   const extractImageUrls = (gallery) => {
@@ -31,6 +34,8 @@ export default function Collections({ className = "" }) {
     try {
       const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?parent=15");
       if (response?.status === 200) {
+        console.log(response)
+        dispatch(collectionData.addAll(response?.data))
         const processedData = response?.data.map(item => ({
           ...item,
           gallery: extractImageUrls(item.gallery),

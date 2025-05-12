@@ -17,7 +17,8 @@ module.exports = {
         'xs': '425px',
         '2xs': '375px',
         'custom820': '820px',
-        'custom660': '660px'
+        'custom660': '660px',
+        'custom1201': '1201px'
       },
       fontSize: {
         '2xs': '0.625rem',
@@ -32,7 +33,7 @@ module.exports = {
         senaryBackground: "#e1d1dc",
         septenaryBackground: "#FAF7F2",
 
-        primaryFont: "#663c59",
+        primaryFont: "#7e5d80",
         primaryButton: "#ffddf4",
 
         primaryOverlay: "#f7d9ee",

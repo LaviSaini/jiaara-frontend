@@ -7,7 +7,7 @@ import Pagination from "@/components/general/Pagination";
 import Validation from "@/components/general/Validation";
 import { useSelector } from "react-redux";
 
-export default function ManageShop({ className = "", params, fromSearch, otherClasses = '' }) {
+export default function ManageShop({ className = "", params, fromSearch, otherClasses = '',data }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryId, setCategoryId] = useState(null);
   const buyNowItem = useSelector((state) => state?.userDataSlice);
@@ -57,25 +57,25 @@ export default function ManageShop({ className = "", params, fromSearch, otherCl
       setLoading(false);
     }
   };
-  const nextPage = () => {
-    if ((currentPage + 1) * pageSize < products.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+ 
   useEffect(() => {
-    fetchProducts();
+    if(!fromSearch){
+      fetchProducts();
+    } 
   }, [categoryId, currentPage]);
+  useEffect(()=>{
+    if(data){
+      console.log(data?.data?.products)
+      const page = Math.ceil(data?.data?.storeInfo?.totalProducts / 20)
+      setTotalProduct(page);
+      setProducts(data?.data?.products);
+    }
+  },[data])
 
   if (loading) {
     return (
       <Validation
-        className="w-screen h-[20rem] text-primaryFont"
+        className={`${fromSearch ? '' : 'w-screen'} h-[20rem] text-primaryFont`}
         message="Loading Products…"
       />
     );
@@ -84,14 +84,14 @@ export default function ManageShop({ className = "", params, fromSearch, otherCl
   if (error) {
     return (
       <Validation
-        className="w-screen h-[20rem] text-primaryFont"
+        className={`${fromSearch ? '' : 'w-screen'} h-[20rem] text-primaryFont`}
         message="There is some error."
       />
     );
   }
 
   return (
-    <div className={`flex flex-col gap-5 my-10 ${className}`}>
+    <div className={`flex flex-col gap-5 ${fromSearch ? '' : 'my-10 '} ${className}`}>
       <ProductGrid products={products || []} otherClasses={otherClasses} />
       {<Pagination
         currentPage={currentPage}

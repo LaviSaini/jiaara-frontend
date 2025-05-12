@@ -20,7 +20,7 @@ export default function Home() {
     <div className="homepage flex flex-col gap-12 relative top-[100px]">
 
       <Hero/>
-      <FilterBar/>
+      {/* <FilterBar/> */}
       <Categories/>
       <FeaturedProducts/>
       <FeaturedDeals/>

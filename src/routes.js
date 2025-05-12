@@ -1,8 +1,8 @@
 import { GoHome, GoHomeFill } from "react-icons/go";
-import { IoPricetagsOutline, IoPricetagsSharp } from "react-icons/io5";
+import { IoPricetagsOutline, IoPricetagsSharp, IoSearch, IoSearchSharp } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { RiUserLine, RiUserFill } from "react-icons/ri";
-import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
+import { IoMdHeartEmpty, IoMdHeart, IoMdSearch } from "react-icons/io";
 import { IoCart, IoCartOutline } from "react-icons/io5";
 
 
@@ -52,7 +52,8 @@ export const SEARCH = {
   id: "search",
   title: "Search",
   pathname: '/search',
-  generalIcon: CiSearch
+  inactiveIcon: IoSearch,
+  activeIcon: IoSearch,
 }
 
 export const WISHLIST = {

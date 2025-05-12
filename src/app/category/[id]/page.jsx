@@ -6,7 +6,7 @@ export default function Category({ params }) {
 
   return (
     <>
-      <ManageShop className="category-page" params={params} otherClasses="flex flex-wrap" />
+      <ManageShop data={[]} className="category-page" params={params} otherClasses="flex flex-wrap" />
     </>
   );
 }

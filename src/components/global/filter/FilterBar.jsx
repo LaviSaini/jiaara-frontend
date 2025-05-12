@@ -11,14 +11,39 @@ import { CiFilter, CiCircleList, CiGrid41 } from "react-icons/ci";
 import AutoSelect from "@/components/general/AutoSelect";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useSelector } from "react-redux";
 
-export default function FilterBar({ className = '', showHeader, closeModel }) {
+export default function FilterBar({ className = '', showHeader, closeModel,fetchData }) {
 
+  const categoryList = useSelector(data => data.categorySlice)
+  const collectionList=useSelector(data=>data.collectionSlice);
+  const [price,setPrice]=useState(1000);
+  const [selectedCategory,setSelectedCategory]=useState('');
+  const [selectedMaterial,setSelectedMaterial]=useState('');
 
-
-
-
-
+  console.log('from search', categoryList)
+  const selectProduct=(item)=>{
+    if(selectedCategory==item.name){
+      setSelectedCategory('')
+    }else{
+      setSelectedCategory(item.name)
+    }
+  }
+  const selectMaterial=(item)=>{
+    if(selectedMaterial==item.name){
+      setSelectedMaterial('')
+    }else{
+      setSelectedMaterial(item.name)
+    }
+  }
+  const applyFilter=()=>{
+    console.log(selectedMaterial,selectedCategory)
+    fetchData({category:selectedCategory,material:selectedMaterial,min:500,max:price})
+  }
+  const selectRange=(e)=>{
+    console.log(e)
+    setPrice(e)
+  }
   return (
     <div className={`bg-white p-4 rounded-lg shadow-lg ${className}`}>
       {
@@ -38,7 +63,15 @@ export default function FilterBar({ className = '', showHeader, closeModel }) {
 
       {/* Price Filter */}
       <div className="mb-4">
-        <h3 className="font-semibold uppercase text-sm mb-4 tracking-wide">Widget Price Filter</h3>
+
+        <div className="flex justify-between mb-4 lg:h-[17px]">
+
+          <h3 className="font-semibold uppercase text-sm  tracking-wide">Widget Price Filter</h3>
+          <div className="flex">
+            <span className="mx-2 text-primaryFont h-fit hover:border-b-2 hover:border-primaryFont hover:font-semibold cursor-pointer" onClick={()=>applyFilter()}>Apply</span>
+            <span className="text-primaryFont h-fit hover:border-b-2 hover:border-primaryFont hover:font-semibold cursor-pointer">Clear</span>
+          </div>
+        </div>
         <div className="flex justify-between gap-2 mb-2">
           <div>
             <label className="text-xs text-gray-500">Min Price</label>
@@ -46,33 +79,27 @@ export default function FilterBar({ className = '', showHeader, closeModel }) {
           </div>
           <div>
             <label className="text-xs text-gray-500">Max Price</label>
-            <input type="text" value="₹2000" className="w-full border px-3 py-2 rounded text-center" readOnly />
+            <input type="text" value={`$${price}`} className="w-full border px-3 py-2 rounded text-center" readOnly />
           </div>
         </div>
         <div className="w-full flex justify-between items-center">
-          <input type="range" min="500" max="2000" value="500" className="w-full accent-black" />
+          <input onChange={(e)=>selectRange(e.target.value)} type="range" min="500" max="5000"  className="w-full accent-black" />
         </div>
-        <p className="text-xs my-2">PRICE RANGE : ₹ 500 - ₹ 2000</p>
+        <p className="text-xs my-2">PRICE RANGE : ₹ 500 - ₹ {price}</p>
       </div>
       {/* Product Categories */}
       <div className="mb-4">
         <h3 className="font-semibold uppercase text-sm mb-4 tracking-wide">Product Categories</h3>
         <div className="space-y-2 text-sm leading-6">
-          {[
-            { label: 'Bracelets', count: 22 },
-            { label: 'Earrings', count: 34, checked: true },
-            { label: 'Gold Set', count: 18 },
-            { label: 'Necklaces', count: 19 },
-            { label: 'Rings', count: 30 },
-            { label: 'Silver Set', count: 18 }
-          ].map((item) => (
-            <label key={item.label} className={`flex items-center gap-2 ${item.checked ? 'font-semibold' : ''}`}>
+          {categoryList.map((item) => (
+            <label key={item.id} className={`flex items-center gap-2 ${selectedCategory==item?.name ? 'font-semibold' : ''}`}>
               <input
                 type="checkbox"
-                className="accent-black w-4 h-4"
+                checked={selectedCategory==item?.name}
+                className="accent-black w-4 h-4" onChange={()=>selectProduct(item)}
                 defaultChecked={item.checked}
               />
-              <span>{item.label}</span>
+              <span>{item.name}</span>
               <span className="ml-auto text-gray-500">({item.count})</span>
             </label>
           ))}
@@ -83,20 +110,15 @@ export default function FilterBar({ className = '', showHeader, closeModel }) {
       <div className="mb-4">
         <h3 className="font-semibold uppercase text-sm mb-4 tracking-wide">Filter by Material</h3>
         <div className="space-y-2 text-sm leading-6">
-          {[
-            { label: 'Gold', count: 36, checked: true },
-            { label: 'Platinum', count: 12 },
-            { label: 'Rose Gold', count: 17 },
-            { label: 'Sterling Silver', count: 26 },
-            { label: 'Brass', count: 34 }
-          ].map((item) => (
-            <label key={item.label} className={`flex items-center gap-2 ${item.checked ? 'font-semibold' : ''}`}>
+          {collectionList?.map((item) => (
+            <label key={item.label} className={`flex items-center gap-2 ${selectedMaterial==item?.name ? 'font-semibold' : ''}`}>
               <input
                 type="checkbox"
-                className="accent-black w-4 h-4"
+                checked={selectedMaterial==item?.name}
+                className="accent-black w-4 h-4" onChange={()=>selectMaterial(item)}
                 defaultChecked={item.checked}
               />
-              <span>{item.label}</span>
+              <span>{item.name}</span>
               <span className="ml-auto text-gray-500">({item.count})</span>
             </label>
           ))}
