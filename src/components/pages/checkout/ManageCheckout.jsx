@@ -13,7 +13,6 @@ const ManageCheckout = () => {
   const isClient = useClient();
 
   const { currentItems, clearItems } = useCheckoutPageValidations();
-  console.log(currentItems, clearItems)
 
   return (
     (isClient &&

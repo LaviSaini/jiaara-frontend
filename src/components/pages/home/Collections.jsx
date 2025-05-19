@@ -34,7 +34,7 @@ export default function Collections({ className = "" }) {
     try {
       const response = await axios.get("https://cms.jiaarajewellery.com/wp-json/custom/v1/getCategories?parent=15");
       if (response?.status === 200) {
-        console.log(response)
+        (response)
         dispatch(collectionData.addAll(response?.data))
         const processedData = response?.data.map(item => ({
           ...item,

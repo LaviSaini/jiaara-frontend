@@ -20,7 +20,6 @@ const ProductGrid = ({
   const userData = useSelector(data => data.userDataSlice);
   useEffect(() => {
 
-    console.log("from grid",products)
     setProductList(products)
     dispatch(loaderData.clear())
     if (userData) {

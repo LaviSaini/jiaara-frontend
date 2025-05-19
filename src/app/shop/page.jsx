@@ -4,6 +4,6 @@ import ManageShop from "@/components/pages/shop/ManageShop";
 export default function Shop() {
 
   return (
-    <ManageShop className="shop-page"/>
+    <ManageShop data={null} className="shop-page"/>
   );
 }

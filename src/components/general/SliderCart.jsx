@@ -336,7 +336,7 @@ export default function SlideCart({ isOpen, onClose, item }) {
                         toast("Something went wrong!!", { type: 'error' })
                     }
                 } catch (error) {
-                    console.log(error)
+                    (error)
                     setProcessingText(false);
                     setOrderProcessing(false);
                     toast("Unable to create Order!!!", { type: 'error' })
@@ -349,7 +349,6 @@ export default function SlideCart({ isOpen, onClose, item }) {
             // setProcessingText('');
             // setOrderProcessing(false)
         } catch (error) {
-            console.log(error)
             setProcessingText('');
             toast('Something Went Wrong!', { type: 'error' })
             setOrderProcessing(false);

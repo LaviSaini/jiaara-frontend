@@ -12,7 +12,9 @@ export default function SearchModel({
     className = "",
     isOpen,
     setIsOpen = () => { },
-    closeModel
+    closeModel,
+    fetchData,
+    clearFilter
 }) {
 
     const modalRef = useRef(null);
@@ -27,7 +29,7 @@ export default function SearchModel({
             createPortal(
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 
-                    <FilterBar showHeader={true} closeModel={closeModel} />
+                    <FilterBar fetchData={fetchData} clearFilter={clearFilter} showHeader={true} closeModel={closeModel} />
                 </div>,
                 document.body
             )

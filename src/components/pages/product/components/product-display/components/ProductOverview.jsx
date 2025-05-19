@@ -142,7 +142,6 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
 
 
   const handleBuyNowButton = (event, isValid) => {
-    console.log(product)
     let newObj = createObjCommanFunction(product);
     newObj.quantity = 1;
     if (product?.on_sale) {
@@ -151,7 +150,6 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
       newObj.sale = false
     }
     newObj.regularPrice = product?.regular_price
-    console.log(newObj)
     dispatch(buyNow.add([newObj]))
     setCartOpen(true)
   }
@@ -280,7 +278,6 @@ export default function ProductOverview({ product = null, cartProduct = null }) 
   }
   const [openThankYouModel, setThankYouModel] = useState(false);
   const closeBuYNowOrder = (e) => {
-    console.log(e)
     setCartOpen(false);
     if (e != 'self') {
       setThankYouModel(true);

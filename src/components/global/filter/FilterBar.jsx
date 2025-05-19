@@ -13,7 +13,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
 
-export default function FilterBar({ className = '', showHeader, closeModel,fetchData }) {
+export default function FilterBar({ className = '', showHeader, closeModel,fetchData,clearFilter }) {
 
   const categoryList = useSelector(data => data.categorySlice)
   const collectionList=useSelector(data=>data.collectionSlice);
@@ -21,7 +21,6 @@ export default function FilterBar({ className = '', showHeader, closeModel,fetch
   const [selectedCategory,setSelectedCategory]=useState('');
   const [selectedMaterial,setSelectedMaterial]=useState('');
 
-  console.log('from search', categoryList)
   const selectProduct=(item)=>{
     if(selectedCategory==item.name){
       setSelectedCategory('')
@@ -37,11 +36,9 @@ export default function FilterBar({ className = '', showHeader, closeModel,fetch
     }
   }
   const applyFilter=()=>{
-    console.log(selectedMaterial,selectedCategory)
     fetchData({category:selectedCategory,material:selectedMaterial,min:500,max:price})
   }
   const selectRange=(e)=>{
-    console.log(e)
     setPrice(e)
   }
   return (
@@ -69,7 +66,7 @@ export default function FilterBar({ className = '', showHeader, closeModel,fetch
           <h3 className="font-semibold uppercase text-sm  tracking-wide">Widget Price Filter</h3>
           <div className="flex">
             <span className="mx-2 text-primaryFont h-fit hover:border-b-2 hover:border-primaryFont hover:font-semibold cursor-pointer" onClick={()=>applyFilter()}>Apply</span>
-            <span className="text-primaryFont h-fit hover:border-b-2 hover:border-primaryFont hover:font-semibold cursor-pointer">Clear</span>
+            <span className="text-primaryFont h-fit hover:border-b-2 hover:border-primaryFont hover:font-semibold cursor-pointer" onClick={()=>clearFilter()}>Clear</span>
           </div>
         </div>
         <div className="flex justify-between gap-2 mb-2">
@@ -125,11 +122,7 @@ export default function FilterBar({ className = '', showHeader, closeModel,fetch
         </div>
       </div>
       <div className="border-t">
-        <button
-          className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-        >
-          Apply
-        </button>
+         
       </div>
     </div>
   );

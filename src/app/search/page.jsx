@@ -4,36 +4,61 @@ import FilterBar from "@/components/global/filter/FilterBar";
 import SearchModel from "@/components/model/SearchFilter";
 import ManageProduct from "@/components/pages/product/ManageProduct";
 import ManageShop from "@/components/pages/shop/ManageShop";
+import { loaderData } from "@/redux/slices/loader";
+import useWindowSize from "@/utils/hooks/general/useWindowSize";
 import axios from "axios";
 import { useState } from "react";
 import { CiCircleList, CiFilter, CiGrid41 } from "react-icons/ci";
+import { useDispatch } from "react-redux";
 
 
 export default function SearchProduct() {
 
 
-
+    const dispatch=useDispatch();
     const toggleSidebar = () =>
         setIsOpen(!isOpen);
+    const { screenWidth, breakpoints: { lg } } = useWindowSize();
 
-
-    const [product,setProductDetail]=useState([])
+    const [product,setProductDetail]=useState(null)
     const [isOpen, setIsOpen] = useState(false);
+    const [filterData,setFilterData]=useState(null);
     const fetchData=(data)=>{
-        console.log(data)
-        callApi(data);
+        setFilterData(data);
+        setIsOpen(false);
+        callApi(data,page);
     }
-    const callApi=async(data)=>{
+    const [page,setPage]=useState(1);
+
+    const callApi=async(data,page)=>{
         // 
         try {
-      const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/custom/v1/filter-product?metal_type=${data?.material}&min_price=${data?.min}&max_price=${data?.max}&category=${data?.category}`);
+             dispatch(loaderData.add(true));
+             setProductDetail(null)
+      const response = await axios.get(`https://cms.jiaarajewellery.com/wp-json/custom-wc2/v1/products?metal_type=${data?.material}&min_price=${data?.min}&max_price=${data?.max}&category=${data?.category}&page=${page}&per_page=10`);
       if (response?.status === 200) {
-        console.log(response)
-       setProductDetail(response)
-      }
+ 
+          
+          setProductDetail(response)
+        }
+        dispatch(loaderData.add(false));
     } catch (error) {
+        dispatch(loaderData.add(false));
+
       console.error("Error fetching collections:", error.message);
     }
+    }
+    const clearFilter=()=>{
+        setIsOpen(false)
+        setProductDetail(null)
+    }
+    const changePage=(page)=>{
+        callApi(filterData,page)
+    }
+    const da=()=>{
+        if(screenWidth<1024){
+            setIsOpen(true)
+        }
     }
     return (
         <>
@@ -44,7 +69,7 @@ export default function SearchProduct() {
                             <div className="flex flex-row">
                                 <button
                                     className="filter-bar group flex items-center gap-1 py-3 pe-2 text-primaryFont"
-                                    onClick={() => setIsOpen(true)}
+                                    onClick={() =>da()}
                                 >
                                     <CiFilter className="filter-icon text-lg group-hover:stroke-1" />
                                     <span className="text-sm uppercase group-hover:font-semibold">
@@ -73,17 +98,24 @@ export default function SearchProduct() {
 
                     </div>
                     <div className="flex mt-4">
-                        <div className="w-[30%] custom1201:w-[25%]">
+                        <div className="w-[30%] hidden lg:block custom1201:w-[25%]">
 
-                            <FilterBar fetchData={fetchData} showHeader={false} className="sticky top-[119px] h-[calc(100vh-132px)] custom-scrollbar overflow-y-scroll overflow-y-hidden" />
+                            <FilterBar fetchData={fetchData} clearFilter={clearFilter} showHeader={false} className="sticky top-[119px] h-[calc(100vh-132px)] custom-scrollbar overflow-y-scroll overflow-y-hidden" />
                         </div>
-                        <div className="w-[70%] custom1201:w-[75%] px-3">
-                            <ManageShop data={product}  className="category-page" fromSearch={true} otherClasses="grid  grid-cols-3 " />
+                        <div className="w-full lg:w-[70%] custom1201:w-[75%] px-3">
+                            {
+                                product &&
+                            <ManageShop data={product}  className="category-page" fromSearch={true} otherClasses="grid  grid-cols-3 " searchCallBack={changePage} />
+                            }
+                            {
+                                !product && 
+                                <div className="flex justify-center">Search Product</div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-            <SearchModel isOpen={isOpen} closeModel={() => setIsOpen(false)} />
+            <SearchModel  fetchData={fetchData} clearFilter={clearFilter} isOpen={isOpen} closeModel={() => setIsOpen(false)} />
         </>
     );
 }

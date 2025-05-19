@@ -1,4 +1,4 @@
-// pages/shop/[id].js or src/components/pages/shop/ManageShop.jsx
+// pages/shop/[id].js or src/components/pages/shop/d.jsx
 'use client'; // This marks the component as a Client Component
 
 import { useState, useEffect } from "react";
@@ -7,7 +7,7 @@ import Pagination from "@/components/general/Pagination";
 import Validation from "@/components/general/Validation";
 import { useSelector } from "react-redux";
 
-export default function ManageShop({ className = "", params, fromSearch, otherClasses = '',data }) {
+export default function ManageShop({ className = "", params, fromSearch, otherClasses = '',data,searchCallBack }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryId, setCategoryId] = useState(null);
   const buyNowItem = useSelector((state) => state?.userDataSlice);
@@ -65,12 +65,13 @@ export default function ManageShop({ className = "", params, fromSearch, otherCl
   }, [categoryId, currentPage]);
   useEffect(()=>{
     if(data){
-      console.log(data?.data?.products)
-      const page = Math.ceil(data?.data?.storeInfo?.totalProducts / 20)
-      setTotalProduct(page);
+      setCurrentPage(data?.data?.page)
+      setTotalProduct(data?.data?.total_pages);
       setProducts(data?.data?.products);
+      setLoading(false);
+
     }
-  },[data])
+  },[data,products,currentPage])
 
   if (loading) {
     return (
@@ -95,7 +96,7 @@ export default function ManageShop({ className = "", params, fromSearch, otherCl
       <ProductGrid products={products || []} otherClasses={otherClasses} />
       {<Pagination
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={fromSearch?searchCallBack:setCurrentPage}
         totalPages={totalProduct} // Set a default totalPages or fetch from API
       />}
       {/* <div style={{ marginTop: '20px' }}>

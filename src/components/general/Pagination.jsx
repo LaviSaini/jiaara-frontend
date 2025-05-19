@@ -60,7 +60,7 @@ export default function Pagination({
               border-primaryFont
               xs:px-4 xs:py-1
             `}
-            onClick={() => setCurrentPage(page)}
+            onClick={() => {console.log("HELO HELO",page);setCurrentPage(page)}}
             disabled={isSelectedPage(page)}
           >
             {page}
