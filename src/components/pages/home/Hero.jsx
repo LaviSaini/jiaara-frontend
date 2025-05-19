@@ -115,7 +115,7 @@ export default function HeroCarousel() {
           lg:gap-10
         `}>
           <div className="text text-center sm:text-xl lg:text-2xl 2xl:text-3xl">
-            <p className="font-banner text-7xl">
+            <p className="font-banner text-5xl lg:text-7xl">
             Elegance you can mean, moments you can cherish.
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function HeroCarousel() {
               uppercase
               bg-primaryButton
               text-primaryFont
-              sm:text-md lg:text-lg 2xl:text-2xl
+              text-sm lg:text-lg 2xl:text-2xl
             `}
             href={SHOP?.pathname}
           >

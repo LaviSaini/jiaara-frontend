@@ -233,7 +233,7 @@ export default function Sale(
 
   return (
     <section id="sale" className="flex flex-col items-center justify-center gap-7">
-      <h2 className="font-heading text-center text-4xl uppercase text-primaryFont leading-10">
+      <h2 className="font-heading text-center text-3xl lg:text-4xl uppercase text-primaryFont leading-10">
         Sale
       </h2>
 

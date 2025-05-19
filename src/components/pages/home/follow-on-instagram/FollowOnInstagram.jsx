@@ -21,7 +21,7 @@ export default function FollowOnInstagram() {
 
   return (
     <section id="follow-on-instagram" className="flex flex-col items-center justify-center gap-7">
-      <h2 className="font-heading text-center text-4xl uppercase text-primaryFont leading-10">
+      <h2 className="font-heading text-center text-3xl lg:text-4xl uppercase text-primaryFont leading-10">
         <span className="text-3xl">Follow Us On</span><br /> Instagram
       </h2>
 

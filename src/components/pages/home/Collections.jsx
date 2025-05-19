@@ -48,8 +48,8 @@ export default function Collections({ className = "" }) {
   }, []);
 
   return (
-    <section id="shop-by-collections" className={`grid items-center gap-y-12 ${className}`}>
-      <h2 className={`font-heading text-center text-4xl capitalize text-primaryFont`}>
+    <section id="shop-by-collections" className={`grid items-center  gap-y-6 lg:gap-y-12 ${className}`}>
+      <h2 className={`font-heading text-center text-3xl lg:text-4xl capitalize text-primaryFont`}>
         Collections
       </h2>
     
@@ -67,7 +67,7 @@ export default function Collections({ className = "" }) {
                 // Row 1 style
                 <>
                   {/* First Big Block */}
-                  <div className="md:col-span-3 flex flex-col md:flex-row h-[400px]" onClick={()=>handleNavigation(firstItem?.id)}>
+                  <div className="md:col-span-3 flex flex-row h-[50vw] lg:h-[400px]" onClick={()=>handleNavigation(firstItem?.id)}>
                     <div className="bg-collectionBackground p-6 md:p-10 w-full md:w-1/3 flex items-center justify-center">
                       <h1 className="text-primaryFont text-2xl md:text-3xl font-light text-center leading-snug">
                         {firstItem?.name}
@@ -84,7 +84,7 @@ export default function Collections({ className = "" }) {
 
                   {/* Second Small Block */}
                   {secondItem && (
-                    <div className="md:col-span-1 h-[400px]" onClick={()=>handleNavigation(secondItem?.id)}>
+                    <div className="md:col-span-1 h-[50vw] lg:h-[400px]" onClick={()=>handleNavigation(secondItem?.id)}>
                       <div className="bg-collectionBackground h-full flex flex-col">
                         <h1 className="text-primaryFont text-xl md:text-2xl font-light text-center pt-6 px-4">
                           {secondItem?.name}
@@ -104,7 +104,7 @@ export default function Collections({ className = "" }) {
                 // Row 2 style
                 <>
                   {/* First Small Block */}
-                  <div className="md:col-span-1 h-[400px] order-3 md:order-none" onClick={()=>handleNavigation(firstItem?.id)}>
+                  <div className="md:col-span-1 h-[50vw] lg:h-[400px] order-3 md:order-none" onClick={()=>handleNavigation(firstItem?.id)}>
                     <div className="bg-collectionBackground h-full flex flex-col">
                       <h1 className="text-primaryFont text-xl md:text-2xl font-light text-center pt-6 px-4">
                         {firstItem?.name}
@@ -121,7 +121,7 @@ export default function Collections({ className = "" }) {
 
                   {/* Second Big Block */}
                   {secondItem && (
-                    <div className="md:col-span-3 flex flex-col md:flex-row h-[400px] order-4 md:order-none" onClick={()=>handleNavigation(secondItem?.id)}>
+                    <div className="md:col-span-3 flex flex-row h-[50vw] lg:h-[400px] order-4 md:order-none" onClick={()=>handleNavigation(secondItem?.id)}>
                       <div className="bg-collectionBackground p-6 md:p-10 w-full md:w-1/3 flex items-center justify-center">
                         <h1 className="text-primaryFont text-2xl md:text-3xl font-light text-center leading-snug">
                           {secondItem?.name}

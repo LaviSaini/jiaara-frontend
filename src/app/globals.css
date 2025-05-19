@@ -33,9 +33,9 @@ main {
     margin-top: 6.75rem;
   }
 
-  &:not(:has(div.no-pb)) {
+  /* &:not(:has(div.no-pb)) {
     padding-bottom: 4rem;
-  }
+  } */
 }
 
 footer {
@@ -240,7 +240,8 @@ input[type="number"] {
   }
 
   .catSecHome {
-    grid-template-columns: repeat(1, 1fr) !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px 10px !important;
   }
 
   footer .newsLetter {

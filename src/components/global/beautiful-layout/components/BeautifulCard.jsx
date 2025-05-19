@@ -17,7 +17,7 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
         
       `}>
         <Image
-          className="object-cover object-center  rounded-[45px] lg:rounded-[70px]"
+          className="object-cover object-center rounded-[25px] md:rounded-[45px] lg:rounded-[60px]"
           fill
           src={item?.image}
           alt={item?.slug}
@@ -27,7 +27,7 @@ export default function BeautifulCard({ className = "", item = null, url = "" })
       {(item?.name || item?.count || url) &&
         <div
           className={`
-            w-full flex justify-center items-center gap-2 px-3 py-3 mb-3
+            w-full flex justify-center items-center gap-2 px-0 py-3 mb-3
             absolute left-0 bottom-0
             text-xs font-semibold
             tracking-wider text-white

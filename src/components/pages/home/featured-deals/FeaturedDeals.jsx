@@ -33,7 +33,7 @@ export default function FeaturedDeals() {
           <h3 className="font-content text-sm uppercase mb-4 leading-3 font-semibold">
             Deal of the Week
           </h3>
-          <h4 className="font-heading text-4xl md:text-3xl lg:text-5xl capitalize mb-5">
+          <h4 className="font-heading text-3xl md:text-3xl lg:text-5xl capitalize mb-5">
             Elin Stacking Crystal Earrings
           </h4>
 

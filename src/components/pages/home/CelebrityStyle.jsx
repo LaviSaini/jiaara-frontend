@@ -41,8 +41,8 @@ const celebrities = [
 export default function CelebrityStyle() {
 
   return (
-    <section id="celebrity-style" className="flex flex-col items-center justify-center gap-12">
-      <h2 className="font-heading text-center text-4xl capitalize text-primaryFont">
+    <section id="celebrity-style" className="flex flex-col items-center justify-center gap-6 lg:gap-12">
+      <h2 className="font-heading text-center text-3xl lg:text-4xl capitalize text-primaryFont">
         Celebrity Style
       </h2>
 

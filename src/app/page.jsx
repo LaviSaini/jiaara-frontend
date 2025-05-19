@@ -17,10 +17,10 @@ import FilterBar from "@/components/global/filter/FilterBar";
 export default function Home() {
 
   return (
-    <div className="homepage flex flex-col gap-12 relative top-[100px]">
+    <div className="homepage flex flex-col gap-12 relative top-[75px] lg:top-[100px]">
 
       <Hero/>
-      <FilterBar/>
+      {/* <FilterBar/> */}
       <Categories/>
       <FeaturedProducts/>
       <FeaturedDeals/>
