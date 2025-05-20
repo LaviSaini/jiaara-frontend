@@ -344,3 +344,35 @@ input[type="number"] {
     width: 100% !important;
   }
 }
+
+.ct-div-block{
+  align-items: stretch;
+    grid-template-columns: repeat(3, minmax(50px, 1fr));
+    grid-column-gap: 0;
+    grid-row-gap: 20px;
+    grid-auto-rows: minmax(min-content, 1fr);
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: left;
+    display: grid;
+}
+
+@media (max-width: 479px) {
+    .ct-div-block {
+        align-items: stretch;
+        grid-template-columns: repeat(2, minmax(40px, 1fr));
+        grid-column-gap: 0;
+        grid-row-gap: 10px;
+        display: grid;
+    }
+}
+
+@media (max-width: 767px) {
+    .ct-div-block {
+        align-items: stretch;
+        grid-template-columns: repeat(2, minmax(50px, 1fr));
+        grid-column-gap: 0;
+        grid-row-gap: 12px;
+        display: grid;
+    }
+}
