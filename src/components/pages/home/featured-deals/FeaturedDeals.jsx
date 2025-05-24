@@ -12,7 +12,7 @@ export default function FeaturedDeals() {
   return (
     <section
       id="featured-deals"
-      className="flex flex-col items-center justify-center gap-12 mx-[6vw] md:mx-[10vw] lg:mx-[10vw]"
+      className="flex flex-col items-center justify-center gap-12 mx-[6vw] md:mx-[10vw] lg:mx-[10vw] mt-8 lg-mt-10"
     >
       {/* <h2 className="heading text-center px-5 text-4xl uppercase text-primaryFont">
         Featured Deals

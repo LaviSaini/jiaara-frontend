@@ -5,8 +5,8 @@ const assetsDirPath = "/assets/pages/homepage/SendGift";
 
 export default function SendGift() {
   return (
-    <section className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-16">
-      <div className="flex flex-col md:flex-row mb-4">
+    <section className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-16 my-8 lg:my-10">
+      <div className="flex flex-col md:flex-row lg:mb-4">
           <div className="flex-auto relative bg-[#c788a1]/80 flex items-center justify-center p-8 md:p-12 text-center">
             {/* Ribbon background image */}
             <img

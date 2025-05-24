@@ -9,7 +9,7 @@ const dirAssets = "/assets/pages/homepage/purpose";
 export default function BuildingWithPurpose() {
 
   return (
-    <section id="building-with-purpose" className="flex flex-col items-center justify-center mx-[10vw] shadow-md">
+    <section id="building-with-purpose" className="flex flex-col items-center justify-center mx-[6vw] lg:mx-[10vw] shadow-md">
       
       <div className="content-cont w-full flex flex-col md:flex-row">
         

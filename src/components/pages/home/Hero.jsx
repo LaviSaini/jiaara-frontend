@@ -72,7 +72,7 @@ export default function HeroCarousel() {
     <section id="hero" ref={sectionRef}>
       <CarouselProvider
         ref={carouselRef}
-        className="carousel w-screen relative"
+        className="carousel relative"
         naturalSlideWidth={100}
         naturalSlideHeight={125}
         isIntrinsicHeight
@@ -83,7 +83,7 @@ export default function HeroCarousel() {
         touchEnabled={false}
         dragEnabled={false}
       >
-        <Slider className="hero-slides">
+        <Slider className="hero-slides ">
           {images.map((image, index) =>
             <Slide
               key={image.id}

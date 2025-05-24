@@ -13,7 +13,7 @@ export default function BeautifulLayout({
 
   return (
     <div className={`${className} beautiful-layout`}>
-      <div className="w-full px-0 mx-auto pt-6 lg:pt-10">
+      <div className="w-full px-0 mx-auto">
         <BeautifulGrid items={items} />
       </div>
     </div>

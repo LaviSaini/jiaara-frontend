@@ -22,7 +22,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center justify-center mx-5 md:mx-[10vw] mb-[10vw]">
+    <section id="testimonials" className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-6 items-center justify-center mx-5 md:mx-[10vw] mb-[10vw] mt-8 lg:mt-10">
    <div className="col-span-1 max-w-md testimonialsDiv">
     <h2 className="font-heading text-3xl md:text-6xl lg:text-6xl capitalize text-primaryFont mb-4 testimonialHEading">
       What Our Customers Say!
@@ -32,7 +32,7 @@ export default function Testimonials() {
             </p>
     </div>
 
-      <div className="col-span-2 lg:ps-10 w-full h-[500px]">
+      <div className="col-span-2 lg:ps-10 w-full h-[460px] lg:h-[500px]">
         <Swiper
           modules={[Autoplay, Mousewheel]}
           spaceBetween={20}

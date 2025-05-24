@@ -48,12 +48,12 @@ export default function Collections({ className = "" }) {
   }, []);
 
   return (
-    <section id="shop-by-collections" className={`grid items-center  gap-y-6 lg:gap-y-12 ${className}`}>
-      <h2 className={`font-heading text-center text-3xl lg:text-4xl capitalize text-primaryFont`}>
+    <section id="shop-by-collections" className={`grid items-center ${className}`}>
+      <h2 className={`font-heading text-center text-3xl lg:text-4xl capitalize text-primaryFont my-8 lg:my-10`}>
         Collections
       </h2>
 
-      <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-20">
+      <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-20 hidden lg:flex lg:flex-col">
         {collection?.map((_, i) => {
           if (i % 2 !== 0) return null; // Only process every 2 items
 
@@ -105,12 +105,13 @@ export default function Collections({ className = "" }) {
                       </div>
                     </div>
                   )}
+                  
                 </>
               ) : (
                 <>
                   {/* Alternate layout for odd-indexed rows */}
                   <div
-                    className="h-[50vw] lg:h-[24vw] lg:mx-h-[426px] ms-0 lg:ms-4"
+                    className="h-[50vw] lg:h-[24vw] lg:mx-h-[426px] me-4"
                     onClick={() => handleNavigation(firstItem?.id)}
                   >
                     <div className="bg-collectionBackground h-full flex flex-col">
@@ -136,7 +137,7 @@ export default function Collections({ className = "" }) {
                         <h1 className="text-primaryFont text-2xl md:text-3xl lg:text-4xl font-medium text-center leading-snug">
                           {secondItem?.name}
                         </h1>
-                      </div>
+                      </div >
                       <div
                         className="w-full md:w-[100%] overflow-hidden md:overflow-auto h-[50vw] lg:h-[24vw] lg:mx-h-[426px]"
                         onClick={() => handleNavigation(secondItem?.id)}
@@ -154,8 +155,87 @@ export default function Collections({ className = "" }) {
             </div>
           );
         })}
+      </div>
+      <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-20 flex flex-col lg:hidden">
+        {collection?.map((_, i) => {
+          if (i % 2 !== 0) return null; // Only process every 2 items
 
+          const firstItem = collection[i];
+          const secondItem = collection[i + 1];
+          const isEvenGroup = Math.floor(i / 2) % 2 === 0;
 
+          return (
+            <div key={i} className="ct-div-block gap-3 mb-2">
+              {isEvenGroup ? (
+                <>
+                  {/* First Big Block */}
+                  <div
+                    className="bg-collectionBackground p-6 md:p-10 w-full md:w-[102%] flex items-center justify-center h-[50vw] lg:h-[24vw] lg:mx-h-[426px]"
+                    onClick={() => handleNavigation(firstItem?.id)}
+                  >
+                    <h1 className="text-primaryFont text-2xl md:text-3xl lg:text-4xl font-medium text-center leading-snug">
+                      {firstItem?.name}
+                    </h1>
+                  </div>
+                  <div
+                    className="w-full md:w-[101%] overflow-hidden md:overflow-auto h-[50vw] lg:h-[24vw] lg:mx-h-[426px]"
+                    onClick={() => handleNavigation(firstItem?.id)}
+                  >
+                    <img
+                      src={firstItem?.gallery[0]}
+                      alt="First Image"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Second Small Block (Only if exists) */}
+                  {secondItem && (
+                    <div
+                      className="h-[50vw] lg:h-[24vw] lg:mx-h-[426px] me-1"
+                      onClick={() => handleNavigation(secondItem?.id)}
+                    >
+                      <div className="bg-collectionBackground h-full flex flex-col">
+                        <h1 className="text-primaryFont text-xl md:text-2xl lg:text-3xl font-medium text-center pt-6 px-4">
+                          {secondItem?.name}
+                        </h1>
+                        <div className="flex-grow px-4 lg:px-16 pt-4 overflow-hidden">
+                          <img
+                            src={secondItem?.gallery[0]}
+                            alt="Second Image"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {secondItem && (
+                    <div
+                      className="h-[50vw] lg:h-[24vw] lg:mx-h-[426px] ms-2"
+                      onClick={() => handleNavigation(secondItem?.id)}
+                    >
+                      <div className="bg-collectionBackground h-full flex flex-col">
+                        <h1 className="text-primaryFont text-xl md:text-2xl lg:text-3xl font-medium text-center pt-6 px-4">
+                          {secondItem?.name}
+                        </h1>
+                        <div className="flex-grow px-4 lg:px-16 pt-4 overflow-hidden">
+                          <img
+                            src={secondItem?.gallery[0]}
+                            alt="Second Image"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                </>
+              ) : (
+                <>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

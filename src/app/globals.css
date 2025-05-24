@@ -19,6 +19,9 @@
 }
 
 
+html {
+  scrollbar-gutter: stable;
+}
 
 
 body {
@@ -279,7 +282,7 @@ input[type="number"] {
   }
 
   .saleSLider {
-    margin: 0px 18px;
+    margin-inline: 18px;
     width: 100%;
   }
 
