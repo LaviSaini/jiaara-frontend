@@ -157,86 +157,88 @@ export default function Collections({ className = "" }) {
         })}
       </div>
       <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-20 flex flex-col lg:hidden">
-        {collection?.map((_, i) => {
-          if (i % 2 !== 0) return null; // Only process every 2 items
+  {collection?.map((item, i) => {
+    // Big block at every 3rd item
+    if (i % 3 === 0) {
+      return (
+        <div key={i} className="ct-div-block gap-3 mb-4">
+          <div
+            className="bg-collectionBackground p-6 md:p-10 w-full flex items-center justify-center h-[50vw]"
+            onClick={() => handleNavigation(item?.id)}
+          >
+            <h1 className="text-primaryFont text-2xl md:text-3xl font-medium text-center leading-snug">
+              {item?.name}
+            </h1>
+          </div>
+          <div
+            className="w-full overflow-hidden h-[50vw]"
+            onClick={() => handleNavigation(item?.id)}
+          >
+            <img
+              src={item?.gallery[0]}
+              alt={item?.name}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      );
+    }
 
-          const firstItem = collection[i];
-          const secondItem = collection[i + 1];
-          const isEvenGroup = Math.floor(i / 2) % 2 === 0;
+    // Two small blocks in a single row
+    if (i % 3 === 1) {
+      const firstSmall = collection[i];
+      const secondSmall = collection[i + 1]; // May be undefined at end of array
 
-          return (
-            <div key={i} className="ct-div-block gap-3 mb-2">
-              {isEvenGroup ? (
-                <>
-                  {/* First Big Block */}
-                  <div
-                    className="bg-collectionBackground p-6 md:p-10 w-full md:w-[102%] flex items-center justify-center h-[50vw] lg:h-[24vw] lg:mx-h-[426px]"
-                    onClick={() => handleNavigation(firstItem?.id)}
-                  >
-                    <h1 className="text-primaryFont text-2xl md:text-3xl lg:text-4xl font-medium text-center leading-snug">
-                      {firstItem?.name}
-                    </h1>
-                  </div>
-                  <div
-                    className="w-full md:w-[101%] overflow-hidden md:overflow-auto h-[50vw] lg:h-[24vw] lg:mx-h-[426px]"
-                    onClick={() => handleNavigation(firstItem?.id)}
-                  >
-                    <img
-                      src={firstItem?.gallery[0]}
-                      alt="First Image"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Second Small Block (Only if exists) */}
-                  {secondItem && (
-                    <div
-                      className="h-[50vw] lg:h-[24vw] lg:mx-h-[426px] me-1"
-                      onClick={() => handleNavigation(secondItem?.id)}
-                    >
-                      <div className="bg-collectionBackground h-full flex flex-col">
-                        <h1 className="text-primaryFont text-xl md:text-2xl lg:text-3xl font-medium text-center pt-6 px-4">
-                          {secondItem?.name}
-                        </h1>
-                        <div className="flex-grow px-4 lg:px-16 pt-4 overflow-hidden">
-                          <img
-                            src={secondItem?.gallery[0]}
-                            alt="Second Image"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {secondItem && (
-                    <div
-                      className="h-[50vw] lg:h-[24vw] lg:mx-h-[426px] ms-2"
-                      onClick={() => handleNavigation(secondItem?.id)}
-                    >
-                      <div className="bg-collectionBackground h-full flex flex-col">
-                        <h1 className="text-primaryFont text-xl md:text-2xl lg:text-3xl font-medium text-center pt-6 px-4">
-                          {secondItem?.name}
-                        </h1>
-                        <div className="flex-grow px-4 lg:px-16 pt-4 overflow-hidden">
-                          <img
-                            src={secondItem?.gallery[0]}
-                            alt="Second Image"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                </>
-              ) : (
-                <>
-                </>
-              )}
+      return (
+        <div key={i} className="flex gap-3 mb-4">
+          {/* First Small Block */}
+          <div
+            className="w-1/2 h-[50vw]"
+            onClick={() => handleNavigation(firstSmall?.id)}
+          >
+            <div className="bg-collectionBackground h-full flex flex-col">
+              <h1 className="text-primaryFont text-xl font-medium text-center pt-6 px-4">
+                {firstSmall?.name}
+              </h1>
+              <div className="flex-grow px-4 pt-4 overflow-hidden">
+                <img
+                  src={firstSmall?.gallery[0]}
+                  alt={firstSmall?.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
-          );
-        })}
-      </div>
+          </div>
+
+          {/* Second Small Block */}
+          {secondSmall && (
+            <div
+              className="w-1/2 h-[50vw]"
+              onClick={() => handleNavigation(secondSmall?.id)}
+            >
+              <div className="bg-collectionBackground h-full flex flex-col">
+                <h1 className="text-primaryFont text-xl font-medium text-center pt-6 px-4">
+                  {secondSmall?.name}
+                </h1>
+                <div className="flex-grow px-4 pt-4 overflow-hidden">
+                  <img
+                    src={secondSmall?.gallery[0]}
+                    alt={secondSmall?.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Skip item if it's already rendered in small pair above
+    return null;
+  })}
+</div>
+
     </section>
   );
 }
