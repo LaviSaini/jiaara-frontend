@@ -284,7 +284,7 @@ export default function Sale(
           !isLoading ? <div className="text-center text-gray-500 h-[135px]">No Product Found!</div> : ''
 
           :
-          <div className="w-full max-w-[90vw] mx-auto saleSLider mb-8 lg:mb-12">
+          <div className="w-full max-w-[90vw] lg:max-w-[85vw] mx-auto saleSLider mb-8 lg:mb-12 ">
             <Swiper
               key={activeTab?.id} // Force re-render on tab change
               modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

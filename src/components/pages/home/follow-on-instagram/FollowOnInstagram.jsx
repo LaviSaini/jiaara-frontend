@@ -25,7 +25,7 @@ export default function FollowOnInstagram() {
         <span className="text-3xl">Follow Us On</span><br /> Instagram
       </h2>
 
-      <div className="w-full max-w-[90vw] mx-auto">
+      <div className="w-full max-w-[86vw] mx-auto">
       <Swiper
       // install Swiper modules
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

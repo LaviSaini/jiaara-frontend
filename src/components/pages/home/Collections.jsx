@@ -53,7 +53,7 @@ export default function Collections({ className = "" }) {
         Collections
       </h2>
 
-      <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-20 hidden lg:flex lg:flex-col">
+      <div className="w-full px-5 mx-auto sm:px-7 md:px-10 lg:px-[104px] hidden lg:flex lg:flex-col">
         {collection?.map((_, i) => {
           if (i % 2 !== 0) return null; // Only process every 2 items
 
