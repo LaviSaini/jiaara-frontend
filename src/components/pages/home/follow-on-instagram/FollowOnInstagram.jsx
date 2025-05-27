@@ -20,12 +20,12 @@ const images = [
 export default function FollowOnInstagram() {
 
   return (
-    <section id="follow-on-instagram" className="flex flex-col items-center justify-center gap-7">
-      <h2 className="font-heading text-center text-4xl uppercase text-primaryFont leading-10">
+    <section id="follow-on-instagram" className="flex flex-col items-center justify-center">
+      <h2 className="font-heading text-center text-3xl lg:text-4xl uppercase text-primaryFont leading-10 my-8 lg:my-10">
         <span className="text-3xl">Follow Us On</span><br /> Instagram
       </h2>
 
-      <div className="w-full max-w-[90vw] mx-auto">
+      <div className="w-full max-w-[86vw] mx-auto">
       <Swiper
       // install Swiper modules
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

@@ -181,7 +181,7 @@ export default function FeaturedProducts(
     <>
 
       <section id="featured-products" className="px-[5vw]">
-        <div className="flex flex-row items-center justify-center gap-12">
+        <div className="flex flex-row items-center justify-center gap-12 my-8 lg:my-14">
           <button onClick={() => tabChange('bestSeller')} className={`font-heading text-center text-3xl lg:text-4xl capetilize text-primaryFont border-b-2 ${activeTab === 'bestSeller' ? 'border-primaryFont' : 'border-transparent'}`}
           >
             Best Seller

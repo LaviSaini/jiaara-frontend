@@ -232,14 +232,14 @@ export default function Sale(
   }, [categoryList]);
 
   return (
-    <section id="sale" className="flex flex-col items-center justify-center gap-7">
-      <h2 className="font-heading text-center text-4xl uppercase text-primaryFont leading-10">
+    <section id="sale" className="flex flex-col items-center justify-center">
+      <h2 className="font-heading text-center text-3xl lg:text-4xl uppercase text-primaryFont leading-10 my-8 lg:my-10">
         Sale
       </h2>
 
 
       {/* Category Tabs */}
-      <div className="overflow-x-auto w-full scrollbar-width salestablist">
+      <div className="overflow-x-auto w-full scrollbar-width salestablist mb-8">
         <div className="flex flex-row items-center gap-12 whitespace-nowrap px-4 saleCategories">
           {categories?.map((tab) => (
             <button
@@ -253,7 +253,7 @@ export default function Sale(
           ))}
         </div>
       </div>
-      <div className='salestabselect  justify-end mr-[63px] w-[100%]' >
+      <div className='salestabselect  justify-end mr-[63px] w-[100%] mb-8' >
         {/* <div>
           <span>Category: </span>
           <span>{getCat(activeTab)?.name}</span>
@@ -284,7 +284,7 @@ export default function Sale(
           !isLoading ? <div className="text-center text-gray-500 h-[135px]">No Product Found!</div> : ''
 
           :
-          <div className="w-full max-w-[90vw] mx-auto saleSLider">
+          <div className="w-full max-w-[90vw] lg:max-w-[85vw] mx-auto saleSLider mb-8 lg:mb-12 ">
             <Swiper
               key={activeTab?.id} // Force re-render on tab change
               modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}

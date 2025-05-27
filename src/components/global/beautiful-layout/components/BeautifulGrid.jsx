@@ -24,7 +24,7 @@ export default function BeautifulGrid({ className = "", items = {} }) {
         {pos < itemsArr.length && (
           <div >
             <BeautifulCard
-              className={`col-span-12 md:col-span-6 lg:col-span-3`}
+              className={`col-span-3 md:col-span-6 lg:col-span-3`}
               item={itemsArr[pos]}
               url={urlsArr[pos++]}
             />

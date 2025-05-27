@@ -72,7 +72,7 @@ export default function HeroCarousel() {
     <section id="hero" ref={sectionRef}>
       <CarouselProvider
         ref={carouselRef}
-        className="carousel w-screen relative"
+        className="carousel relative"
         naturalSlideWidth={100}
         naturalSlideHeight={125}
         isIntrinsicHeight
@@ -83,7 +83,7 @@ export default function HeroCarousel() {
         touchEnabled={false}
         dragEnabled={false}
       >
-        <Slider className="hero-slides">
+        <Slider className="hero-slides ">
           {images.map((image, index) =>
             <Slide
               key={image.id}
@@ -115,7 +115,7 @@ export default function HeroCarousel() {
           lg:gap-10
         `}>
           <div className="text text-center sm:text-xl lg:text-2xl 2xl:text-3xl">
-            <p className="font-banner text-7xl">
+            <p className="font-banner text-5xl lg:text-7xl">
             Elegance you can mean, moments you can cherish.
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function HeroCarousel() {
               uppercase
               bg-primaryButton
               text-primaryFont
-              sm:text-md lg:text-lg 2xl:text-2xl
+              text-sm lg:text-lg 2xl:text-2xl
             `}
             href={SHOP?.pathname}
           >

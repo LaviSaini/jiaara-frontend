@@ -244,7 +244,7 @@ export default function Header() {
     >
 
       <Link className="app-brand img-cont-wrapper" href={HOME?.pathname}>
-        <div className="img-cont size-[100px] relative">
+        <div className="img-cont w-[100px] h-[70px] relative">
           <Image
             fill
             src={isHeroSecVisible ? brandLogo?.black : brandLogo?.black}
@@ -400,7 +400,7 @@ export default function Header() {
           </ul>
         </nav>
 
-        <nav className="nav-icons-cont grow flex flex-col items-end justify-center py-8 lg:items-baseline">
+        <nav className="nav-icons-cont grow flex flex-col items-end justify-center py-5 lg:py-8 lg:items-baseline">
           <ul className={`
             flex justify-center items-center gap-4 px-3
             text-lg

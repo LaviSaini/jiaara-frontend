@@ -12,7 +12,7 @@ export default function FeaturedDeals() {
   return (
     <section
       id="featured-deals"
-      className="flex flex-col items-center justify-center gap-12 mx-[6vw] md:mx-[10vw] lg:mx-[10vw]"
+      className="flex flex-col items-center justify-center gap-12 mx-[6vw] md:mx-[10vw] lg:mx-[7vw] mt-8 lg-mt-10"
     >
       {/* <h2 className="heading text-center px-5 text-4xl uppercase text-primaryFont">
         Featured Deals
@@ -33,7 +33,7 @@ export default function FeaturedDeals() {
           <h3 className="font-content text-sm uppercase mb-4 leading-3 font-semibold">
             Deal of the Week
           </h3>
-          <h4 className="font-heading text-4xl md:text-3xl lg:text-5xl capitalize mb-5">
+          <h4 className="font-heading text-3xl md:text-3xl lg:text-5xl capitalize mb-5">
             Elin Stacking Crystal Earrings
           </h4>
 

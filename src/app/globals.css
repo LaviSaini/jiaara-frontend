@@ -19,6 +19,9 @@
 }
 
 
+html {
+  scrollbar-gutter: stable;
+}
 
 
 body {
@@ -33,9 +36,9 @@ main {
     margin-top: 6.75rem;
   }
 
-  &:not(:has(div.no-pb)) {
+  /* &:not(:has(div.no-pb)) {
     padding-bottom: 4rem;
-  }
+  } */
 }
 
 footer {
@@ -255,7 +258,8 @@ input[type="number"] {
   }
 
   .catSecHome {
-    grid-template-columns: repeat(1, 1fr) !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px 10px !important;
   }
 
   footer .newsLetter {
@@ -293,7 +297,7 @@ input[type="number"] {
   }
 
   .saleSLider {
-    margin: 0px 18px;
+    margin-inline: 18px;
     width: 100%;
   }
 
@@ -357,4 +361,36 @@ input[type="number"] {
   .threeDivs div {
     width: 100% !important;
   }
+}
+
+.ct-div-block{
+  align-items: stretch;
+    grid-template-columns: repeat(3, minmax(50px, 1fr));
+    grid-column-gap: 0;
+    grid-row-gap: 20px;
+    grid-auto-rows: minmax(min-content, 1fr);
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: left;
+    display: grid;
+}
+
+@media (max-width: 479px) {
+    .ct-div-block {
+        align-items: stretch;
+        grid-template-columns: repeat(2, minmax(40px, 1fr));
+        grid-column-gap: 0;
+        grid-row-gap: 10px;
+        display: grid;
+    }
+}
+
+@media (max-width: 767px) {
+    .ct-div-block {
+        align-items: stretch;
+        grid-template-columns: repeat(2, minmax(50px, 1fr));
+        grid-column-gap: 0;
+        grid-row-gap: 12px;
+        display: grid;
+    }
 }
