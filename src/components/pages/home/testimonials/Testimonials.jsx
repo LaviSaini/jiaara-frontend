@@ -11,13 +11,11 @@ import Testimonial from "./components/Testimonial";
 const secAssetsDirPath = "/assets/pages/homepage/testimonials";
 
 const testimonials = [
-  { id: 1, avatar: { name: "Elizabeth Jeff", profilePic: `${secAssetsDirPath}/1.jpg` }, rating: 3, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." },
-  { id: 2, avatar: { name: "Emily Thomas", profilePic: `${secAssetsDirPath}/2.jpg` }, rating: 4, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." },
-  { id: 3, avatar: { name: "Helen Paquet", profilePic: `${secAssetsDirPath}/3.jpg` }, rating: 4.4, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." },
-  { id: 4, avatar: { name: "Salena Gomez", profilePic: `${secAssetsDirPath}/2.jpg` }, rating: 3.5, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." },
-  { id: 5, avatar: { name: "Rihana", profilePic: `${secAssetsDirPath}/1.jpg` }, rating: 4, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." },
-  { id: 6, avatar: { name: "Taylor Swift", profilePic: `${secAssetsDirPath}/3.jpg` }, rating: 4.5, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." },
-  { id: 7, avatar: { name: "Angela Jolie", profilePic: `${secAssetsDirPath}/2.jpg` }, rating: 4.7, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel fringilla nulla. Aliquam erat volutpat. Sed euismod.." }
+  { id: 1, avatar: { name: "Ella Nasar", profilePic: `${secAssetsDirPath}/1.jpeg` }, rating: 5, text: "This is my third purchase from this jewelry brand, and they never disappoint! The natural stone bracelet I got is stunning, with vibrant colors and a perfect fit. I appreciate that they use sustainable materials. It’s refreshing to support a brand that values both quality and fusion" },
+  { id: 2, avatar: { name: "Pallavi Bhadauria", profilePic: `${secAssetsDirPath}/2.jpeg` }, rating: 5, text: "This brand’s jewelry is a game-changer! I bought a necklace set and they’re so versatile—I can mix and match them with any outfit. The quality is top-notch, and they haven’t tarnished at all. Plus, their packaging makes it feel like a gift every time." },
+  { id: 3, avatar: { name: "Anupriya Singh", profilePic: `${secAssetsDirPath}/3.jpeg` }, rating: 5, text: "I’m obsessed with my new handcrafted hoop earrings! They’re lightweight, comfortable, and add such a chic touch to my outfits. The brand’s commitment to using ethically sourced materials makes me feel good about my purchase. I’ll definitely be a repeat customer." },
+  { id: 4, avatar: { name: "Manisha R Singh", profilePic: `${secAssetsDirPath}/4.jpeg` }, rating: 5, text: "I purchased a raw stone necklace from this brand, and I’m absolutely in love! The craftsmanship is impeccable, with every detail carefully thought out. It arrived beautifully packaged, and the quality feels so luxurious. I’ve received countless compliments wearing it. Highly recommend!" },
+
 ];
 
 export default function Testimonials() {
