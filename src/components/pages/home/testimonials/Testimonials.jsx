@@ -15,7 +15,6 @@ const testimonials = [
   { id: 2, avatar: { name: "Pallavi Bhadauria", profilePic: `${secAssetsDirPath}/2.jpeg` }, rating: 5, text: "This brand’s jewelry is a game-changer! I bought a necklace set and they’re so versatile—I can mix and match them with any outfit. The quality is top-notch, and they haven’t tarnished at all. Plus, their packaging makes it feel like a gift every time." },
   { id: 3, avatar: { name: "Anupriya Singh", profilePic: `${secAssetsDirPath}/3.jpeg` }, rating: 5, text: "I’m obsessed with my new handcrafted hoop earrings! They’re lightweight, comfortable, and add such a chic touch to my outfits. The brand’s commitment to using ethically sourced materials makes me feel good about my purchase. I’ll definitely be a repeat customer." },
   { id: 4, avatar: { name: "Manisha R Singh", profilePic: `${secAssetsDirPath}/4.jpeg` }, rating: 5, text: "I purchased a raw stone necklace from this brand, and I’m absolutely in love! The craftsmanship is impeccable, with every detail carefully thought out. It arrived beautifully packaged, and the quality feels so luxurious. I’ve received countless compliments wearing it. Highly recommend!" },
-
 ];
 
 export default function Testimonials() {
