@@ -383,6 +383,7 @@ export default function SlideCart({ isOpen, onClose, item }) {
                                         alt="brand-logo"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         priority
+                                        quality={80}
                                     />
                                 </div>
                             </div>

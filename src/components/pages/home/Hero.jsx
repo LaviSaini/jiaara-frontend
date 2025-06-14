@@ -44,29 +44,19 @@ const images = [
   }
 ];
 
-
 export default function HeroCarousel() { 
-
   const sectionRef = useRef(null);
-  
   const carouselRef = useRef(null);
-
   const { dispatch } = useContext(context);
-
   const isHeroSecVisible = useIntersectionObserver({ sectionRef });
-  
   const { currentSlide } = useCurrentSlide({ carouselRef });
 
-
   useEffect(() => {
-
     function storeComponentData() {
       dispatch(storeData({ isHeroSecVisible }, "states"));
     }
     storeComponentData();
-
   }, [isHeroSecVisible, dispatch]);
-   
 
   return (
     <section id="hero" ref={sectionRef}>
@@ -100,6 +90,9 @@ export default function HeroCarousel() {
                   fill
                   src={image.src}
                   alt={image.alt}
+                  quality={80}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
                 />
               </div>
             </Slide>

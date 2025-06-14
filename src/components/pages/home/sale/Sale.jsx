@@ -307,12 +307,13 @@ export default function Sale(
                       <div className="bg-white shadow-lg relative grid grid-cols-2 rounded-tr-lg rounded-br-lg overflow-hidden">
                         <div className="card-img h-[180px] w-full" >
                           <Image
-                            src={product?.images[currentImageIndex]?.src} // Fallback image if no images available
+                            src={product?.images[currentImageIndex]?.src}
                             alt={product?.images[currentImageIndex]?.alt || "default"}
                             width={300}
                             height={200}
-                            className="object-cover w-[100%] h-[100%] "
-                            priority // Preload images
+                            className="object-cover w-[100%] h-[100%]"
+                            priority
+                            quality={80}
                           />
                         </div>
                         <div className="content p-4 flex flex-col text-left justify-between">

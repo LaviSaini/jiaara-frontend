@@ -37,9 +37,7 @@ const celebrities = [
   }
 ];
 
-
 export default function CelebrityStyle() {
-
   return (
     <section id="celebrity-style" className="flex flex-col items-center justify-center">
       <h2 className="font-heading text-center text-3xl lg:text-4xl capitalize text-primaryFont my-8 lg:my-10">
@@ -64,6 +62,8 @@ export default function CelebrityStyle() {
               fill
               src={celebrity?.image}
               alt={celebrity?.id}
+              quality={80}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
          </div>
         )}

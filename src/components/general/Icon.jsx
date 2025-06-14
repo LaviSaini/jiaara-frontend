@@ -1,8 +1,6 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
-
 import Image from 'next/image';
-
 
 function isReactElement(icon) {
   return React.isValidElement(icon);
@@ -31,7 +29,6 @@ function isHTML(icon) {
 function isString(icon) {
   return typeof icon === "string";
 }
-
 
 const Icon = ({
   className = "",
@@ -62,6 +59,8 @@ const Icon = ({
           fill
           src={icon}
           alt={alt}
+          quality={80}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
     );

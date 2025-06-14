@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-
 const mimeTypes = {
   mp4: 'video/mp4',
   webm: 'video/webm',
@@ -18,7 +17,6 @@ const getMimeType = src => {
 };
 
 const isVideo = src => src.match(/\.(mp4|webm|ogg|ogv|mov|avi|mkv|flv)$/i);
-
 
 const Media = ({ 
   src = "",
@@ -53,6 +51,9 @@ const Media = ({
         className={imgClassName} 
         src={src} 
         alt={alt || "media"}
+        quality={80}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        priority={type === 'hero'}
       />
     </div>
   );
