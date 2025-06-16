@@ -27,10 +27,10 @@ export default function Footer() {
             <div>
               <h3 className="font-semibold text-lg mb-4">JIAARA</h3>
               <ul className="space-y-2 text-sm">
-                <li>About Us</li>
+                <li><a href="/about-us">About Us</a></li>
                 {/* <li>Store Locator</li> */}
                 {/* <li>Careers</li> */}
-                <li><a href="/terms-and-conditions" target='_blank'>Term of service</a></li>
+                <li><a href="/terms-and-conditions">Term of service</a></li>
                 {/* <li>Jewelry Care</li> */}
                 {/* <li>Sitemap</li> */}
               </ul>
