@@ -68,6 +68,7 @@ export default function FollowOnInstagram() {
       </h2>
 
       <div className="w-full max-w-[90vw] mx-auto">
+        {console.log("---------Parveen",list)}
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={18}

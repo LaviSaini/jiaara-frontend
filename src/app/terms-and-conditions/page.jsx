@@ -7,55 +7,39 @@ export default function TermsAndConditions() {
       </h1>
 
       <p className="mb-6">
-        Welcome to Jiaara Jewellery. By accessing and using our website,
+        The terms “We” / “Us” / “Our”/ ”Company” individually and collectively refer to 
         <a href="/" className="text-primaryFont hover:underline ml-1">
           www.jiaarajewellery.com
         </a>
-        , you agree to comply with and be bound by the following terms and
-        conditions. Please read them carefully before engaging in any
-        transactions or using our services.
+        and the terms “Visitor” ”User” refer to the users.
+      </p>
+
+      <p className="mb-6 text-justify leading-7">
+        This page states the Terms and Conditions under which you (Visitor) may visit this website (“<a href="/" className="text-primaryFont hover:underline ml-1">www.jiaarajewellery.com</a>”). Please read this page carefully. If you do not accept the Terms and Conditions stated here, we would request you to exit this site. The business, any of its business divisions and / or its subsidiaries, associate companies or subsidiaries to subsidiaries or such other investment companies (in India or abroad) reserve their respective rights to revise these Terms and Conditions at any time by updating this posting. You should visit this page periodically to re-appraise yourself of the Terms and Conditions, because they are binding on all users of this Website.
       </p>
 
       <hr className="border-gray-300 my-6" />
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">1. General Information</h2>
-        <ul className="space-y-4">
-          <li>
-            <strong className="font-semibold">Ownership:</strong> The website is
-            owned and operated by Jiaara Jewellery.
-          </li>
-          <li>
-            <strong className="font-semibold">Eligibility:</strong> By using
-            this website, you confirm that you are at least 18 years old or have
-            parental/guardian consent.
-          </li>
-          <li>
-            <strong className="font-semibold">Changes to Terms:</strong> Jiaara
-            Jewellery reserves the right to update these terms at any time.
-            Changes will be effective immediately upon being posted on the
-            website.
-          </li>
-        </ul>
+        <h2 className="text-2xl font-semibold mb-4">Use of Content</h2>
+        <p className="mb-4 text-justify leading-7">All logos, brands, marks headings, labels, names, signatures, numerals, shapes or any combinations thereof, appearing in this site, except as otherwise noted, are properties either owned, or used under licence, by the business and / or its associate entities who feature on this Website. The use of these properties or any other content on this site, except as provided in these terms and conditions or in the site content, is strictly prohibited.</p>
+        <p className="mb-4 text-justify leading-7">You may not sell or modify the content of this Website  or reproduce, display, publicly perform, distribute, or otherwise use the materials in any way for any public or commercial purpose without the respective organisation’s or entity’s written permission.</p>
       </section>
 
       <hr className="border-gray-300 my-6" />
 
       <section className="mb-10">
         <h2 className="text-2xl font-semibold mb-4">
-          2. Products and Services
+         Acceptable Website Use
         </h2>
         <ul className="space-y-4">
           <li>
-            <strong className="font-semibold">Product Descriptions:</strong> We
-            strive to provide accurate information about our products. However,
-            minor variations in colour or appearance may occur due to
-            photography or screen display differences.
+            <strong className="font-semibold block mb-2">(A) Security Rules</strong> 
+            <p className="mb-4 text-justify leading-7">We Visitors are prohibited from violating or attempting to violate the security of the Web site, including, without limitation, (1) accessing data not intended for such user or logging into a server or account which the user is not authorised to access, (2) attempting to probe, scan or test the vulnerability of a system or network or to breach security or authentication measures without proper authorisation, (3) attempting to interfere with service to any user, host or network, including, without limitation, via means of submitting a virus or “Trojan horse” to the Website, overloading, “flooding”, “mail bombing” or “crashing”, or (4) sending unsolicited electronic mail, including promotions and/or advertising of products or services. Violations of system or network security may result in civil or criminal liability. The business and / or its associate entities will have the right to investigate occurrences that they suspect as involving such violations and will have the right to involve, and cooperate with, law enforcement authorities in prosecuting users who are involved in such violations.</p>
           </li>
           <li>
-            <strong className="font-semibold">Pricing:</strong> All prices are
-            listed in INR and include GST unless otherwise stated. Jiaara
-            Jewellery reserves the right to modify prices without prior notice.
+            <strong className="font-semibold block mb-2">(B) General Rules</strong> 
+            <p className="mb-4 text-justify leading-7">Visitors may not use the Web Site in order to transmit, distribute, store or destroy material (a) that could constitute or encourage conduct that would be considered a criminal offence or violate any applicable law or regulation, (b) in a manner that will infringe the copyright, trademark, trade secret or other intellectual property rights of others or violate the privacy or publicity of other personal rights of others, or (c) that is libellous, defamatory, pornographic, profane, obscene, threatening, abusive or hateful.</p>
           </li>
         </ul>
       </section>
@@ -63,210 +47,24 @@ export default function TermsAndConditions() {
       <hr className="border-gray-300 my-6" />
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">3. Orders and Payments</h2>
-        <ul className="space-y-4">
-          <li>
-            <strong className="font-semibold">Payment Options:</strong>
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>Indian Customers: UPI, Credit/Debit Cards, and Net Banking.</li>
-            <li>
-              International Customers: Stripe or Bank Transfer (processed in
-              INR).
-            </li>
-          </ul>
-          <li>
-            <strong className="font-semibold">Order Confirmation:</strong>{" "}
-            Orders are confirmed only after payment is received.
-          </li>
-          <li>
-            <strong className="font-semibold">Cancellation:</strong> Orders
-            cannot be cancelled once placed. Please review carefully before
-            confirming.
-          </li>
-        </ul>
+        <h2 className="text-2xl font-semibold mb-4">Indemnity</h2>
+        <p className="mb-4 text-justify leading-7">The User unilaterally agree to indemnify and hold harmless, without objection, the Company, its officers, directors, employees and agents from and against any claims, actions and/or demands and/or liabilities and/or losses and/or damages whatsoever arising from or resulting from their use of <a href="/">www.jiaarajewellery.com</a> or their breach of the terms.</p>
+      </section>
+
+      <hr className="border-gray-300 my-6" />
+
+       <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-4">Liability</h2>
+        <p className="mb-4 text-justify leading-7">User agrees that neither company nor its group companies, directors, officers or employee shall be liable for any direct or/and indirect or/and incidental or/and special or/and consequential or/and exemplary damages, resulting from the use or/and the inability to use the service or/and for cost of procurement of substitute goods or/and services or resulting from any goods or/and data or/and information or/and services purchased or/and obtained or/and messages received or/and transactions entered into through or/and from the service or/and resulting from unauthorised access to or/and alteration of user’s transmissions or/and data or/and arising from any other matter relating to the service, including but not limited to, damages for loss of profits or/and use or/and data or other intangible, even if company has been advised of the possibility of such damages.</p>
+        <p className="mb-4 text-justify leading-7">User further agrees that company shall not be liable for any damages arising from interruption, suspension or termination of service, including but not limited to direct or/and indirect or/and incidental or/and special consequential or/and exemplary damages, whether such interruption or/and suspension or/and termination was justified or not, negligent or intentional, inadvertent or advertent.</p>
+        <p className="mb-4 text-justify leading-7">User agrees that company shall not be responsible or liable to user, or anyone, for the statements or conduct of any third party of the service. In sum, in no event shall Company’s total liability to the User for all damages or/and losses or/and causes of action exceed the amount paid by the User to company, if any, that is related to the cause of action.</p>
       </section>
 
       <hr className="border-gray-300 my-6" />
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">
-          4. Shipping and Delivery
-        </h2>
-        <ul className="space-y-4">
-          <li>
-            <strong className="font-semibold">Shipping:</strong>
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>
-              Free shipping is available for orders above ₹599 within India.
-            </li>
-            <li>
-              Domestic orders are shipped within 1-3 working days after payment
-              confirmation.
-            </li>
-            <li>International orders are processed within 3-5 working days.</li>
-          </ul>
-          <li>
-            <strong className="font-semibold">Delivery Timelines:</strong>
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>Metros: 2-5 working days after dispatch.</li>
-            <li>Remote locations: 5-7 working days.</li>
-          </ul>
-          <li>
-            <strong className="font-semibold">Responsibility:</strong> While we
-            ensure timely dispatch, we are not liable for courier delays but
-            will assist in tracking and resolving issues.
-          </li>
-        </ul>
-      </section>
-
-      <hr className="border-gray-300 my-6" />
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">
-          5. Return, Refund, and Cancellation Policy
-        </h2>
-        <ul className="space-y-4">
-          <li>
-            <strong className="font-semibold">Returns:</strong>
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>
-              Customers can request a return within 7 days of receiving the
-              product by contacting{" "}
-              <a
-                href="mailto:jiaaracreations@gmail.com"
-                className="text-primaryFont hover:underline"
-              >
-                jiaaracreations@gmail.com
-              </a>
-              .
-            </li>
-            <li>Return requests made after 7 days will not be accepted.</li>
-          </ul>
-          <li>
-            <strong className="font-semibold">Refunds:</strong>
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>
-              Approved refunds are issued as store credit redeemable for future
-              purchases.
-            </li>
-            <li>
-              Direct refunds to bank accounts are not provided, except for
-              damaged products where the item is out of stock.
-            </li>
-          </ul>
-          <li>
-            <strong className="font-semibold">Damaged Products:</strong>
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>
-              A clear unboxing video is mandatory to validate claims for damaged
-              items.
-            </li>
-            <li>
-              If valid, a replacement or refund will be issued based on stock
-              availability.
-            </li>
-          </ul>
-        </ul>
-      </section>
-
-      <hr className="border-gray-300 my-6" />
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">
-          6. Privacy and Data Usage
-        </h2>
-        <ul className="space-y-4">
-          <li>
-            <strong className="font-semibold">Data Collection:</strong> We
-            collect personal information such as name, contact details, and
-            payment information to process orders and improve services.
-          </li>
-          <li>
-            <strong className="font-semibold">Data Security:</strong> We
-            implement safeguards to protect your data from unauthorised access
-            or disclosure.
-          </li>
-          <li>
-            <strong className="font-semibold">Cookies:</strong> Cookies are used
-            to enhance your browsing experience. You can manage cookie
-            preferences through browser settings.
-          </li>
-          <li>
-            For detailed information, refer to our{" "}
-            <a href="/privacy-policy" className="text-primaryFont hover:underline">
-              Privacy Policy
-            </a>
-            .
-          </li>
-        </ul>
-      </section>
-
-      <hr className="border-gray-300 my-6" />
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">
-          7. Liability and Disclaimer
-        </h2>
-        <ul className="space-y-4">
-          <li>
-            <strong className="font-semibold">Limitation of Liability:</strong>{" "}
-            Jiaara Jewellery is not responsible for:
-          </li>
-          <ul className="ml-8 list-disc space-y-2">
-            <li>Any indirect, incidental, or consequential damages.</li>
-            <li>
-              Issues arising from the use of third-party services integrated
-              with our website.
-            </li>
-          </ul>
-        </ul>
-      </section>
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">8. Intellectual Property</h2>
-        <ul className="space-y-4">
-          <li>
-            All content on the website, including images, text, logos, and designs, is the property of Jiaara Jewellery and is protected by applicable copyright and trademark laws.
-          </li>
-          <li>
-            Reproduction, distribution, or unauthorized use of any content is strictly prohibited.
-          </li>
-        </ul>
-      </section>
-
-      <hr className="border-gray-300 my-6" />
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">9. Governing Law and Jurisdiction</h2>
-        <ul className="space-y-4">
-          <li>
-            These terms and conditions are governed by and construed in accordance with the laws of India.
-          </li>
-          <li>
-            Any disputes arising out of or related to the use of this website will be subject to the exclusive jurisdiction of the courts in Jaipur, Rajasthan, India.
-          </li>
-        </ul>
-      </section>
-
-      <hr className="border-gray-300 my-6" />
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">10. Contact Information</h2>
-        <ul className="space-y-4">
-          <li>
-            For any queries or assistance, you can contact us at:
-            <a href="mailto:jiaaracreations@gmail.com" className="text-primaryFont hover:underline ml-1">jiaaracreations@gmail.com</a>
-          </li>
-          <li>
-            Alternatively, reach out to us via our social media channels or the contact form available on our website.
-          </li>
-        </ul>
+        <h2 className="text-2xl font-semibold mb-4">Disclaimer of Consequential Damages</h2>
+        <p className="mb-4 text-justify leading-7">In no event shall Company or any parties, organisations or entities associated with the corporate brand name us or otherwise, mentioned at this Website be liable for any damages whatsoever (including, without limitations, incidental and consequential damages, lost profits, or damage to computer hardware or loss of data information or business interruption) resulting from the use or inability to use the Website and the Website material, whether based on warranty, contract, tort, or any other legal theory, and whether or not, such organisation or entities were advised of the possibility of such damages.</p>
       </section>
     </div>
   );

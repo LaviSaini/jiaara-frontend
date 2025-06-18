@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
   return (
     <footer className="bg-[#5D2C55] text-white py-10 lg:px-16 px-8">
@@ -13,9 +15,9 @@ export default function Footer() {
             Bhayander 401107
           </p>
           <p className="mt-4 text-sm">
-            jiaracreations@gmail.com<br />
-            www.amazon.in/jiara<br />
-            www.instagram.com/jiarajewellery
+            jiaaracreations@gmail.com<br />
+            www.amazon.in/jiaara<br />
+            www.instagram.com/jiaarajewellery
           </p>
           <p className="mt-4 font-bold text-lg">+91 6396872895</p>
         </div>
@@ -25,10 +27,10 @@ export default function Footer() {
             <div>
               <h3 className="font-semibold text-lg mb-4">JIAARA</h3>
               <ul className="space-y-2 text-sm">
-                <li>About Us</li>
-                <li>Store Locator</li>
+                <li><a href="/about-us">About Us</a></li>
+                {/* <li>Store Locator</li> */}
                 {/* <li>Careers</li> */}
-                <li>Term of service</li>
+                <li><a href="/terms-and-conditions">Term of service</a></li>
                 {/* <li>Jewelry Care</li> */}
                 {/* <li>Sitemap</li> */}
               </ul>
@@ -36,9 +38,9 @@ export default function Footer() {
             <div>
               <h3 className="font-semibold text-lg mb-4">SOCIAL</h3>
               <ul className="space-y-2 text-sm">
-                <li>Instagram</li>
-                <li>YouTube</li>
-                <li>Pinterest</li>
+                <li><a href="https://www.instagram.com/jiaarajewellery" target='_blank'>Instagram</a></li>
+                {/* <li>YouTube</li> */}
+                {/* <li>Pinterest</li> */}
               </ul>
             </div>
             <div>
