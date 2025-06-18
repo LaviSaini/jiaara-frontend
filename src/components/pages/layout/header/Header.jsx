@@ -29,7 +29,7 @@ import skipMap from "@/utils/functions/general/skipMap";
 
 import { getAllRoutes } from '@/routes';
 import Axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { buyNow } from '@/redux/slices/buyNow';
 import { wishlist } from '@/redux/slices/wishlist';
 import { cart } from '@/redux/slices/cart';
@@ -52,6 +52,13 @@ export default function Header() {
   const { screenWidth, breakpoints: { md, lg } } = useWindowSize();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const router = useRouter();
+  const [isRouterReady, setIsRouterReady] = useState(false);
+
+  // Handle router initialization
+  useEffect(() => {
+    setIsRouterReady(true);
+  }, []);
 
   // Close popup on outside click
   useEffect(() => {
@@ -233,6 +240,32 @@ export default function Header() {
     dispatch(coupon.clear())
 
   }
+
+  // Add prefetching for main navigation routes
+  useEffect(() => {
+    if (isRouterReady) {
+      try {
+        // Prefetch main navigation routes
+        if (HOME?.pathname) router.prefetch(HOME.pathname);
+        if (SHOP?.pathname) router.prefetch(SHOP.pathname);
+        if (CATEGORIES?.pathname) router.prefetch(CATEGORIES.pathname);
+        if (COLLECTIONS?.pathname) router.prefetch(COLLECTIONS.pathname);
+      } catch (error) {
+        console.error('Error prefetching routes:', error);
+      }
+    }
+  }, [isRouterReady, router]);
+
+  const handleOptionSelect = (option) => {
+    if (isRouterReady && option?.url) {
+      try {
+        router.prefetch(option.url);
+      } catch (error) {
+        console.error('Error prefetching option URL:', error);
+      }
+    }
+  };
+
   return (
     <header
       id="header"
@@ -243,7 +276,11 @@ export default function Header() {
       `}
     >
 
-      <Link className="app-brand img-cont-wrapper" href={HOME?.pathname}>
+      <Link 
+        className="app-brand img-cont-wrapper" 
+        href={HOME?.pathname}
+        prefetch={isRouterReady}
+      >
         <div className="img-cont w-[100px] h-[70px] relative">
           <Image
             fill
@@ -281,7 +318,8 @@ export default function Header() {
                     flex flex-col items-center justify-center gap-2 px-3 py-3 rounded
                     lg:flex-row lg:gap-2
                   `,
-                  pathname: route?.pathname
+                  pathname: route?.pathname,
+                  prefetch: true
                 }}
                 icon={{
                   className: `
@@ -346,6 +384,7 @@ export default function Header() {
                     `,
                     link: "flex justify-between items-center"
                   }}
+                  onOptionSelect={handleOptionSelect}
                 />
               </li>
             }
@@ -394,6 +433,7 @@ export default function Header() {
                     `,
                     link: "flex flex-wrap justify-between items-center"
                   }}
+                  onOptionSelect={handleOptionSelect}
                 />
               </li>
             }
